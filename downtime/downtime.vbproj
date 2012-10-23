@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F677D482-BDC8-40D2-97C2-F39B371F0683}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>downtime.main</StartupObject>
+    <RootNamespace>downtime</RootNamespace>
+    <AssemblyName>downtime</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <ManifestCertificateThumbprint>F189CAFDAC79F78592B4C4A4EA6CD9A39DE6202A</ManifestCertificateThumbprint>
+    <ManifestKeyFile>downtime_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>59</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>downtime.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>downtime.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="AutoItHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Automator\AutoItHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="CodeBase2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\CB2\CB2\bin\Debug\CodeBase2.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Interop.Access, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="MySql.Data.MySqlClient" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aliquotform.Designer.vb">
+      <DependentUpon>Aliquotform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Aliquotform.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Addonform.Designer.vb">
+      <DependentUpon>Addonform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Addonform.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoIT.vb" />
+    <Compile Include="AUtoLabReprintform.Designer.vb">
+      <DependentUpon>AUtoLabReprintform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AUtoLabReprintform.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DateTimeFunctions.vb" />
+    <Compile Include="DIOrderEntryForm.Designer.vb">
+      <DependentUpon>DIOrderEntryForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DIOrderEntryForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MolisEntry.Designer.vb">
+      <DependentUpon>MolisEntry.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MolisEntry.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecoveryForm.Designer.vb">
+      <DependentUpon>RecoveryForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RecoveryForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputBoxForm.Designer.vb">
+      <DependentUpon>InputBoxForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="InputBoxForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackCoagfrom.Designer.vb">
+      <DependentUpon>TrackCoagfrom.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrackCoagfrom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm2.Designer.vb">
+      <DependentUpon>LoginForm2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForm2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="restartwheel.Designer.vb">
+      <DependentUpon>restartwheel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="restartwheel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trackurinechemfrom.Designer.vb">
+      <DependentUpon>Trackurinechemfrom.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Trackurinechemfrom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trackurinehemfrom.Designer.vb">
+      <DependentUpon>Trackurinehemfrom.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Trackurinehemfrom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trackhemfrom.Designer.vb">
+      <DependentUpon>Trackhemfrom.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Trackhemfrom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="statorderqueryform.Designer.vb">
+      <DependentUpon>statorderqueryform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="statorderqueryform.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackSMSfrom.Designer.vb">
+      <DependentUpon>TrackSMSfrom.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrackSMSfrom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm1.Designer.vb">
+      <DependentUpon>LoginForm1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForm1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main.vb" />
+    <Compile Include="AD.vb" />
+    <Compile Include="orderentry.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderentry.Designer.vb">
+      <DependentUpon>orderentry.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LabelerModule.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UnitTests.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Aliquotform.resx">
+      <DependentUpon>Aliquotform.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Addonform.resx">
+      <DependentUpon>Addonform.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AUtoLabReprintform.resx">
+      <DependentUpon>AUtoLabReprintform.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DIOrderEntryForm.resx">
+      <DependentUpon>DIOrderEntryForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MolisEntry.resx">
+      <DependentUpon>MolisEntry.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RecoveryForm.resx">
+      <DependentUpon>RecoveryForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InputBoxForm.resx">
+      <DependentUpon>InputBoxForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackCoagfrom.resx">
+      <DependentUpon>TrackCoagfrom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm2.resx">
+      <DependentUpon>LoginForm2.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="restartwheel.resx">
+      <DependentUpon>restartwheel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trackurinechemfrom.resx">
+      <DependentUpon>Trackurinechemfrom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trackurinehemfrom.resx">
+      <DependentUpon>Trackurinehemfrom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trackhemfrom.resx">
+      <DependentUpon>Trackhemfrom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="statorderqueryform.resx">
+      <DependentUpon>statorderqueryform.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackSMSfrom.resx">
+      <DependentUpon>TrackSMSfrom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm1.resx">
+      <DependentUpon>LoginForm1.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderentry.resx">
+      <DependentUpon>orderentry.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{2A75196C-D9EB-4129-B803-931327F72D5C}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="AutoItX3Lib">
+      <Guid>{F8937E53-D444-4E71-9275-35B64210CC3B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AutoItX3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="lbl.txt" />
+    <Content Include="lbl2.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
