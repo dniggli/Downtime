@@ -152,6 +152,7 @@
     <Compile Include="AUtoLabReprintform.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GetMySQL.vb" />
     <Compile Include="PrintLabels.vb" />
     <Compile Include="DateTimeFunctions.vb" />
     <Compile Include="DIOrderEntryForm.Designer.vb">
@@ -214,10 +215,10 @@
     <Compile Include="Trackhemfrom.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <Compile Include="MainMenu.Designer.vb">
+      <DependentUpon>MainMenu.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form1.vb">
+    <Compile Include="MainMenu.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="statorderqueryform.Designer.vb">
@@ -316,8 +317,8 @@
       <DependentUpon>Trackhemfrom.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="statorderqueryform.resx">

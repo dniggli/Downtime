@@ -28,7 +28,7 @@ Module Labeler
             collectiontime = _collectiontime
             todaysdate = _todaysdate
             testlist = _tests
-         
+
 
 
         End Sub
@@ -45,13 +45,31 @@ Module Labeler
             location = _location
         End Sub
 
+        Sub New(ByVal _ordernumber As String, ByVal _PRIORITY As String, ByVal _medreqnum As String, ByVal _lastname As String, ByVal _firstname As String, ByVal _location As String)
+            orderNumber = _ordernumber
+            extension = ""
+            specimenType = ""
+            priority = _PRIORITY
+            testlist = ""
+            medreqnum = _medreqnum
+            lastname = _lastname
+            firstname = _firstname
+            location = _location
+        End Sub
+
+        Function setTestsExtensionSpecimenType(ByVal tests As String, ByVal extension As String, ByVal st As String) As LabelData
+            Return New LabelData(orderNumber, tests, extension, st, priority, medreqnum, lastname, firstname, location, collectiontime, todaysdate)
+        End Function
+
 
     End Class
 
-
-    '................/////////////////// THIS PRINTS COLLECTION LABLES FOR TUBES \\\\\\\\\\\\\\\\\\\\\\\..........................
-
-
+    ''' <summary>
+    ''' THIS PRINTS COLLECTION LABLES FOR TUBES 
+    ''' </summary>
+    ''' <param name="ldata"></param>
+    ''' <param name="printer"></param>
+    ''' <remarks></remarks>
     Sub LabelPrint(ByVal ldata As LabelData, ByVal printer As String)
         Dim sTemplatelines As New ArrayList
 
@@ -105,8 +123,12 @@ Module Labeler
     End Sub
 
 
-    '................/////////////////// THIS PRINTS COMMENT LABLES \\\\\\\\\\\\\\\\\\\\\\\..........................
-
+    ''' <summary>
+    ''' THIS PRINTS COMMENT LABLES
+    ''' </summary>
+    ''' <param name="ldata1"></param>
+    ''' <param name="printer"></param>
+    ''' <remarks></remarks>
     Sub LabelPrint1(ByVal ldata1 As LabelData, ByVal printer As String)
         Dim sTemplatelines As New ArrayList
 
@@ -144,12 +166,12 @@ Module Labeler
 
     End Sub
 
-
-
-
-    '................/////////////////// THIS PRINTS DEMOGRAPHIC LABLES FOR REQS \\\\\\\\\\\\\\\\\\\\\\\..........................
-
-
+    ''' <summary>
+    ''' THIS PRINTS DEMOGRAPHIC LABLES FOR REQS
+    ''' </summary>
+    ''' <param name="ldata2"></param>
+    ''' <param name="printer"></param>
+    ''' <remarks></remarks>
     Sub LabelPrint2(ByVal ldata2 As LabelData, ByVal printer As String)
         Dim sTemplatelines As New ArrayList
 
@@ -178,20 +200,15 @@ Module Labeler
         label += "^FO0025,137,^B3,N,72,N,^FD" & ldata2.orderNumber & ldata2.extension & "^FS" & vbNewLine
         label += "^FT370,160,^AD             ^FD^FS" & vbNewLine
         label += "^XZ" & vbNewLine
-
-
-
-
-
         orderentry.strNecessary.Append(label)
-
     End Sub
 
-
-
-
-    '............................////////////////////// Prints STAT Aliquot Collection Labels for Tubes(For Aliquotform only) \\\\\\\\\\\\\\\\\\\\.........................
-
+    ''' <summary>
+    ''' Prints STAT Aliquot Collection Labels for Tubes(For Aliquotform only)
+    ''' </summary>
+    ''' <param name="ldata"></param>
+    ''' <param name="printer"></param>
+    ''' <remarks></remarks>
     Sub LabelPrintal1(ByVal ldata As LabelData, ByVal printer As String)
         Dim sTemplatelines As New ArrayList
 
@@ -241,12 +258,12 @@ Module Labeler
         orderentry.strNecessary.Append(label)
     End Sub
 
-
-
-
-    '...............//////////////// Print ROUTINE Aliquot Collection Labels for Tubes (For Aliquotform only) \\\\\\\\\\\\\...................
-
-
+    ''' <summary>
+    ''' Print ROUTINE Aliquot Collection Labels for Tubes (For Aliquotform only)
+    ''' </summary>
+    ''' <param name="ldata"></param>
+    ''' <param name="printer"></param>
+    ''' <remarks></remarks>
     Sub LabelPrintal2(ByVal ldata As LabelData, ByVal printer As String)
         Dim sTemplatelines As New ArrayList
 
