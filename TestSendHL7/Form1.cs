@@ -19,6 +19,9 @@ namespace TestSendHL7
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
+            
+
             //set the IP and port to send to
             var sendhl = new SendHl7("lis-s22104-9000", 52345);
 

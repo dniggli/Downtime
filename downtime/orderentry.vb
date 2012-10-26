@@ -24,8 +24,11 @@ Public Class orderentry
         Application.Run(myorder)
 
     End Sub
-    Dim specimensDict = New Dictionary(Of TextBox, KeyValuePair(Of String, String))
-    Public Sub orderentry()
+    Dim specimensDict As Dictionary(Of TextBox, KeyValuePair(Of String, String))
+    Public Sub New()
+        InitializeComponent()
+
+        specimensDict = New Dictionary(Of TextBox, KeyValuePair(Of String, String))
         specimensDict.Add(Me.comment, New KeyValuePair(Of String, String)("", "CMT"))
 
         specimensDict.Add(Me.redtest, New KeyValuePair(Of String, String)("00", "SST"))
@@ -366,17 +369,7 @@ Public Class orderentry
 
     End Sub
 
-    Public Sub sendHL7(ByVal mrn As String, ByVal firstName As String, ByVal lastName As String, ByVal ordernumberAndExtension As String, ByVal ward As String, ByVal codes As IEnumerable(Of String))
-        'set the IP and port to send to
-        Dim sendhl = New SendHl7("lis-s22104-9000", 6669)
 
-        'create the HL7 message
-        Dim co = New OrderMessage(mrn, firstName, lastName, ordernumberAndExtension, "", ward, Sex.U, codes)
-        Dim hl = co.toHl7()
-
-        'send the hl7 message
-        sendhl.SendHL7(hl)
-    End Sub
 
     Public Sub ButtonWrite_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonWrite.Click
         ButtonClick()
@@ -503,7 +496,26 @@ Public Class orderentry
 
         End If
 
-        If Not Me.ordernumber.Text = String.Empty Then writeandprint()
+
+
+        If Not Me.ordernumber.Text = String.Empty Then
+
+            For Each spec As KeyValuePair(Of TextBox, KeyValuePair(Of String, String)) In specimensDict
+                Dim tests = spec.Key.Text
+                Dim extension = spec.Value.Key
+                Dim specimenType = spec.Value.Value
+
+                Dim codes = tests.Split(","c)
+                For Each code In codes
+                    Dim indiCodes = GroupTestToIndividualTest.getIndividualTests(code)
+                    sendHL7(Me.mrn.Text, Me.firstname.Text, Me.lastname.Text, Me.ordernumber.Text + extension, Me.ComboBoxWard.Text, indiCodes)
+                Next
+
+            Next
+
+            writeandprint()
+        End If
+
 
         editorder.Enabled = True
         Buttoneditprevious.Enabled = True
@@ -512,16 +524,21 @@ Public Class orderentry
             ComboBoxoldorder.Items.Add(RECENT)
         End If
 
-        For Each spec As KeyValuePair(Of TextBox, KeyValuePair(Of String, String)) In specimensDict.items
-            Dim tests = spec.Key.Text
-            Dim extension = spec.Value.Key
-            Dim specimenType = spec.Value.Value
-            sendHL7(Me.mrn.Text, Me.firstname.Text, Me.lastname.Text, Me.ordernumber.Text + extension, "", tests.Split(" "c, ","c, ";"c, ":"c))
-        Next
+   
 
 
     End Sub
+    Public Sub sendHL7(ByVal mrn As String, ByVal firstName As String, ByVal lastName As String, ByVal ordernumberAndExtension As String, ByVal ward As String, ByVal codes As IEnumerable(Of String))
+        'set the IP and port to send to
+        Dim sendhl = New SendHl7("lis-s22104-9000", 6669)
 
+        'create the HL7 message
+        Dim co = New OrderMessage(mrn, firstName, lastName, ordernumberAndExtension, "", ward, Sex.U, codes)
+        Dim hl = co.toHl7()
+
+        'send the hl7 message
+        sendhl.SendHL7(hl)
+    End Sub
     Sub writeandprint()
 
         writeDowntimeTable()
