@@ -1,0 +1,253 @@
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28,^FR     ^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD**/SED^FS
+^FO  0, 92,^AB            ^FD^FS
+^FO  0,107,^A0,22,20      ^FDCollected @ 15:58 On 10/20/2010  ^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD**^FS
+
+^BY2,2,80
+^FO0040,137,^B3,N,72,N,^FD82026599^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28,^FR     ^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD**/SED^FS
+^FO  0, 92,^AB            ^FD^FS
+^FO  0,107,^A0,22,20      ^FDCollected @ 15:58 On 10/20/2010  ^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD**^FS
+
+^BY2,2,80
+^FO0040,137,^B3,N,72,N,^FD82026599^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-00^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*SST*/SED^FS
+^FO  0, 92,^AB            ^FDHST,HRD^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*SST*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659900^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-23^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*BLU*/SED^FS
+^FO  0, 92,^AB            ^FDHBL^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*BLU*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659923^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-40^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*GRN*/SED^FS
+^FO  0, 92,^AB            ^FDED7,TROP^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*GRN*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659940^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-18^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*LAV*/SED^FS
+^FO  0, 92,^AB            ^FDCBCD^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*LAV*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659918^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-19^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*GRY*/SED^FS
+^FO  0, 92,^AB            ^FDHGY^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*GRY*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659919^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28,^FR     ^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD**/SED^FS
+^FO  0, 92,^AB            ^FD^FS
+^FO  0,107,^A0,22,20      ^FDCollected @ 15:58 On 10/20/2010  ^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD**^FS
+
+^BY2,2,80
+^FO0040,137,^B3,N,72,N,^FD82026599^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28,^FR     ^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD**/SED^FS
+^FO  0, 92,^AB            ^FD^FS
+^FO  0,107,^A0,22,20      ^FDCollected @ 15:58 On 10/20/2010  ^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD**^FS
+
+^BY2,2,80
+^FO0040,137,^B3,N,72,N,^FD82026599^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-00^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*SST*/SED^FS
+^FO  0, 92,^AB            ^FDHST,HRD^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*SST*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659900^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-23^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*BLU*/SED^FS
+^FO  0, 92,^AB            ^FDHBL^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*BLU*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659923^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-40^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*GRN*/SED^FS
+^FO  0, 92,^AB            ^FDED7,TROP^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*GRN*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659940^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-18^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*LAV*/SED^FS
+^FO  0, 92,^AB            ^FDCBCD^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*LAV*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659918^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+^XA
+^FX COLLECTION LABEL ^FS
+^FO  0, 15,^A0B,29        ^FD6599^FS
+^FO 30, 13,^A0,29         ^FD82026599-19^FS
+^FO260, 3                 ^GB 60, 13,35,,100^FS^FO260, 13,^A0,28         ^FR^FDSTAT^FS
+^FO 30, 42,^A0,28,25      ^FDSCHOOL,PHILIP^FS
+^FO 30, 75,^AB            ^FDM#^FS
+^FO 55, 70,^A0,22,20      ^FD000000807717^FS
+^FO200, 70,^A0,22,20      ^FD*GRY*/SED^FS
+^FO  0, 92,^AB            ^FDHGY^FS
+^FO  0,107,^AB            ^FD^FS
+^FO  0,122,^AB            ^FD^FS
+^FO365,100,^A0,40         ^FD*GRY*^FS
+
+^BY2,2,80
+^FO0040,137,^BC,,N,,,A,^FD8202659919^FS
+^FT370,160,^AD             ^FD^FS
+^XZ
+

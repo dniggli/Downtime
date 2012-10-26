@@ -32,16 +32,7 @@ Public Class aliquotform
             LabelPrint2(fn2, Me.ComboBoxprinter.Text)
         End If
 
-        Dim printer As String = ComboBoxprinter.Text
-        'RawPrinterHelper.SendStringToPrinter(printer, orderentry.strNecessary.ToString)
-        Dim NameToIP As Dictionary(Of String, String) = CodeBase2.Labeler.Send_IP_Printer.GetLabelersList_byGroup("/Strong/Specimen Management")
-        Dim PrinterDNSName As String = NameToIP(printer.ToUpper).ToString
-        If Not PrinterDNSName.Contains(".") Then
-            printer = CodeBase2.DNS.NameToIPString(PrinterDNSName)
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(printer, orderentry.strNecessary.ToString)
-        Else
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), orderentry.strNecessary.ToString)
-        End If
+       PrintLabels.apply(ComboBoxprinter.Text)
 
     End Sub
     'prints demographic labels for routines
@@ -61,16 +52,7 @@ Public Class aliquotform
             LabelPrint2(fn2, Me.ComboBoxprinter.Text)
         End If
 
-        Dim printer As String = ComboBoxprinter.Text
-        ' RawPrinterHelper.SendStringToPrinter(printer, orderentry.strNecessary.ToString)
-        Dim NameToIP As Dictionary(Of String, String) = CodeBase2.Labeler.Send_IP_Printer.GetLabelersList_byGroup("/Strong/Specimen Management")
-        Dim PrinterDNSName As String = NameToIP(printer.ToUpper).ToString
-        If Not PrinterDNSName.Contains(".") Then
-            printer = CodeBase2.DNS.NameToIPString(PrinterDNSName)
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(printer, orderentry.strNecessary.ToString)
-        Else
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), orderentry.strNecessary.ToString)
-        End If
+       PrintLabels.apply(ComboBoxprinter.Text)
 
     End Sub
     'Dave: Give it a password to connect!!!!  in both the readDowntimeTable and writeDowntimeTable subroutines
@@ -159,16 +141,7 @@ Public Class aliquotform
             LabelPrintal1(OTHER, Me.ComboBoxprinter.Text)
         End If
 
-        Dim printer As String = ComboBoxprinter.Text
-        'RawPrinterHelper.SendStringToPrinter(printer, orderentry.strNecessary.ToString)
-        Dim NameToIP As Dictionary(Of String, String) = CodeBase2.Labeler.Send_IP_Printer.GetLabelersList_byGroup("/Strong/Specimen Management")
-        Dim PrinterDNSName As String = NameToIP(printer.ToUpper).ToString
-        If Not PrinterDNSName.Contains(".") Then
-            printer = CodeBase2.DNS.NameToIPString(PrinterDNSName)
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(printer, orderentry.strNecessary.ToString)
-        Else
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), orderentry.strNecessary.ToString)
-        End If
+      PrintLabels.apply(ComboBoxprinter.Text)
 
 
 
@@ -258,16 +231,8 @@ Public Class aliquotform
             Dim OTHER As New LabelData(Me.ordernumber.Text, Me.OTHERBOX.Text, "", "OTH", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
             LabelPrintal2(OTHER, Me.ComboBoxprinter.Text)
         End If
-        Dim printer As String = ComboBoxprinter.Text
-        'RawPrinterHelper.SendStringToPrinter(printer, orderentry.strNecessary.ToString)
-        Dim NameToIP As Dictionary(Of String, String) = CodeBase2.Labeler.Send_IP_Printer.GetLabelersList_byGroup("/Strong/Specimen Management")
-        Dim PrinterDNSName As String = NameToIP(printer.ToUpper).ToString
-        If Not PrinterDNSName.Contains(".") Then
-            printer = CodeBase2.DNS.NameToIPString(PrinterDNSName)
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(printer, orderentry.strNecessary.ToString)
-        Else
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), orderentry.strNecessary.ToString)
-        End If
+  
+        PrintLabels.apply(ComboBoxprinter.Text)
 
 
     End Sub

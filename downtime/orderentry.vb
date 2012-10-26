@@ -194,17 +194,7 @@ Public Class orderentry
         'fs.Close()
         'fs.Dispose()
 
-        Dim printer As String = ComboBoxprinter.Text
-
-        ' RawPrinterHelper.SendStringToPrinter(printer, strNecessary.ToString)
-        Dim NameToIP As Dictionary(Of String, String) = CodeBase2.Labeler.Send_IP_Printer.GetLabelersList_byGroup("/Strong/Specimen Management")
-        Dim PrinterDNSName As String = NameToIP(printer.ToUpper).ToString
-        If Not PrinterDNSName.Contains(".") Then
-            printer = CodeBase2.DNS.NameToIPString(PrinterDNSName)
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(printer, strNecessary.ToString)
-        Else
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), strNecessary.ToString)
-        End If
+   PrintLabels.apply(ComboBoxprinter.Text)
 
 
 
@@ -327,17 +317,7 @@ Public Class orderentry
 
 
 
-        Dim printer As String = ComboBoxprinter.Text
-        'RawPrinterHelper.SendStringToPrinter(printer, strNecessary.ToString)
-        Dim NameToIP As Dictionary(Of String, String) = CodeBase2.Labeler.Send_IP_Printer.GetLabelersList_byGroup("/Strong/Specimen Management")
-
-        Dim PrinterDNSName As String = NameToIP(printer.ToUpper).ToString
-        If Not PrinterDNSName.Contains(".") Then
-            printer = CodeBase2.DNS.NameToIPString(PrinterDNSName)
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(printer, strNecessary.ToString)
-        Else
-            CodeBase2.Labeler.Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), strNecessary.ToString)
-        End If
+  PrintLabels.apply(ComboBoxprinter.Text)
 
     End Sub
 
