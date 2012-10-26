@@ -2,6 +2,7 @@
 Imports System.Text.RegularExpressions
 Imports System.IO
 Imports ADODB
+Imports HL7
 
 Public Class orderentry
     Public Shared NUMBER = ""
@@ -10,14 +11,14 @@ Public Class orderentry
     Public Shared Tdate As Integer
     Public Shared strNecessary As New System.Text.StringBuilder("")
 
-    Dim mySql As New GetMySQL()
+    Dim mySql = New GetMySQL()
 
     ''' <summary>
     ''' Starts the Order Thread
     ''' </summary>
     ''' <remarks></remarks>
     Public Shared Sub Order()
-        Dim myorder As New orderentry
+        Dim myorder = New orderentry
         Application.Run(myorder)
 
     End Sub
@@ -338,6 +339,19 @@ Public Class orderentry
 
 
     End Sub
+
+    Public Sub sendHL7(ByVal mrn As String, ByVal firstName As String, ByVal lastName As String, ByVal ordernumberAndExtension As String, ByVal ward As String, ByVal codes As IEnumerable(Of String))
+        'set the IP and port to send to
+        Dim sendhl = New SendHl7("lis-s22104-9000", 6669)
+
+        'create the HL7 message
+        Dim co = New OrderMessage(mrn, firstName, lastName, ordernumberAndExtension, "", ward, Sex.U, codes)
+        Dim hl = co.toHl7()
+
+        'send the hl7 message
+        sendhl.SendHL7(hl)
+    End Sub
+
     Public Sub ButtonWrite_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonWrite.Click
         ButtonClick()
     End Sub
@@ -471,7 +485,7 @@ Public Class orderentry
             Dim RECENT As String = NUMBER + "   " + LSTNAME + "," + FSTNAME
             ComboBoxoldorder.Items.Add(RECENT)
         End If
-
+        'sendHL7(Me.mrn.Text,Me.firstname.Text,Me.lastname.Text,Me.ordernumber.Text + Me.sp
     End Sub
 
     Sub writeandprint()
@@ -526,8 +540,6 @@ Public Class orderentry
         End If
 
     End Sub
-
-
 
     Sub checkmrn()
         If Me.mrn.Text.Length < 12 Then
@@ -669,12 +681,7 @@ Public Class orderentry
                 lastname.Focus()
             Next
         End Try
-
-
-
-
     End Sub
-
 
     Sub readDowntimeTable()
         Dim t = mySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" & Me.ordernumber.Text & "' ORDER BY ID DESC LIMIT 1")
@@ -748,9 +755,6 @@ Public Class orderentry
                 cal1.Text = "585-987-7848"
                 collectiontime.Text = "20:50"
                 receivetime.Text = "20:55"
-
-
-
             End If
         Next
 
@@ -772,21 +776,12 @@ Public Class orderentry
             ordernumber.Enabled = False
             Techid2()
             checkfororder()
-
-
         End If
-
     End Sub
-
-
-
 
     Sub Techid2()
-
         ordertechid.Text = main.Username
-
     End Sub
-
 
     Private Sub editorder_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles editorder.Click
         Buttoneditprevious.Enabled = False
