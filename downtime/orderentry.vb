@@ -4,6 +4,8 @@ Imports System.IO
 Imports ADODB
 Imports HL7
 
+
+
 Public Class orderentry
     Public Shared NUMBER = ""
     Public Shared LSTNAME = ""
@@ -22,6 +24,30 @@ Public Class orderentry
         Application.Run(myorder)
 
     End Sub
+    Dim specimensDict = New Dictionary(Of TextBox, KeyValuePair(Of String, String))
+    Public Sub orderentry()
+        specimensDict.Add(Me.comment, New KeyValuePair(Of String, String)("", "CMT"))
+
+        specimensDict.Add(Me.redtest, New KeyValuePair(Of String, String)("00", "SST"))
+        specimensDict.Add(Me.bluetest, New KeyValuePair(Of String, String)("23", "BLU"))
+        specimensDict.Add(Me.greentest, New KeyValuePair(Of String, String)("40", "GRN"))
+        specimensDict.Add(Me.lavchemtest, New KeyValuePair(Of String, String)("79", "LAV"))
+        specimensDict.Add(Me.lavhemtest, New KeyValuePair(Of String, String)("18", "LAV"))
+        specimensDict.Add(Me.graytest, New KeyValuePair(Of String, String)("19", "GRY"))
+        specimensDict.Add(Me.urinechem, New KeyValuePair(Of String, String)("27", "URC"))
+        specimensDict.Add(Me.urinehem, New KeyValuePair(Of String, String)("UA", "UAC"))
+        specimensDict.Add(Me.bloodgas, New KeyValuePair(Of String, String)("20", "SYR"))
+        specimensDict.Add(Me.sendout, New KeyValuePair(Of String, String)("05", "REF"))
+        specimensDict.Add(Me.ser, New KeyValuePair(Of String, String)("41", "SRL"))
+        specimensDict.Add(Me.hepp, New KeyValuePair(Of String, String)("42", "SHP"))
+        specimensDict.Add(Me.csfbox, New KeyValuePair(Of String, String)("26", "CSF"))
+        specimensDict.Add(Me.fluidbox, New KeyValuePair(Of String, String)("38", "FLD"))
+        specimensDict.Add(Me.Viralloadbox, New KeyValuePair(Of String, String)("74", "LAV"))
+        specimensDict.Add(Me.OTHERBOX, New KeyValuePair(Of String, String)("", "OTH"))
+        specimensDict.Add(Me.TextBoxIMMUNO, New KeyValuePair(Of String, String)("2R", "SST"))
+    End Sub
+
+
 
     Private Sub orderentry_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Disposed
 
@@ -485,7 +511,15 @@ Public Class orderentry
             Dim RECENT As String = NUMBER + "   " + LSTNAME + "," + FSTNAME
             ComboBoxoldorder.Items.Add(RECENT)
         End If
-        'sendHL7(Me.mrn.Text,Me.firstname.Text,Me.lastname.Text,Me.ordernumber.Text + Me.sp
+
+        For Each spec As KeyValuePair(Of TextBox, KeyValuePair(Of String, String)) In specimensDict.items
+            Dim tests = spec.Key.Text
+            Dim extension = spec.Value.Key
+            Dim specimenType = spec.Value.Value
+            sendHL7(Me.mrn.Text, Me.firstname.Text, Me.lastname.Text, Me.ordernumber.Text + extension, "", tests.Split(" "c, ","c, ";"c, ":"c))
+        Next
+
+
     End Sub
 
     Sub writeandprint()
