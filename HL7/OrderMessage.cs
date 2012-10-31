@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using FunctionalCSharp;
 
 namespace HL7
 {
@@ -22,22 +23,31 @@ namespace HL7
         string sex;
         string ward;
         IEnumerable<string> testCodes;
-        public OrderMessage(string mrn, string firstName, string lastName, string orderNumberWithSpecExtension, string dob, string ward, Sex sex, IEnumerable<string> testCodes) {
+        string messageUniqueIDForAck;
+        SpecimenType specimenType;
+        public OrderMessage(string mrn, string firstName, string lastName, string orderNumber, string dob, string ward, Sex sex, IEnumerable<string> testCodes, string messageUniqueIDForAck, SpecimenType specimenType)
+        {
             this.mrn = mrn;
             this.firstName = firstName;
             this.lastName = lastName;
-            this.orderNumberWithSpecExtension = orderNumberWithSpecExtension;
+            this.orderNumberWithSpecExtension = orderNumber + specimenType.extension;
             this.testCodes = testCodes;
             this.ward = ward;
             this.dob = dob;
+            this.messageUniqueIDForAck = messageUniqueIDForAck;
+            this.specimenType = specimenType;
             if (sex == Sex.M) this.sex = "M";
             else if (sex == Sex.F) this.sex = "F";
             else if (sex == Sex.U) this.sex = "U";
         }
+
+        public OrderMessage(string mrn, string firstName, string lastName, string orderNumberWithSpecExtension, string dob, string ward, Sex sex, IEnumerable<string> testCodes, SpecimenType specimenType) : this(mrn, firstName, lastName, orderNumberWithSpecExtension, dob, ward, sex, testCodes, "00000000", specimenType) { }
+        
+        
         
         private string MSH()
         {
-            return "MSH|^~\\&|LAB|SCC||ROCHE|" + DateTime.Now.ToString("yyyyMMddHHmmss") + "||OML^O01|64275384|P|2.3|||AL|NE||8859";
+            return "MSH|^~\\&|LAB|SCC||ROCHE|" + DateTime.Now.ToString("yyyyMMddHHmmss") + "||OML^O01|" + messageUniqueIDForAck + "|P|2.3|||AL|NE||8859";
         }
 
         private string PID()
@@ -58,6 +68,7 @@ namespace HL7
         private string ORC()
         {
             return "ORC|XO|" + orderNumberWithSpecExtension + "|||||1^^^^^R^EVER";
+            
         }
 
        
@@ -68,8 +79,13 @@ namespace HL7
             var testList = new List<String>();
             foreach (string code in individualTestCodes) {
                 index = index + 1;
-                var tco = new TestCodeForOrder(index.ToString(), code, orderNumberWithSpecExtension, "AMPT");
-                testList.Add(tco.toHl7());
+                var tco = new TestCodeForOrder(index.ToString(), code, orderNumberWithSpecExtension, ward, specimenType);
+
+                tco.toHl7().forEach<string>( hl7 =>
+                    testList.Add(hl7)
+                );
+
+                
             }
             var segments = new List<String>(new String[] {MSH(),PID(),PV1(), SAC(),ORC()});
             segments.AddRange(testList);
@@ -131,27 +147,31 @@ TCD|^^^ALK^ALK PHOS||||||Y<cr>
         string testIndex;
         string testName = "";
         string ward;
-        public TestCodeForOrder(string testIndex,string testCode, string orderNumberWithSpecExtension, string ward)
+        SpecimenType specimenType;
+        public TestCodeForOrder(string testIndex,string testCode, string orderNumberWithSpecExtension, string ward, SpecimenType specimenType)
         {
             this.testIndex = testIndex;
             this.orderNumberWithSpecExtension = orderNumberWithSpecExtension;
             this.testCode = testCode;
             this.ward = ward;
+            this.specimenType = specimenType;
         }
 
  
 
-        private string OBR() {
-            return "OBR|" + testIndex + "|" + orderNumberWithSpecExtension + "||^^^" + testCode + "^" + testName +
-                "|||" + DateTime.Now.ToString("yyyyMMdd") + "000000||||A||||SER|||" + ward + "\r";
+        private Option<string> OBR() {
+            return specimenType.diName.map(diName =>
+
+               "OBR|" + testIndex + "|" + orderNumberWithSpecExtension + "||^^^" + testCode + "^" + testName +
+                  "|||" + DateTime.Now.ToString("yyyyMMdd") + "000000||||A||||" + diName + "|||" + ward + "\r");
         }
 
         private string TCD() {
            return "TCD|^^^" + testCode + "^" + testName + "||||||Y";
         }
 
-        public string toHl7() {
-            return OBR() + TCD();
+        public Option<string> toHl7() {
+            return OBR().map(obr => obr + TCD());
         }
     }
 

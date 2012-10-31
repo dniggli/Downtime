@@ -22,79 +22,79 @@ Public Class Addons
 
         If Not Me.firstname.Text = String.Empty Then
             Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
         End If
         If Not Me.firstname.Text = String.Empty Then
             Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
         End If
         If Not Me.comment.Text = String.Empty Then
             Dim ordcmt1 As New LabelData(Me.ordernumber.Text, Me.comment.Text, "", "CMT", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint1(ordcmt1, Me.ComboBoxprinter.Text)
+            ordcmt1.LabelPrint1(Me.ComboBoxprinter.Text)
         End If
         If Not Me.redtest.Text = String.Empty Then
             Dim rt1 As New LabelData(Me.ordernumber.Text, Me.redtest.Text, "00", "SST", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(rt1, Me.ComboBoxprinter.Text)
+            rt1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.bluetest.Text = String.Empty Then
             Dim bt1 As New LabelData(Me.ordernumber.Text, Me.bluetest.Text, "23", "BLU", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(bt1, Me.ComboBoxprinter.Text)
+            bt1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.greentest.Text = String.Empty Then
             Dim gt1 As New LabelData(Me.ordernumber.Text, Me.greentest.Text, "40", "GRN", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(gt1, Me.ComboBoxprinter.Text)
+            gt1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.lavchemtest.Text = String.Empty Then
             Dim lct1 As New LabelData(Me.ordernumber.Text, Me.lavchemtest.Text, "79", "LAV", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(lct1, Me.ComboBoxprinter.Text)
+            lct1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.lavhemtest.Text = String.Empty Then
             Dim lht1 As New LabelData(Me.ordernumber.Text, Me.lavhemtest.Text, "18", "LAV", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(lht1, Me.ComboBoxprinter.Text)
+            lht1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.graytest.Text = String.Empty Then
             Dim gtr1 As New LabelData(Me.ordernumber.Text, Me.graytest.Text, "19", "GRY", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(gtr1, Me.ComboBoxprinter.Text)
+            gtr1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.urinechem.Text = String.Empty Then
             Dim uc1 As New LabelData(Me.ordernumber.Text, Me.urinechem.Text, "27", "URC", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(uc1, Me.ComboBoxprinter.Text)
+            uc1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.urinehem.Text = String.Empty Then
             Dim uh1 As New LabelData(Me.ordernumber.Text, Me.urinehem.Text, "UA", "UAC", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(uh1, Me.ComboBoxprinter.Text)
+            uh1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.bloodgas.Text = String.Empty Then
             Dim bg1 As New LabelData(Me.ordernumber.Text, Me.bloodgas.Text, "20", "SYR", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(bg1, Me.ComboBoxprinter.Text)
+            bg1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.sendout.Text = String.Empty Then
             Dim sendot As New LabelData(Me.ordernumber.Text, Me.sendout.Text, "05", "REF", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(sendot, Me.ComboBoxprinter.Text)
+            sendot.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.ser.Text = String.Empty Then
             Dim sero As New LabelData(Me.ordernumber.Text, Me.ser.Text, "41", "SRL", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(sero, Me.ComboBoxprinter.Text)
+            sero.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.hepp.Text = String.Empty Then
             Dim heppe As New LabelData(Me.ordernumber.Text, Me.hepp.Text, "42", "SHP", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(heppe, Me.ComboBoxprinter.Text)
+            heppe.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.csfbox.Text = String.Empty Then
             Dim csf1 As New LabelData(Me.ordernumber.Text, Me.csfbox.Text, "26", "CSF", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(csf1, Me.ComboBoxprinter.Text)
+            csf1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.fluidbox.Text = String.Empty Then
             Dim fluid1 As New LabelData(Me.ordernumber.Text, Me.fluidbox.Text, "38", "FLD", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(fluid1, Me.ComboBoxprinter.Text)
+            fluid1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.Viralloadbox.Text = String.Empty Then
             Dim vrl As New LabelData(Me.ordernumber.Text, Me.Viralloadbox.Text, "74", "LAV", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(vrl, Me.ComboBoxprinter.Text)
+            vrl.LabelPrint(Me.ComboBoxprinter.Text)
         End If
 
         PrintLabels.apply(ComboBoxprinter.Text)
-     
+
 
     End Sub
 
@@ -108,78 +108,78 @@ Public Class Addons
 
         If Not Me.firstname.Text = String.Empty Then
             Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
         End If
         If Not Me.firstname.Text = String.Empty Then
             Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
         End If
         If Not Me.comment.Text = String.Empty Then
             Dim ordcmt1 As New LabelData(Me.ordernumber.Text, Me.comment.Text, "", "CMT", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint1(ordcmt1, Me.ComboBoxprinter.Text)
+            ordcmt1.LabelPrint1(Me.ComboBoxprinter.Text)
         End If
         If Not Me.redtest.Text = String.Empty Then
             Dim rt1 As New LabelData(Me.ordernumber.Text, Me.redtest.Text, "00", "SST", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(rt1, Me.ComboBoxprinter.Text)
+            rt1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.bluetest.Text = String.Empty Then
             Dim bt1 As New LabelData(Me.ordernumber.Text, Me.bluetest.Text, "23", "BLU", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(bt1, Me.ComboBoxprinter.Text)
+            bt1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.greentest.Text = String.Empty Then
             Dim gt1 As New LabelData(Me.ordernumber.Text, Me.greentest.Text, "40", "GRN", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(gt1, Me.ComboBoxprinter.Text)
+            gt1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.lavchemtest.Text = String.Empty Then
             Dim lct1 As New LabelData(Me.ordernumber.Text, Me.lavchemtest.Text, "79", "LAV", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(lct1, Me.ComboBoxprinter.Text)
+            lct1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.lavhemtest.Text = String.Empty Then
             Dim lht1 As New LabelData(Me.ordernumber.Text, Me.lavhemtest.Text, "18", "LAV", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(lht1, Me.ComboBoxprinter.Text)
+            lht1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.graytest.Text = String.Empty Then
             Dim gtr1 As New LabelData(Me.ordernumber.Text, Me.graytest.Text, "19", "GRY", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(gtr1, Me.ComboBoxprinter.Text)
+            gtr1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.urinechem.Text = String.Empty Then
             Dim uc1 As New LabelData(Me.ordernumber.Text, Me.urinechem.Text, "27", "URC", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(uc1, Me.ComboBoxprinter.Text)
+            uc1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.urinehem.Text = String.Empty Then
             Dim uh1 As New LabelData(Me.ordernumber.Text, Me.urinehem.Text, "UA", "UAC", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(uh1, Me.ComboBoxprinter.Text)
+            uh1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.bloodgas.Text = String.Empty Then
             Dim bg1 As New LabelData(Me.ordernumber.Text, Me.bloodgas.Text, "20", "SYR", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(bg1, Me.ComboBoxprinter.Text)
+            bg1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.sendout.Text = String.Empty Then
             Dim sendot As New LabelData(Me.ordernumber.Text, Me.sendout.Text, "05", "REF", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(sendot, Me.ComboBoxprinter.Text)
+            sendot.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.ser.Text = String.Empty Then
             Dim sero As New LabelData(Me.ordernumber.Text, Me.ser.Text, "41", "SRL", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(sero, Me.ComboBoxprinter.Text)
+            sero.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.hepp.Text = String.Empty Then
             Dim heppe As New LabelData(Me.ordernumber.Text, Me.hepp.Text, "42", "SHP", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(heppe, Me.ComboBoxprinter.Text)
+            heppe.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.csfbox.Text = String.Empty Then
             Dim csf1 As New LabelData(Me.ordernumber.Text, Me.csfbox.Text, "26", "CSF", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(csf1, Me.ComboBoxprinter.Text)
+            csf1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.fluidbox.Text = String.Empty Then
             Dim fluid1 As New LabelData(Me.ordernumber.Text, Me.fluidbox.Text, "38", "FLD", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(fluid1, Me.ComboBoxprinter.Text)
+            fluid1.LabelPrint(Me.ComboBoxprinter.Text)
         End If
         If Not Me.Viralloadbox.Text = String.Empty Then
             Dim vrl As New LabelData(Me.ordernumber.Text, Me.Viralloadbox.Text, "74", "LAV", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text)
-            LabelPrint(vrl, Me.ComboBoxprinter.Text)
+            vrl.LabelPrint(Me.ComboBoxprinter.Text)
         End If
 
-       PrintLabels.apply(ComboBoxprinter.Text)
+        PrintLabels.apply(ComboBoxprinter.Text)
 
     End Sub
 

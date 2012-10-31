@@ -3,17 +3,15 @@ Imports System.Text.RegularExpressions
 Imports System.IO
 Imports ADODB
 Imports HL7
-
-
+Imports FunctionalCSharp
 
 Public Class orderentry
-    Public Shared NUMBER = ""
     Public Shared LSTNAME = ""
     Public Shared FSTNAME = ""
     Public Shared Tdate As Integer
     Public Shared strNecessary As New System.Text.StringBuilder("")
 
-    Dim mySql = New GetMySQL()
+    Dim mySql As GetMySQL = New GetMySQL()
 
     ''' <summary>
     ''' Starts the Order Thread
@@ -22,32 +20,34 @@ Public Class orderentry
     Public Shared Sub Order()
         Dim myorder = New orderentry
         Application.Run(myorder)
-
     End Sub
-    Dim specimensDict As Dictionary(Of TextBox, KeyValuePair(Of String, String))
+
+
+
+    Dim specimensDict As Dictionary(Of TextBox, SpecimenType)
     Public Sub New()
         InitializeComponent()
 
-        specimensDict = New Dictionary(Of TextBox, KeyValuePair(Of String, String))
-        specimensDict.Add(Me.comment, New KeyValuePair(Of String, String)("", "CMT"))
+        specimensDict = New Dictionary(Of TextBox, SpecimenType)
+        specimensDict.Add(Me.comment, SpecimenType.Comment)
 
-        specimensDict.Add(Me.redtest, New KeyValuePair(Of String, String)("00", "SST"))
-        specimensDict.Add(Me.bluetest, New KeyValuePair(Of String, String)("23", "BLU"))
-        specimensDict.Add(Me.greentest, New KeyValuePair(Of String, String)("40", "GRN"))
-        specimensDict.Add(Me.lavchemtest, New KeyValuePair(Of String, String)("79", "LAV"))
-        specimensDict.Add(Me.lavhemtest, New KeyValuePair(Of String, String)("18", "LAV"))
-        specimensDict.Add(Me.graytest, New KeyValuePair(Of String, String)("19", "GRY"))
-        specimensDict.Add(Me.urinechem, New KeyValuePair(Of String, String)("27", "URC"))
-        specimensDict.Add(Me.urinehem, New KeyValuePair(Of String, String)("UA", "UAC"))
-        specimensDict.Add(Me.bloodgas, New KeyValuePair(Of String, String)("20", "SYR"))
-        specimensDict.Add(Me.sendout, New KeyValuePair(Of String, String)("05", "REF"))
-        specimensDict.Add(Me.ser, New KeyValuePair(Of String, String)("41", "SRL"))
-        specimensDict.Add(Me.hepp, New KeyValuePair(Of String, String)("42", "SHP"))
-        specimensDict.Add(Me.csfbox, New KeyValuePair(Of String, String)("26", "CSF"))
-        specimensDict.Add(Me.fluidbox, New KeyValuePair(Of String, String)("38", "FLD"))
-        specimensDict.Add(Me.Viralloadbox, New KeyValuePair(Of String, String)("74", "LAV"))
-        specimensDict.Add(Me.OTHERBOX, New KeyValuePair(Of String, String)("", "OTH"))
-        specimensDict.Add(Me.TextBoxIMMUNO, New KeyValuePair(Of String, String)("2R", "SST"))
+        specimensDict.Add(Me.redtest, SpecimenType.Red)
+        specimensDict.Add(Me.bluetest, SpecimenType.Blue)
+        specimensDict.Add(Me.greentest, SpecimenType.Green)
+        specimensDict.Add(Me.lavchemtest, SpecimenType.LavChem)
+        specimensDict.Add(Me.lavhemtest, SpecimenType.LavHem)
+        specimensDict.Add(Me.graytest, SpecimenType.Gray)
+        specimensDict.Add(Me.urinechem, SpecimenType.UrineChem)
+        specimensDict.Add(Me.urinehem, SpecimenType.UrineHem)
+        specimensDict.Add(Me.bloodgas, SpecimenType.BloodGas)
+        specimensDict.Add(Me.sendout, SpecimenType.SendOut)
+        specimensDict.Add(Me.ser, SpecimenType.Ser)
+        specimensDict.Add(Me.hepp, SpecimenType.Hepp)
+        specimensDict.Add(Me.csfbox, SpecimenType.Csf)
+        specimensDict.Add(Me.fluidbox, SpecimenType.Fluid)
+        specimensDict.Add(Me.Viralloadbox, SpecimenType.Viral)
+        specimensDict.Add(Me.OTHERBOX, SpecimenType.Other)
+        specimensDict.Add(Me.TextBoxIMMUNO, SpecimenType.Immuno)
     End Sub
 
 
@@ -94,120 +94,7 @@ Public Class orderentry
         Next
     End Sub
 
-    Sub printDTLabel2(ByVal tests As String, ByVal extension As String, ByVal specimentype As String)
-        If tests <> String.Empty Then
-            Dim fn2 As New LabelData(Me.ordernumber.Text, tests, extension, specimentype, Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
-        End If
-    End Sub
 
-
-    'Dave: Give it a password to connect!!!!  in both the readDowntimeTable and writeDowntimeTable subroutines
-    Sub printDowntimeLables()
-        Dim test As New List(Of String)
-        If Me.priority.Text = "S" Then Me.priority.Text = "STAT"
-
-        If Not Me.firstname.Text = String.Empty Then
-            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
-        End If
-        If Not Me.firstname.Text = String.Empty Then
-            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
-        End If
-        printDTLabel2(Me.comment.Text, "", "CMT")
-        printDTLabel2(Me.redtest.Text, "00", "SST")
-        printDTLabel2(Me.bluetest.Text, "23", "BLU")
-        printDTLabel2(Me.greentest.Text, "40", "GRN")
-        printDTLabel2(Me.lavchemtest.Text, "79", "LAV")
-        printDTLabel2(Me.lavhemtest.Text, "18", "LAV")
-        printDTLabel2(Me.graytest.Text, "19", "GRY")
-        printDTLabel2(Me.urinechem.Text, "27", "URC")
-        printDTLabel2(Me.urinehem.Text, "UA", "UAC")
-        printDTLabel2(Me.bloodgas.Text, "20", "SYR")
-        printDTLabel2(Me.sendout.Text, "1N", "REF")
-        printDTLabel2(Me.ser.Text, "41", "SRL")
-        printDTLabel2(Me.hepp.Text, "42", "SHP")
-        printDTLabel2(Me.csfbox.Text, "26", "CSF")
-        printDTLabel2(Me.fluidbox.Text, "38", "FLD")
-        printDTLabel2(Me.Viralloadbox.Text, "74", "LAV")
-        printDTLabel2(Me.OTHERBOX.Text, "", "OTH")
-        printDTLabel2(Me.TextBoxIMMUNO.Text, "2R", "SST")
-
-
-
-        'Dim filepath = "lbl.txt"
-        'Dim fs As New FileStream(filepath, FileMode.Open, FileAccess.Write, FileShare.Write)
-
-        'Threading.Thread.Sleep(500)
-        'Dim writing As New StreamWriter(fs, System.Text.Encoding.UTF8)
-
-        'writing.WriteLine(strNecessary)
-
-
-        'writing.Close()
-        'fs.Close()
-        'fs.Dispose()
-
-        PrintLabels.apply(ComboBoxprinter.Text)
-
-
-
-
-    End Sub
-
-    Sub printDTLabel1(ByVal tests As String, ByVal extension As String, ByVal specimentype As String)
-        If tests <> String.Empty Then
-            Dim fn2 As New LabelData(Me.ordernumber.Text, tests, extension, specimentype, Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint1(fn2, Me.ComboBoxprinter.Text)
-        End If
-    End Sub
-
-    Sub printDTLabel(ByVal tests As String, ByVal extension As String, ByVal specimentype As String)
-        If tests <> String.Empty Then
-            Dim fn2 As New LabelData(Me.ordernumber.Text, tests, extension, specimentype, Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint(fn2, Me.ComboBoxprinter.Text)
-        End If
-    End Sub
-
-    Sub printDowntimeLablesR()
-        Dim test As New List(Of String)
-        If Me.priority.Text = "S" Then Me.priority.Text = "STAT"
-
-        If Not Me.firstname.Text = String.Empty Then
-
-            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
-        End If
-        If Not Me.firstname.Text = String.Empty Then
-
-            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-            LabelPrint2(fn2, Me.ComboBoxprinter.Text)
-        End If
-
-        printDTLabel1(Me.comment.Text, "", "CMT")
-
-        printDTLabel(Me.redtest.Text, "00", "SST")
-        printDTLabel(Me.bluetest.Text, "23", "BLU")
-        printDTLabel(Me.greentest.Text, "40", "GRN")
-        printDTLabel(Me.lavchemtest.Text, "79", "LAV")
-        printDTLabel(Me.lavhemtest.Text, "18", "LAV")
-        printDTLabel(Me.graytest.Text, "19", "GRY")
-        printDTLabel(Me.urinechem.Text, "27", "URC")
-        printDTLabel(Me.urinehem.Text, "UA", "UAC")
-        printDTLabel(Me.bloodgas.Text, "20", "SYR")
-        printDTLabel(Me.sendout.Text, "05", "REF")
-        printDTLabel(Me.ser.Text, "41", "SRL")
-        printDTLabel(Me.hepp.Text, "42", "SHP")
-        printDTLabel(Me.csfbox.Text, "26", "CSF")
-        printDTLabel(Me.fluidbox.Text, "38", "FLD")
-        printDTLabel(Me.Viralloadbox.Text, "74", "LAV")
-        printDTLabel(Me.OTHERBOX.Text, "", "OTH")
-        printDTLabel(Me.TextBoxIMMUNO.Text, "2R", "SST")
-
-        PrintLabels.apply(ComboBoxprinter.Text)
-
-    End Sub
 
     'http://www.vbmysql.com/articles/vbnet-mysql-tutorial/the-vbnet-mysql-tutorial-part-4
     Sub writeDowntimeTable()
@@ -218,51 +105,16 @@ Public Class orderentry
 
         Dim ranletter = alphabet.Substring(ran.Next(0, 25), 1)
 
-        Dim fn = firstname.Text
-        Dim ordernumber1 = ordernumber.Text
-        Dim lastname1 = lastname.Text
-        Dim collectiontime1 = collectiontime.Text
-        Dim receivetime1 = receivetime.Text
-        Dim location1 = ComboBoxWard.Text
-        Dim priority1 = priority.Text
-        Dim mrn1 = mrn.Text
-        Dim dob1 = DOB.Text
-        Dim rt = redtest.Text
-        Dim bt = bluetest.Text
-        Dim lht = lavhemtest.Text
-        Dim gt = greentest.Text
-        Dim lct = lavchemtest.Text
-        Dim grt = graytest.Text
-        Dim uh = urinehem.Text
-        Dim uc = urinechem.Text
-        Dim bg = bloodgas.Text
-        Dim prob = problem.Text
-        Dim ordcmt = comment.Text
-        Dim cal = cal1.Text
-        Dim hep = hepp.Text
-        Dim serr = ser.Text
-        Dim senot = sendout.Text
-
-        Dim techids = ordertechid.Text
-        Dim csf = csfbox.Text
-        Dim fluid = fluidbox.Text
-        Dim viral = Viralloadbox.Text
-        Dim other = OTHERBOX.Text
-        Dim BILLING = TextBoxbillingnumber.Text
-        Dim IMMUNO = TextBoxIMMUNO.Text
-
-
         colldate.Text = DateTimePicker1.Text
-        Dim colld = colldate.Text
 
-        If Not mrn.Text.ToString Like "X*" Then
-            While mrn1.ToString.Length < 12
-                mrn1 = "0" & mrn1
+        If Not mrn.Text Like "X*" Then
+            While mrn.Text.Length < 12
+                mrn.Text = "0" & mrn.Text
             End While
         End If
 
-        Dim p = New MySqlParameter("?CollectionTime", collectiontime1)
-        mySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" & receivetime1 & "',LOCATION = '" & location1 & "',PRIORITY = '" & priority1 & "',MRN = '" & mrn1 & "',DOB = '" & dob1 & "',FIRSTNAME = '" & fn & "',REDTEST = '" & rt & "',BLUETEST = '" & bt & "',LAVHEMTEST = '" & lht & "',GREENTEST = '" & gt & "',LAVCHEMTEST = '" & lct & "',GRYTEST = '" & grt & "',URINEHEM = '" & uh & "',URINECHEM = '" & uc & "',BLOODGAS = '" & bg & "',PROBLEM = '" & prob & "',CALLS = '" & cal & "',ORDERCOMMENT = '" & ordcmt & "',LASTNAME = '" & lastname1 & "',SENDOUT = '" & senot & "',SEROLOGY = '" & serr & "' ,HEPPETITAS = '" & hep & "',COLLECTDATE = '" & colld & "',TECHID = '" & techids & "',CSFTEST = '" & csf & "' ,FLUIDTEST = '" & fluid & "',VIRALLOADTEST = '" & viral & "',OTHERTEST = '" & other & "', BILLINGNUMBER = '" & BILLING & "', IMMUNOTEST = '" & IMMUNO & "' WHERE ordernumber = '" & ordernumber1 & "'", p)
+        Dim p = New MySqlParameter("?CollectionTime", collectiontime.Text)
+        mySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" & receivetime.Text & "',LOCATION = '" & ComboBoxWard.Text & "',PRIORITY = '" & priority.Text & "',MRN = '" & mrn.Text & "',DOB = '" & DOB.Text & "',FIRSTNAME = '" & firstname.Text & "',REDTEST = '" & redtest.Text & "',BLUETEST = '" & bluetest.Text & "',LAVHEMTEST = '" & lavhemtest.Text & "',GREENTEST = '" & greentest.Text & "',LAVCHEMTEST = '" & lavchemtest.Text & "',GRYTEST = '" & graytest.Text & "',URINEHEM = '" & urinehem.Text & "',URINECHEM = '" & urinechem.Text & "',BLOODGAS = '" & bloodgas.Text & "',PROBLEM = '" & problem.Text & "',CALLS = '" & cal1.Text & "',ORDERCOMMENT = '" & comment.Text & "',LASTNAME = '" & lastname.Text & "',SENDOUT = '" & sendout.Text & "',SEROLOGY = '" & ser.Text & "' ,HEPPETITAS = '" & hepp.Text & "',COLLECTDATE = '" & colldate.Text & "',TECHID = '" & ordertechid.Text & "',CSFTEST = '" & csfbox.Text & "' ,FLUIDTEST = '" & fluidbox.Text & "',VIRALLOADTEST = '" & Viralloadbox.Text & "',OTHERTEST = '" & OTHERBOX.Text & "', BILLINGNUMBER = '" & TextBoxbillingnumber.Text & "', IMMUNOTEST = '" & TextBoxIMMUNO.Text & "' WHERE ordernumber = '" & ordernumber.Text & "'", p)
 
         For Each C As Control In Me.Controls
             If TypeOf C Is TextBox Then
@@ -285,11 +137,11 @@ Public Class orderentry
     Function date2ordernumber(ByVal dates As String)
         Dim ordend As String = dates
 
-        Dim dateend As Match = Regex.Match(ordend.ToString, "([0-9]+)/([0-9]+)/([0-9]+)")
+        Dim dateend As System.Text.RegularExpressions.Match = Regex.Match(ordend, "([0-9]+)/([0-9]+)/([0-9]+)")
         Dim endmonth As String = dateend.Groups(1).Value
         Dim endday As String = dateend.Groups(2).Value
         Dim endyear As String = dateend.Groups(3).Value
-        While endday.ToString.Length < 2
+        While endday.Length < 2
             endday = "0" & endday
         End While
 
@@ -312,62 +164,51 @@ Public Class orderentry
 
     End Function
 
-    Public Sub checkdatechange()
+    ''' <summary>
+    ''' If the Date changes, wipe out the table of orderNumbers and restart ordering
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub TruncateOrderNumbersOnDateChange()
 
-        Dim COUNT As Integer = 0
-        Dim DATES1 As Integer = Date.Now.Day
-
-        If Not DATES1 = Tdate Then
+        If Not Date.Now.Day = Tdate Then
             Dim dtable = mySql.FilledTable("select * from dtdb1.ordernumber")
-            For Each rw As DataRow In dtable.Rows
-                COUNT = COUNT + 1
-            Next
-            If Not COUNT = 1 Then
+
+            If Not dtable.Rows.Count = 1 Then
                 mySql.ExecuteNonQuery("truncate TABLE dtdb1.ordernumber")
                 mySql.ExecuteNonQuery("insert into dtdb1.ordernumber (OrderLast,Ordernumber)values ('1', '7500');")
-                getordernumber()
             End If
-        Else
-            getordernumber()
+            Tdate = Date.Now.Day
         End If
+
     End Sub
 
-    Sub getordernumber()
-        Dim n = mySql.FilledTable("insert into dtdb1.ordernumber (OrderLast,Ordernumber) select OrderLast+1, ordernumber+1 from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1;select OrderLast, Ordernumber from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1;")
+    ''' <summary>
+    ''' use the DB to generate a new orderNumber 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Function getOrderNumber() As String
+        Dim q As DataRow = mySql.FilledRow("insert into dtdb1.ordernumber (OrderLast,Ordernumber) select OrderLast+1, ordernumber+1 from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1;select OrderLast, Ordernumber from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1;")
 
-        Dim q As DataRow = n.Rows(0)
-        Dim h = q("Ordernumber").ToString
-
-        Dim neworernumber As String = h
-        Dim alphanum As String
+        Dim neworernumber As String = q("Ordernumber").ToString
 
         '........//////  un-comment to use alpha-numeric ordernumbers (also un-comment line items 47-50 in Restartwheel) \\\\\\......
         If neworernumber.Length > 4 Then
 
-
-            Dim ordernums As String = Microsoft.VisualBasic.Right(h, 3)
-            Dim letters As String = Microsoft.VisualBasic.Left(h, 2)
+            Dim ordernums As String = Microsoft.VisualBasic.Right(neworernumber, 3)
+            Dim letters As String = Microsoft.VisualBasic.Left(neworernumber, 2)
             neworernumber = Chr(letters) + ordernums
-            'NUMBER = alphanum
-
 
             'Dim alphanum As String = date2ordernumber(Date.Now) + h
-            'NUMBER = alphanum
-            'ordernumber.Text = alphanum
-        End If
-        alphanum = date2ordernumber(Date.Now) + neworernumber
-        ordernumber.Text = alphanum
-        NUMBER = alphanum
 
+        End If
+        Dim alphanum As String = date2ordernumber(Date.Now) + neworernumber
         mySql.ExecuteNonQuery("insert into dtdb1.Table1(ordernumber)value('" & alphanum & "');")
 
-        LSTNAME = lastname.Text
-        FSTNAME = firstname.Text
-
-        writeandprint()
+        Return alphanum
+    End Function
 
 
-    End Sub
 
 
 
@@ -447,7 +288,7 @@ Public Class orderentry
 
         Dim a = collectiontime.Text
 
-        Dim d As Match = Regex.Match(a, "([0-9]{2}):([0-9]{2})")
+        Dim d As System.Text.RegularExpressions.Match = Regex.Match(a, "([0-9]{2}):([0-9]{2})")
         If Not d.Success Then
             If MsgBox("collection time not in proper format ##:##", MsgBoxStyle.DefaultButton1, "MsgBox") = MsgBoxResult.Ok Then
                 mrn.Focus()
@@ -460,7 +301,7 @@ Public Class orderentry
 
         Dim E1 = receivetime.Text
 
-        Dim F As Match = Regex.Match(E1, "([0-9]{2}):([0-9]{2})")
+        Dim F As System.Text.RegularExpressions.Match = Regex.Match(E1, "([0-9]{2}):([0-9]{2})")
         If Not F.Success Then
             If MsgBox("Receive time must be in proper format(##:##)", MsgBoxStyle.DefaultButton1, "MsgBox") = MsgBoxResult.Ok Then
                 mrn.Focus()
@@ -472,7 +313,7 @@ Public Class orderentry
 
         Dim xact As String = Microsoft.VisualBasic.Left(mrn.Text, 1)
         If Not xact = "X" Then
-            If mrn.Text.ToString = String.Empty Then
+            If mrn.Text = String.Empty Then
                 If MsgBox("Must enter MRN", MsgBoxStyle.DefaultButton1, "MsgBox") = MsgBoxResult.Ok Then
                     mrn.Focus()
                     Exit Sub
@@ -492,52 +333,47 @@ Public Class orderentry
         End If
 
         If Me.ordernumber.Text = String.Empty Then
-            checkdatechange()
+            TruncateOrderNumbersOnDateChange()
 
+            ordernumber.Text = getOrderNumber()
+            LSTNAME = lastname.Text
+            FSTNAME = firstname.Text
         End If
 
 
-
-        If Not Me.ordernumber.Text = String.Empty Then
-
-            For Each spec As KeyValuePair(Of TextBox, KeyValuePair(Of String, String)) In specimensDict
-                Dim tests = spec.Key.Text
-                Dim extension = spec.Value.Key
-                Dim specimenType = spec.Value.Value
-
+        For Each spec As KeyValuePair(Of TextBox, SpecimenType) In specimensDict
+            Dim tests = spec.Key.Text
+            If (tests <> "") Then
                 Dim codes = tests.Split(","c)
                 For Each code In codes
                     Dim indiCodes = GroupTestToIndividualTest.getIndividualTests(code)
-                    sendHL7(Me.mrn.Text, Me.firstname.Text, Me.lastname.Text, Me.ordernumber.Text + extension, Me.ComboBoxWard.Text, indiCodes)
+                    sendHL7(Me.mrn.Text, Me.firstname.Text, Me.lastname.Text, Me.ordernumber.Text, Me.ComboBoxWard.Text, indiCodes, spec.Value)
                 Next
+            End If
+        Next
 
-            Next
-
-            writeandprint()
-        End If
-
+        writeandprint()
 
         editorder.Enabled = True
         Buttoneditprevious.Enabled = True
-        If Not NUMBER = "" Then
-            Dim RECENT As String = NUMBER + "   " + LSTNAME + "," + FSTNAME
+        If Not ordernumber.Text = "" Then
+            Dim RECENT As String = ordernumber.Text + "   " + LSTNAME + "," + FSTNAME
             ComboBoxoldorder.Items.Add(RECENT)
         End If
 
-   
-
 
     End Sub
-    Public Sub sendHL7(ByVal mrn As String, ByVal firstName As String, ByVal lastName As String, ByVal ordernumberAndExtension As String, ByVal ward As String, ByVal codes As IEnumerable(Of String))
+    Public Sub sendHL7(ByVal mrn As String, ByVal firstName As String, ByVal lastName As String, ByVal ordernumber As String, ByVal ward As String, ByVal codes As IEnumerable(Of String), ByVal specimenType As SpecimenType)
         'set the IP and port to send to
-        Dim sendhl = New SendHl7("lis-s22104-9000", 6669)
+        Dim sendhl = New SendHl7("LIS-S22104-9000", 10013)
 
         'create the HL7 message
-        Dim co = New OrderMessage(mrn, firstName, lastName, ordernumberAndExtension, "", ward, Sex.U, codes)
+        Dim co = New OrderMessage(mrn, firstName, lastName, ordernumber, "", ward, Sex.U, codes, specimenType)
         Dim hl = co.toHl7()
 
         'send the hl7 message
-        sendhl.SendHL7(hl)
+        MessageBox.Show(hl)
+        If (Not sendhl.SendHL7(hl)) Then MessageBox.Show("HL7 connection failed")
     End Sub
     Sub writeandprint()
 
@@ -735,9 +571,8 @@ Public Class orderentry
     End Sub
 
     Sub readDowntimeTable()
-        Dim t = mySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" & Me.ordernumber.Text & "' ORDER BY ID DESC LIMIT 1")
+        Dim r As DataRow = mySql.FilledRow("select * from dtdb1.Table1 where ordernumber like '" & Me.ordernumber.Text & "' ORDER BY ID DESC LIMIT 1")
 
-        Dim r As DataRow = t.Rows(0)
         'Try
 
         'ordernumber.Text = r("ordernumber").ToString
@@ -853,7 +688,7 @@ Public Class orderentry
 
     Private Sub ComboBoxoldorder_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBoxoldorder.SelectedIndexChanged
         If ComboBoxoldorder.Text.Length > 8 Then
-            NUMBER = ""
+            ' oNUMBER = ""
             FSTNAME = ""
             LSTNAME = ""
             Dim ordnum = ComboBoxoldorder.Text
@@ -926,15 +761,14 @@ Public Class orderentry
 
 
 
-        Dim fn = firstname.Text
+
         Dim lastname1 = lastname.Text
         Dim collectiontime1 = collectiontime.Text
         Dim receivetime1 = receivetime.Text
         Dim location1 = ComboBoxWard.Text
         Dim priority1 = priority.Text
-        Dim mrn1 = mrn.Text
         Dim dob1 = DOB.Text
-        Dim rt = redtest.Text
+
         Dim bt = bluetest.Text
         Dim lht = lavhemtest.Text
         Dim gt = greentest.Text
@@ -961,17 +795,124 @@ Public Class orderentry
         colldate.Text = DateTimePicker1.Text
         Dim colld = colldate.Text
 
-        If Not mrn.Text.ToString Like "X*" Then
-            While mrn1.ToString.Length < 12
-                mrn1 = "0" & mrn1
+        If Not mrn.Text Like "X*" Then
+            While mrn.Text.Length < 12
+                mrn.Text = "0" & mrn.Text
             End While
         End If
 
 
 
         mySql.ExecuteNonQuery("insert into dtdb1.Table1 (ordernumber,COLLECTIONTIME,RECEIVETIME,LOCATION,PRIORITY,MRN,DOB,FIRSTNAME,REDTEST,BLUETEST,LAVHEMTEST,GREENTEST,LAVCHEMTEST,GRYTEST,URINEHEM,URINECHEM,BLOODGAS,PROBLEM,CALLS,ORDERCOMMENT,LASTNAME,SENDOUT,SEROLOGY,HEPPETITAS,COLLECTDATE,TECHID,CSFTEST,FLUIDTEST,VIRALLOADTEST, BILLINGNUMBER)VALUES('" _
-                           & ordernumber & "', '" & collectiontime1 & "','" & receivetime1 & "','" & location1 & "', '" & priority1 & "', '" & mrn1 & "','" & dob1 & "','" & fn & "', '" & rt & "', '" & bt & "', '" & lht & "','" & gt & "', '" & lct & "', '" & grt & "','" & uh & "','" & uc & "','" & bg & "', '" & prob & "','" & cal & "','" & ordcmt & "','" & lastname1 & "','" & senot & "','" & serr & "', '" & hep & "','" & colld & "','" & techids & "','" & csf & "','" & fluid & "','" & viral & "', '" & BILLING & "')")
+                           & ordernumber & "', '" & collectiontime1 & "','" & receivetime1 & "','" & location1 & "', '" & priority1 & "', '" & mrn.Text & "','" & dob1 & "','" & firstname.Text & "', '" & redtest.Text & "', '" & bt & "', '" & lht & "','" & gt & "', '" & lct & "', '" & grt & "','" & uh & "','" & uc & "','" & bg & "', '" & prob & "','" & cal & "','" & ordcmt & "','" & lastname1 & "','" & senot & "','" & serr & "', '" & hep & "','" & colld & "','" & techids & "','" & csf & "','" & fluid & "','" & viral & "', '" & BILLING & "')")
     End Sub
 
+
+    'Dave: Give it a password to connect!!!!  in both the readDowntimeTable and writeDowntimeTable subroutines
+    Sub printDowntimeLables()
+        Dim test As New List(Of String)
+        If Me.priority.Text = "S" Then Me.priority.Text = "STAT"
+
+        If Not Me.firstname.Text = String.Empty Then
+            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
+        End If
+        If Not Me.firstname.Text = String.Empty Then
+            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
+        End If
+        printDTLabel2(Me.comment.Text, "", "CMT")
+        printDTLabel2(Me.redtest.Text, "00", "SST")
+        printDTLabel2(Me.bluetest.Text, "23", "BLU")
+        printDTLabel2(Me.greentest.Text, "40", "GRN")
+        printDTLabel2(Me.lavchemtest.Text, "79", "LAV")
+        printDTLabel2(Me.lavhemtest.Text, "18", "LAV")
+        printDTLabel2(Me.graytest.Text, "19", "GRY")
+        printDTLabel2(Me.urinechem.Text, "27", "URC")
+        printDTLabel2(Me.urinehem.Text, "UA", "UAC")
+        printDTLabel2(Me.bloodgas.Text, "20", "SYR")
+        printDTLabel2(Me.sendout.Text, "1N", "REF")
+        printDTLabel2(Me.ser.Text, "41", "SRL")
+        printDTLabel2(Me.hepp.Text, "42", "SHP")
+        printDTLabel2(Me.csfbox.Text, "26", "CSF")
+        printDTLabel2(Me.fluidbox.Text, "38", "FLD")
+        printDTLabel2(Me.Viralloadbox.Text, "74", "LAV")
+        printDTLabel2(Me.OTHERBOX.Text, "", "OTH")
+        printDTLabel2(Me.TextBoxIMMUNO.Text, "2R", "SST")
+
+
+
+        'Dim filepath = "lbl.txt"
+        'Dim fs As New FileStream(filepath, FileMode.Open, FileAccess.Write, FileShare.Write)
+
+        'Threading.Thread.Sleep(500)
+        'Dim writing As New StreamWriter(fs, System.Text.Encoding.UTF8)
+
+        'writing.WriteLine(strNecessary)
+
+
+        'writing.Close()
+        'fs.Close()
+        'fs.Dispose()
+
+        PrintLabels.apply(ComboBoxprinter.Text)
+
+
+
+
+    End Sub
+
+    Sub printDTLabel1(ByVal tests As String, ByVal extension As String, ByVal specimentype As String)
+        Dim fn2 As New LabelData(Me.ordernumber.Text, tests, extension, specimentype, Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
+        fn2.LabelPrint1(Me.ComboBoxprinter.Text)
+    End Sub
+
+    Sub printDTLabel(ByVal tests As String, ByVal extension As String, ByVal specimentype As String)
+        Dim fn2 As New LabelData(Me.ordernumber.Text, tests, extension, specimentype, Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
+        fn2.LabelPrint(Me.ComboBoxprinter.Text)
+    End Sub
+
+    Sub printDowntimeLablesR()
+        Dim test As New List(Of String)
+        If Me.priority.Text = "S" Then Me.priority.Text = "STAT"
+
+        If Not Me.firstname.Text = String.Empty Then
+
+            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
+        End If
+        If Not Me.firstname.Text = String.Empty Then
+
+            Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
+            fn2.LabelPrint2(Me.ComboBoxprinter.Text)
+        End If
+
+        printDTLabel1(Me.comment.Text, "", "CMT")
+
+        printDTLabel(Me.redtest.Text, "00", "SST")
+        printDTLabel(Me.bluetest.Text, "23", "BLU")
+        printDTLabel(Me.greentest.Text, "40", "GRN")
+        printDTLabel(Me.lavchemtest.Text, "79", "LAV")
+        printDTLabel(Me.lavhemtest.Text, "18", "LAV")
+        printDTLabel(Me.graytest.Text, "19", "GRY")
+        printDTLabel(Me.urinechem.Text, "27", "URC")
+        printDTLabel(Me.urinehem.Text, "UA", "UAC")
+        printDTLabel(Me.bloodgas.Text, "20", "SYR")
+        printDTLabel(Me.sendout.Text, "05", "REF")
+        printDTLabel(Me.ser.Text, "41", "SRL")
+        printDTLabel(Me.hepp.Text, "42", "SHP")
+        printDTLabel(Me.csfbox.Text, "26", "CSF")
+        printDTLabel(Me.fluidbox.Text, "38", "FLD")
+        printDTLabel(Me.Viralloadbox.Text, "74", "LAV")
+        printDTLabel(Me.OTHERBOX.Text, "", "OTH")
+        printDTLabel(Me.TextBoxIMMUNO.Text, "2R", "SST")
+
+        PrintLabels.apply(ComboBoxprinter.Text)
+
+    End Sub
+    Sub printDTLabel2(ByVal tests As String, ByVal extension As String, ByVal specimentype As String)
+        Dim fn2 As New LabelData(Me.ordernumber.Text, tests, extension, specimentype, Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
+        fn2.LabelPrint2(Me.ComboBoxprinter.Text)
+    End Sub
 End Class
 
