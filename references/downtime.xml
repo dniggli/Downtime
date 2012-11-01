@@ -1,0 +1,91 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+downtime
+</name>
+</assembly>
+<members>
+<member name="M:downtime.DateTimeFunctions.datetomysql(System.String)">
+	<summary>
+ Convert to Date for entry into MySQL
+ </summary>
+	<param name="mysqldate">mysql Date</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:downtime.Addons.addon">
+	<summary>
+ Starts the Order Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.autolabaliquotform.autolab">
+	<summary>
+ Starts the Order Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.main.main">
+	<summary>
+ Starts the main thread of the application
+ </summary>
+	<remarks></remarks>
+</member><member name="P:downtime.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:downtime.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:downtime.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:downtime.orderentry.Order">
+	<summary>
+ Starts the Order Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.Trackurinechemfrom.Tracking4">
+	<summary>
+ Starts the Tracking Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.aliquotform.aliquot">
+	<summary>
+ Starts the Order Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.myPrinter.Add">
+	<summary>
+ Add printer and attach to Printer port
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.Trackurinehemfrom.Tracking2">
+	<summary>
+ Starts the Tracking Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.Trackhemfrom.Tracking1">
+	<summary>
+ Starts the Tracking Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.Trackcoagfrom.Tracking1">
+	<summary>
+ Starts the Tracking Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.statorderqueryform.ThreadStart(System.Collections.Hashtable)">
+	<summary>
+ Starts the Query Thread
+ </summary>
+	<remarks></remarks>
+</member><member name="M:downtime.TrackSMSfrom.Tracking">
+	<summary>
+ Starts the Tracking Thread
+ </summary>
+	<remarks></remarks>
+</member>
+</members>
+</doc>

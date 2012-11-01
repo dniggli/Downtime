@@ -21,8 +21,8 @@ Public Class LoginForm2
         If UsernameTextBox.Text = "URMCLAB" Then b = True
 
         'AD.Authenticate(Me.UsernameTextBox.Text, Me.PasswordTextBox.Text)
-        Form1.Valid = b
-        Form1.Username = UsernameTextBox.Text
+        MainMenu.Valid = b
+        MainMenu.Username = UsernameTextBox.Text
         If b = True Then
 
             Me.Close()
