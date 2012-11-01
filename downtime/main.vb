@@ -12,7 +12,7 @@
         Application.EnableVisualStyles()
 
         Dim Login As New LoginForm1
-        Dim F1 As New Form1
+        Dim F1 As New MainMenu
 
         Application.Run(Login)
         If Valid Then
