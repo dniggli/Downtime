@@ -52,10 +52,6 @@ Public Class orderentry
 
 
 
-    Private Sub orderentry_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Disposed
-
-    End Sub
-
     Private Sub orderentry_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         For Each C As Control In Me.Controls
@@ -376,7 +372,7 @@ Public Class orderentry
         If (status = HL7Status.NOCONNECTION) Then
             MessageBox.Show("HL7 connection failed")
         ElseIf (status = HL7Status.NACK) Then
-            MessageBox.Show("HL7 connection Successful, but NACK returned")
+            '  MessageBox.Show("HL7 connection Successful, but NACK returned")
         ElseIf (status = HL7Status.EXCEPTION) Then
             MessageBox.Show("HL7 connection tried, but exception thrown")
         End If

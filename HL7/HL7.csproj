@@ -36,6 +36,12 @@
     <Reference Include="CodeBase2">
       <HintPath>..\..\codebase2\CB2\CodeBase2\bin\Release\CodeBase2.dll</HintPath>
     </Reference>
+    <Reference Include="CodeBase2.Database">
+      <HintPath>..\references\CodeBase2.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="CodeBase2.MySql">
+      <HintPath>..\references\CodeBase2.MySql.dll</HintPath>
+    </Reference>
     <Reference Include="FunctionalCSharp">
       <HintPath>..\references\FunctionalCSharp.dll</HintPath>
     </Reference>
@@ -59,9 +65,8 @@
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GROUP_TESTS.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Compile Include="GetMySQL.cs" />
+    <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
