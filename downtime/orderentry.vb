@@ -365,15 +365,26 @@ Public Class orderentry
     End Sub
     Public Sub sendHL7(ByVal mrn As String, ByVal firstName As String, ByVal lastName As String, ByVal ordernumber As String, ByVal ward As String, ByVal codes As IEnumerable(Of String), ByVal specimenType As SpecimenType)
         'set the IP and port to send to
-        Dim sendhl = New SendHl7("LIS-S22104-9000", 10013)
+        Dim sendhl = New SendHl7("172.18.140.209", 10013)
 
         'create the HL7 message
         Dim co = New OrderMessage(mrn, firstName, lastName, ordernumber, "", ward, Sex.U, codes, specimenType)
         Dim hl = co.toHl7()
 
         'send the hl7 message
-        MessageBox.Show(hl)
-        If (Not sendhl.SendHL7(hl)) Then MessageBox.Show("HL7 connection failed")
+        Dim status = sendhl.SendHL7(hl)
+        If (status = HL7Status.NOCONNECTION) Then
+            MessageBox.Show("HL7 connection failed")
+        ElseIf (status = HL7Status.NACK) Then
+            MessageBox.Show("HL7 connection Successful, but NACK returned")
+        ElseIf (status = HL7Status.EXCEPTION) Then
+            MessageBox.Show("HL7 connection tried, but exception thrown")
+        End If
+
+
+
+
+
     End Sub
     Sub writeandprint()
 

@@ -7,6 +7,17 @@ using System.Net;
 
 namespace HL7
 {
+
+    public enum HL7Status
+    {
+        ACK,
+        NACK,
+        NOCONNECTION,
+        EXCEPTION
+    }
+
+
+
     public class SendHl7
     {
         string server;
@@ -17,7 +28,7 @@ namespace HL7
             this.port = port;
         }
 
-        public bool SendHL7(string hl7message)
+        public HL7Status SendHL7(string hl7message)
         {
             try
             {
@@ -33,7 +44,7 @@ namespace HL7
 
                 // If the socket could not get a connection, then return false.
                 if (s == null)
-                    return false;
+                    return HL7Status.NOCONNECTION;
 
                 // Send message to the server.
                 s.Send(bytesSent, bytesSent.Length, 0);
@@ -48,16 +59,16 @@ namespace HL7
                 // Check to see if it was successful
                 if (page.Contains("MSA|AA"))
                 {
-                    return true;
+                    return HL7Status.ACK;
                 }
                 else
                 {
-                    return false;
+                    return HL7Status.NACK;
                 }
             }
             catch (Exception)
             {
-                return false;
+                return HL7Status.EXCEPTION;
             }
         }
 
