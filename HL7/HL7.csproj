@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CodeBase2">
-      <HintPath>..\..\codebase2\CB2\CodeBase2\bin\Release\CodeBase2.dll</HintPath>
+      <HintPath>..\references\CodeBase2.dll</HintPath>
     </Reference>
     <Reference Include="FunctionalCSharp">
       <HintPath>..\references\FunctionalCSharp.dll</HintPath>

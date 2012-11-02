@@ -923,7 +923,7 @@ Public Class orderentry
     End Sub
     Sub printDTLabel2(ByVal tests As String, ByVal extension As String, ByVal specimentype As String)
         Dim fn2 As New LabelData(Me.ordernumber.Text, tests, extension, specimentype, Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
-        fn2.LabelPrint2(Me.ComboBoxprinter.Text)
+        fn2.LabelPrint(Me.ComboBoxprinter.Text)
     End Sub
 End Class
 
