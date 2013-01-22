@@ -9,6 +9,7 @@ namespace HL7
 {
    public static class GroupTestToIndividualTest
     {
+       static DataTable groupTestsTable = new GetMySQL().FilledTable("SELECT * FROM grouptest");
 
         /// <summary>
         /// Break down all groups into individual tests.
@@ -20,8 +21,6 @@ namespace HL7
         /// <returns></returns>
         public static IEnumerable<String> getIndividualTests(String testCode)
         {
-
-            var groupTestsTable = new CSVReader().GetDataTable("GROUP_TESTS.csv");
             var rows = groupTestsTable.Select("GROUP_TEST_ID =" + quotequote(testCode));
 
             List<String> codes = new List<String>();
