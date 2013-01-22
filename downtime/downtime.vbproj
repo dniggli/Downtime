@@ -72,14 +72,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\references\AutoItHelper.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2">
-      <HintPath>..\..\codebase2\CB2\CodeBase2.MySql\bin\Release\CodeBase2.dll</HintPath>
+    <Reference Include="CodeBase2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\references\CodeBase2.dll</HintPath>
     </Reference>
     <Reference Include="CodeBase2.Database">
-      <HintPath>..\..\codebase2\CB2\CodeBase2.MySql\bin\Release\CodeBase2.Database.dll</HintPath>
+      <HintPath>..\references\CodeBase2.Database.dll</HintPath>
     </Reference>
     <Reference Include="CodeBase2.MySql">
-      <HintPath>..\..\codebase2\CB2\CodeBase2.MySql\bin\Release\CodeBase2.MySql.dll</HintPath>
+      <HintPath>..\references\CodeBase2.MySql.dll</HintPath>
     </Reference>
     <Reference Include="FunctionalCSharp">
       <HintPath>..\references\FunctionalCSharp.dll</HintPath>
