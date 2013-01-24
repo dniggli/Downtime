@@ -1,11 +1,11 @@
-﻿Class Trackhemfrom
+﻿Public Class TrackHemForm
 
     ''' <summary>
     ''' Starts the Tracking Thread
     ''' </summary>
     ''' <remarks></remarks>
     Public Shared Sub Tracking1()
-        Dim Track As New Trackhemfrom
+        Dim Track As New TrackHemForm
         Application.Run(Track)
 
     End Sub

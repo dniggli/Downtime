@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Trackcoagfrom
+Partial Class TrackUrineChemForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -202,7 +202,7 @@ Partial Class Trackcoagfrom
         'trklocatn
         '
         Me.trklocatn.FormattingEnabled = True
-        Me.trklocatn.Items.AddRange(New Object() {"COAG->STOR"})
+        Me.trklocatn.Items.AddRange(New Object() {"SUP->STORE"})
         Me.trklocatn.Location = New System.Drawing.Point(463, 320)
         Me.trklocatn.Name = "trklocatn"
         Me.trklocatn.Size = New System.Drawing.Size(195, 21)
@@ -211,13 +211,13 @@ Partial Class Trackcoagfrom
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(582, 236)
+        Me.Label10.Location = New System.Drawing.Point(591, 236)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(85, 13)
+        Me.Label10.Size = New System.Drawing.Size(91, 13)
         Me.Label10.TabIndex = 21
-        Me.Label10.Text = "Format (?##-##)"
+        Me.Label10.Text = "Format (??##-##)"
         '
-        'Trackcoagfrom
+        'Trackurinechemfrom
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -242,8 +242,8 @@ Partial Class Trackcoagfrom
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.ORDERNUMBER)
         Me.Controls.Add(Me.Label1)
-        Me.Name = "Trackcoagfrom"
-        Me.Text = "COAG TRACKING"
+        Me.Name = "Trackurinechemfrom"
+        Me.Text = "Urine Chem Tracking"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

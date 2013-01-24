@@ -1,13 +1,13 @@
 ﻿Imports System.Threading
 Imports System.IO
 
-Public Class statorderqueryform
+Public Class StatOrderQueryForm
     ''' <summary>
     ''' Starts the Query Thread
     ''' </summary>
     ''' <remarks></remarks>
-    Public Shared Sub ThreadStart(ByVal args As Hashtable)
-        Application.Run(New statorderqueryform(args))
+    Public Shared Sub ThreadStart(ByVal args As Object)
+        Application.Run(New StatOrderQueryForm(args))
 
     End Sub
 

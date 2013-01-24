@@ -4,12 +4,11 @@ Imports System.Threading
 Imports System.IO.StreamWriter
 Imports System.Web
 
+
 Public Class MainMenu
 
 
-    Public Shared Valid As Boolean = False
-    Public Shared Username As String = ""
-    Public Shared query As String = ""
+
 
     Dim orderTHREAD As Thread
     Dim chemtrackTHREAD As Thread
@@ -41,15 +40,15 @@ Public Class MainMenu
     End Sub
 
     Private Sub orderent_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles orderent.Click
-        StartThread(orderTHREAD, ApartmentState.STA, AddressOf orderentry.Order)
+        StartThread(orderTHREAD, ApartmentState.STA, AddressOf OrderEntry.Order)
     End Sub
 
     Private Sub archtrack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles archtrack.Click
-        StartThread(chemtrackTHREAD, AddressOf TrackSMSfrom.Tracking)
+        StartThread(chemtrackTHREAD, AddressOf TrackSmsForm.Tracking)
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox1.SelectedIndexChanged
-
+        Dim query As String = ""
         Select Case Me.ComboBox1.Text
             Case "STAT Query"
                 runqueryForm("SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.OTHERTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS FROM dtdb1.Table1 GROUP BY Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS HAVING(((Table1.PRIORITY) Like ""S"")) ORDER BY Table1.ordernumber;", "STAT Query")
@@ -94,7 +93,7 @@ Public Class MainMenu
 
         Dim QUERYTHREAD As Thread
         ' If queryTHREAD Is Nothing Then
-        QUERYTHREAD = New Thread(AddressOf statorderqueryform.ThreadStart)
+        QUERYTHREAD = New Thread(AddressOf StatOrderQueryForm.ThreadStart)
         QUERYTHREAD.Start(args)
         ' ElseIf Not queryTHREAD.IsAlive Then
         'queryTHREAD = New Thread(AddressOf statorderqueryform.ThreadStart)
@@ -118,23 +117,22 @@ Public Class MainMenu
     End Sub
 
     Private Sub hemtrack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles hemtrack.Click
-        StartThread(hemTACKTHREAD, AddressOf Trackhemfrom.Tracking1)
+        StartThread(hemTACKTHREAD, AddressOf TrackHemForm.Tracking1)
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        StartThread(urinehemtrackTHREAD, AddressOf Trackurinehemfrom.Tracking2)
+        StartThread(urinehemtrackTHREAD, AddressOf TrackUrineHemForm.Tracking2)
     End Sub
 
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
-        StartThread(urinechemtrackTHREAD, AddressOf Trackurinechemfrom.Tracking4)
+        StartThread(urinechemtrackTHREAD, AddressOf TrackUrineChemForm.Tracking4)
     End Sub
 
     Private Sub buttoncoagtrack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Buttoncoagtrack.Click
-        StartThread(CoagtrackTHREAD, AddressOf Trackcoagfrom.Tracking1)
+        StartThread(CoagtrackTHREAD, AddressOf TrackCoagForm.Tracking1)
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-
         Dim msg As String
         Dim title As String
         Dim style As MsgBoxStyle
@@ -148,16 +146,13 @@ Public Class MainMenu
 
 
 
-        Dim Login As New LoginForm2
-        Dim F1 As New restartwheel
+        Dim Login As New LoginForm2()
+        Dim F1 As New RestartWheel
 
         Login.ShowDialog()
-        If Valid Then
-            Valid = False
+        If Login.Valid Then
             F1.ShowDialog()
         End If
-
-
 
     End Sub
 

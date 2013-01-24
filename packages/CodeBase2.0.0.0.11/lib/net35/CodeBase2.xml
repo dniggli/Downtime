@@ -1,0 +1,588 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CodeBase2</name>
+    </assembly>
+    <members>
+        <member name="T:CodeBase2.XmlExtensions">
+            <summary>
+            Extensions using Reflection and Xml
+            </summary>
+        </member>
+        <member name="M:CodeBase2.XmlExtensions.LoadClassPropertiesFromXML(System.Xml.XmlNode,System.Object)">
+            <summary>
+            If one uses the XMLPropertyAttribute to designate attribute names in Xml of class properties, this will set the values from Xml to the class properties, if the property type is an enum, string or int.  This will work set public and nonpublic properties (it can break encapsulation). Inherited properties cannot be set if the set method of the property is private, it must be at least protected.
+            </summary>
+            <param name="node"></param>
+            <param name="o"></param>
+        </member>
+        <member name="T:CodeBase2.XMLPropertyAttribute">
+            <summary>
+            Identifies the names of properties in the XML for the element the current class represents
+            </summary>
+        </member>
+        <member name="F:CodeBase2.XMLPropertyAttribute.Value">
+            <summary>
+            the property name as it appears in the XML
+            </summary>
+        </member>
+        <member name="M:CodeBase2.XMLPropertyAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value">the property name as it appears in the XML</param>
+        </member>
+        <member name="M:CodeBase2.ByteArrays.StreamToByteArray(System.IO.Stream)">
+            <summary>
+            This method takes a stream and converts it to a byte array.
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.ReflectionExtensions.GetCustomAttributes``1(System.Type)">
+            <summary>
+            Gets the Properties of an object that have a specific Attribute
+            </summary>
+            <param name="msg"></param>
+        </member>
+        <member name="M:CodeBase2.ReflectionExtensions.GetPropertiesWithAttribute``1(System.Object)">
+            <summary>
+            Gets the Properties of an object that have a specific Attribute
+            </summary>
+            <param name="msg"></param>
+        </member>
+        <member name="M:CodeBase2.ReflectionExtensions.GetClassesWithAttribute``2(System.Reflection.Assembly)">
+            <summary>
+            Gets dictionary of classes that are subclasses of C and have attribute A
+            </summary>
+            <typeparam name="C">find subclasses of this class</typeparam>
+            <typeparam name="A">attribute type to look for on the subclasses</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.ReflectionExtensions.GetClassesWithAttribute``2">
+            <summary>
+            Gets dictionary of classes that are subclasses of C and have attribute A
+            </summary>
+            <typeparam name="C">find subclasses of this class</typeparam>
+            <typeparam name="A">attribute type to look for on the subclasses</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DNS.NameToIPString(System.String)">
+            <summary>
+            retrieve the IP address using the DNS name
+            </summary>
+            <param name="DNS_Name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DNS.NameDictionaryToIPDictionary(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Converts a Dictionary of "Key:String, Value:IP Or DNS Name" to "Key:String, Value:IP Address"
+            </summary>
+            <param name="dict"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DNS.IPToName(System.String,System.Boolean)">
+            <summary>
+            retrieve the IP address using the DNS name
+            </summary>
+            <param name="DNS_Name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DNS.IPToFullName(System.String,System.Boolean)">
+            <summary>
+            retrieve the IP address using the DNS name
+            </summary>
+            <param name="DNS_Name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Labeler.AddPrinter.Add_IP_Port(System.String)">
+            <summary>
+            Add Printer IP Port
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:CodeBase2.Labeler.AddPrinter.Add(System.String,System.String,System.String,System.String)">
+            <summary>
+            Install printer and driver and attach to Printer port
+            </summary>
+            <param name="IP">172.16.60.252</param>
+            <param name="Name">HP LaserJet 4000</param>
+            <param name="INFDriverPath">D:\Install\Drivers\HP4000\WinXP\hp222ip6.inf</param>
+            <param name="Model">HP LaserJet 4000 Series PCL 6</param>
+        </member>
+        <member name="T:CodeBase2.Soft.AA_ID">
+            <summary>
+            SoftLab Primary Keys
+            </summary>
+        </member>
+        <member name="M:CodeBase2.Soft.AA_ID.create(System.String)">
+            <summary>
+            create an AA_ID from a full AA_ID string
+            </summary>
+            <param name="Full_AaId">The AA_ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Soft.AA_ID.#ctor(System.String)">
+            <summary>
+             
+            </summary>
+            <param name="prefix">Hex prefix, four characters long.  I believe this is an identifier for the specific index</param>
+            <param name="index">The actual row index as a Hex string</param>
+        </member>
+        <member name="M:CodeBase2.Soft.AA_ID.#ctor(System.String,System.String)">
+            <summary>
+             
+            </summary>
+            <param name="prefix">Hex prefix, four characters long.  I believe this is an identifier for the specific index</param>
+            <param name="index">The actual row index as a Hex string</param>
+        </member>
+        <member name="M:CodeBase2.Soft.AA_ID.#ctor(System.String,System.Int64)">
+            <summary>
+             
+            </summary>
+            <param name="prefix">Hex prefix, four characters long.  I believe this is an identifier for the specific index</param>
+            <param name="index">The actual row index as an integer</param>
+        </member>
+        <member name="M:CodeBase2.Soft.AA_ID.Increment(System.Int32)">
+            <summary>
+            increments the index value by X
+            </summary>
+            <param name="x"></param>
+        </member>
+        <member name="M:CodeBase2.Soft.AA_ID.Decrement(System.Int32)">
+            <summary>
+            deccrements the index value by X
+            </summary>
+            <param name="x"></param>
+        </member>
+        <member name="P:CodeBase2.Soft.AA_ID.Value">
+            <summary>
+            prefix (length 4) + the integer index converted to hex(length 12). Total length 16 characters
+            </summary>
+        </member>
+        <member name="T:CodeBase2.Labeler.Send_Printer">
+            <summary>
+            sends data to any printer that has been configured within control panel (used for USB labelers, when network down)
+            </summary>
+        </member>
+        <member name="M:CodeBase2.Services.RestartService(System.String)">
+            <summary>
+            Restarts a service
+            Ex: Print Spooler
+            RestartService("Spooler")
+            </summary>
+            <param name="ServiceShortname">Listed in service properties as "Service Name"</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:CodeBase2.EmbeddedResources.Resource.GetEmbeddedFile(System.String,System.String)">
+            <summary>
+            Extracts an embedded file out of a given assembly.
+            </summary>
+            <param name="assemblyName">The namespace of your assembly.</param>
+            <param name="fileName">The name of the file to extract.</param>
+            <returns>A stream containing the file data.</returns>
+        </member>
+        <member name="M:CodeBase2.EmbeddedResources.Resource.GetEmbeddedJS(System.Reflection.Assembly,System.String)">
+            <summary>
+            Gets embedded resource string
+            </summary>
+            <param name="assem">the Assembly containing the file</param>
+            <param name="resourceName">Name.Space.And.Name.Of.File</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.EmbeddedResources.Resource.GetEmbeddedFile(System.Reflection.Assembly,System.String)">
+            <summary>
+            Gets embedded resource
+            </summary>
+            <param name="assem">the Assembly containing the file</param>
+            <param name="resourceName">Name.Space.And.Name.Of.File</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.EmbeddedResources.Resource.GetEmbeddedFile(CodeBase2.EmbeddedResources.EmbeddedLocation,System.String)">
+            <summary>
+            Gets embedded resource from specified assembly location
+            </summary>
+            <param name="resourceName">Name.Space.And.Name.Of.File</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.EmbeddedResources.Resource.GetEmbeddedJS(CodeBase2.EmbeddedResources.EmbeddedLocation,System.String)">
+            <summary>
+            Gets embedded resource string from specified assembly location
+            </summary>
+            <param name="resourceName">Name.Space.And.Name.Of.File</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.EmbeddedResources.Resource.FormatEmbeddedJS(CodeBase2.EmbeddedResources.EmbeddedLocation,System.String,System.Object[])">
+            <summary>
+            Gets embedded resource string from calling assembly
+            </summary>
+            <param name="resourceName">Name.Space.And.Name.Of.File</param>
+            <returns></returns>
+        </member>
+        <member name="P:CodeBase2.EmbeddedResources.Testing.Data">
+            <summary>
+            Retrieve TestData for PathDirectory
+            </summary>
+        </member>
+        <member name="P:CodeBase2.EmbeddedResources.Testing.Schema">
+            <summary>
+            Retrieve TestSchema for PathDirectory
+            </summary>
+        </member>
+        <member name="T:CodeBase2.Email">
+            <summary>
+            EMail message manipulation
+            </summary>
+        </member>
+        <member name="M:CodeBase2.Email.Mailer(System.String,System.String,System.String,System.String)">
+            <summary>
+            Send email messages to one or many users as HTML message
+            </summary>
+            <param name="recipients">christopher_vanvranken@urmc.rochester.edu;jeff_vanvranken@urmc.rochester.edu</param>
+            <param name="sender">clss@nunit.com</param>
+            <param name="subject">Email Subject Line</param>
+            <param name="message">my plain text message</param>
+        </member>
+        <member name="M:CodeBase2.Email.Mailer(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Send HTML email messages to one or many users
+            </summary>
+            <param name="recipients">christopher_vanvranken@urmc.rochester.edu;jeff_vanvranken@urmc.rochester.edu</param>
+            <param name="sender">clss@nunit.com</param>
+            <param name="subject">Test Message</param>
+            <param name="message">&lt;h2&gt;This is an HTML-Formatted Email Send Using the &lt;code&gt;IsBodyHtml&lt;/code&gt; Property&lt;/h2&gt;&lt;p&gt;Isn't HTML &lt;em&gt;neat&lt;/em&gt;?&lt;/p&gt;&lt;p&gt;You can make all sorts of &lt;span style="color:red;font-weight:bold;"&gt;pretty colors!!&lt;/span&gt;.&lt;/p&gt;</param>
+            <param name="UseHTML">true</param>
+        </member>
+        <member name="M:CodeBase2.Email.Mailer(System.String,System.String,System.String,System.String,System.Boolean,System.Net.Mail.Attachment)">
+            <summary>
+            Send HTML email messages to one or many users with attachment
+            </summary>
+            <param name="recipients">christopher_vanvranken@urmc.rochester.edu;jeff_vanvranken@urmc.rochester.edu</param>
+            <param name="sender">clss@nunit.com</param>
+            <param name="subject">Test Message</param>
+            <param name="message">&lt;h2&gt;This is an HTML-Formatted Email Send Using the &lt;code&gt;IsBodyHtml&lt;/code&gt; Property&lt;/h2&gt;&lt;p&gt;Isn't HTML &lt;em&gt;neat&lt;/em&gt;?&lt;/p&gt;&lt;p&gt;You can make all sorts of &lt;span style="color:red;font-weight:bold;"&gt;pretty colors!!&lt;/span&gt;.&lt;/p&gt;</param>
+            <param name="UseHTML">true</param>
+            <param name="attachment">Attachment object</param>
+        </member>
+        <member name="M:CodeBase2.Email.GetAttachment(System.IO.FileStream,System.String)">
+            <summary>
+            Creates a mail attachment from a template file
+            </summary>
+            <param name="fs">The filestream that represents the file.  It should be set to: FileMode.Open, FileAccess.Read, FileShare.ReadWrite</param>
+            <param name="replacements">a 2d array of strings.  [0]SearchText, [1]ReplacementText</param>
+            <returns>RTF or Text Document as System.Net.Mail.Attachment</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:CodeBase2.Email.GetAttachment(System.IO.FileStream,System.String,CodeBase2.Email.Replacement[])">
+            <summary>
+            Creates a mail attachment from a template file
+            </summary>
+            <param name="fs">The filestream that represents the file.  It should be set to: FileMode.Open, FileAccess.Read, FileShare.ReadWrite</param>
+            <param name="replacements">a 2d array of strings.  [0]SearchText, [1]ReplacementText</param>
+            <returns>RTF or Text Document as System.Net.Mail.Attachment</returns>
+            <remarks></remarks>
+        </member>
+        <member name="F:CodeBase2.SoftCalculations.GoLiveDate">
+            <summary>
+            The original Soft Go Live date (For Live Environment)
+            </summary>
+        </member>
+        <member name="M:CodeBase2.SoftCalculations.DaysSinceGoLive">
+            <summary>
+            Calculate the days between now and go live
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.SoftCalculations.DaysSinceGoLive(System.DateTime)">
+            <summary>
+            Calculate the days between given date and go live
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CodeBase2.SoftExtensions">
+            <summary>
+            Extensions used for programming against the Soft database
+            </summary>
+        </member>
+        <member name="M:CodeBase2.SoftExtensions.ToOrderNumber(System.DateTime,System.Boolean)">
+            <summary>
+            Converts a DateTime to a Soft Order Number (8 characters, unless PadRight is False), including AlphaNumeric order numbers...though the calculation is valid for Live only.
+            </summary>
+            <param name="dt"></param>
+            <param name="PadRightwithZeroes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.SoftExtensions.ToOrderNumber(System.DateTime)">
+            <summary>
+            Converts a DateTime to a Soft Order Number (8 characters, unless PadRight is False), including AlphaNumeric order numbers...though the calculation is valid for Live only.
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.SoftExtensions.StringDate_toordernumberStart(System.String,System.Boolean)">
+            <summary>
+            Converts a string representing a date to a Soft Order Number (8 characters with padRight=true, 4 characters with padright=false)
+            </summary>
+            <param name="ordend"></param>
+            <param name="padRight"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.SoftExtensions.Bitand(System.Int64,System.Int64)">
+            <summary>
+            I think we used this for flag conversion at one point...
+            </summary>
+            <param name="val1"></param>
+            <param name="val2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.IEnumerableExtensions.ToString(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Concatenates a collection's elements together using the given separator string
+            </summary>
+            <param name="collection"></param>
+            <param name="separator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Ping.PingIt(System.String)">
+            <summary>
+            Used to Ping a device on the network
+            </summary>
+            <returns>A boolean value, True if the device was successfully pinged</returns>
+        </member>
+        <member name="M:CodeBase2.Ping.PingIt(System.String,System.String)">
+            <summary>
+            Used to Ping a device on the network
+            </summary>
+            <returns>A boolean value, True if the device was successfully pinged</returns>
+        </member>
+        <member name="M:CodeBase2.Ping.PingStatus(System.String)">
+            <summary>
+            Used to Ping a device on the network
+            </summary>
+            <returns>A boolean value, True if the device was successfully pinged</returns>
+        </member>
+        <member name="M:CodeBase2.Ping.PingStatus(System.String,System.String)">
+            <summary>
+            Used to Ping a device on the network
+            </summary>
+            <returns>A IPStatus value, True if the device was successfully pinged</returns>
+        </member>
+        <member name="M:CodeBase2.Ftp.BeginFtpRequest(System.String)">
+            <summary>
+            Begins an upload or download request using given filename
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Ftp.BeginFtpRequest">
+            <summary>
+            Begins FTP requests (other than FileUpload)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Ftp.Download(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="SavetoPath">localpath c:\\myfolder\\</param>
+            <param name="SavetoName">filename.txt</param>
+            <param name="FtpServerName">localhost</param>
+            <param name="FtpURL">/downloadfolder/downloadthis.txt</param>
+        </member>
+        <member name="M:CodeBase2.Ftp.Download(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="savetoPath">C:\\Documents and Settings\\cvanvranken\\My Documents</param>
+            <param name="savetoName">file.txt</param>
+            <param name="ftpURL">ftp://ServerName/pathto/fileName</param>
+        </member>
+        <member name="M:CodeBase2.Ftp.DownloadTextFile">
+            <summary>
+            Retrives file from server as a string given the location on the server
+            <para>Throws a WebException if FileNotFound</para>
+            </summary>
+            <param name="serverUri">EX: ftp://shlab1/080930_0001.nsf</param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:CodeBase2.Ftp.UploadTextFile(System.String,System.String)">
+            <summary>
+            Retrives file from server as a string given the location on the server
+            <para>Throws a WebException if FileNotFound</para>
+            </summary>
+            <param name="serverUri">EX: ftp://shlab1/080930_0001.nsf</param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:CodeBase2.Ftp.Upload(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="localpath">c:\users</param>
+            <param name="filename">test.txt</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DateLibrary.SkipWeekends(System.Int32,System.DateTime)">
+            <summary>
+            Counts a specified number of work days after the given date, skipping weekends and holidays.
+            </summary>
+            <param name="daysToAdd"></param>
+            <param name="originalDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DateLibrary.WorkdaysSince(System.DateTime)">
+            <summary>
+            Returns the number of workDays it has been since a specified date
+            </summary>
+            <param name="daysToAdd"></param>
+            <param name="originalDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DateLibrary.Holidays(System.Int32)">
+            <summary>
+            Gets the list of Actual Holidays which the URMC recognizes given a year.
+            </summary>
+            <param name="currentDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DateLibrary.DaysOff(System.Int32)">
+            <summary>
+            Gives the list of dates the URMC recognizes as a day off.
+            </summary>
+            <param name="currentDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DateLibrary.IsDayOff(System.DateTime)">
+            <summary>
+            Determines if the given date is a Day the URMC recognizes as a Day Off
+            </summary>
+            <param name="currentDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.DateLibrary.IsHoliday(System.DateTime)">
+            <summary>
+            Determines if the given date is a Day the URMC recognizes as a Holiday
+            </summary>
+            <param name="currentDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.EventLog_CB2.Write(System.String)">
+            <summary>
+            Writes a message to the eventlog.  If running vista or windows7 this only writes when running as an Admin and the program has elevated priveleges
+            </summary>
+            <param name="eventMessage"></param>
+        </member>
+        <member name="P:CodeBase2.EventLog_CB2.IsAdmin">
+            <summary>
+            Checks if the process is elevated
+            </summary>
+            <returns>If is elevated</returns>
+        </member>
+        <member name="M:CodeBase2.SerializerExtension.ToDictionary(System.Data.DataRow)">
+            <summary>
+            Converts a datarow to a dictionary of '(string)ColumnName,object', usually used for serialization to Javascript
+            </summary>
+            <param name="row">the datarow to be converted</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Strings.Join(System.String,System.String[])">
+            <summary>
+            Join string array with the given separator ( ex: "separator".join(array)  )
+            </summary>
+            <param name="separator"></param>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Strings.SplitByChar(System.String,System.UInt16,System.Char)">
+            <summary>
+            delegates to string.split, delimiter is |
+            </summary>
+            <param name="s">source string to split</param>
+            <param name="i"> 0 based index of the string segment to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Strings.SplitPipe(System.String,System.UInt16)">
+            <summary>
+            delegates to string.split, delimiter is |
+            </summary>
+            <param name="s">source string to split</param>
+            <param name="i"> 0 based index of the string segment to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Strings.SplitHat(System.String,System.UInt16)">
+            <summary>
+            delegates to string.split, delimiter is ^
+            </summary>
+            <param name="s">source string to split</param>
+            <param name="i"> 0 based index of the string segment to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Strings.SplitX(System.String,System.UInt16,System.Char)">
+            <summary>
+            delegates to string.split
+            </summary>
+            <param name="s">source string to split</param>
+            <param name="i">0 based index of the string segment to retrieve</param>
+            <param name="delim">delimiter to use to split the string</param>
+            <returns></returns>
+        </member>
+        <member name="P:CodeBase2.RegistryBase.SubKey">
+            <summary>
+            ex:  return "SOFTWARE\\MyCompany\\MyProgram\\";
+            </summary>
+        </member>
+        <member name="P:CodeBase2.RegistryBase.Hive">
+            <summary>
+            ex: return Microsoft.Win32.RegistryHive.CurrentUser;
+            </summary>
+        </member>
+        <member name="M:CodeBase2.GenericTypeConverter.ConvertType``2(``0,System.Collections.Generic.Dictionary{System.String,System.String},``1)">
+            <summary>
+            Uses reflection to convert an object to a destination type, e.g. transfers all the properties and members they have in common
+            </summary>
+            <typeparam name="SrcType">Source Type</typeparam>
+            <typeparam name="DestType">Destination Type</typeparam>
+            <param name="Source">Object to convert</param>
+            <param name="SrcDestMap">Mapping between source and destination property names. Null if no mapping exist.</param>
+            <param name="Dest">Destination object or null if it should be created</param>
+            <returns>An object where as many properties and fields as possible have been transferred from Source.</returns>
+        </member>
+        <member name="M:CodeBase2.MockXmlNode.ToXmlNode(System.String)">
+            <summary>
+            Given an Xml string, returns the RootNode
+            </summary>
+            <param name="xml"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.MockXmlNode.ToXmlNode_fromFile(System.String)">
+            <summary>
+            Given a FileName, opens an xml file and returns the RootNode
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hash.ComputeBytes(System.String)">
+            <summary>
+            Computes the Hash code of a string.
+            </summary>
+            <param name="input">The string.</param>
+            <returns>The Hash code.</returns>
+        </member>
+        <member name="M:Hash.Compute(System.String)">
+            <summary>
+            Computes the Hash code of a string and converts it into a Hex string.
+            </summary>
+            <param name="input">The string.</param>
+            <returns>The Hash code, converted into a Hex string.</returns>
+        </member>
+        <member name="M:Hash.ComputeSecuredHash(System.String,System.String)">
+            <summary>
+            Computes the Hash of a string, mixing it with other data for increased security.
+            </summary>
+            <param name="input">The string.</param>
+            <param name="otherData">The other data to mix into the input string.</param>
+            <returns>The secured Hash.</returns>
+        </member>
+    </members>
+</doc>

@@ -2,11 +2,8 @@
 
 Public Class LoginForm2
 
+    Public Valid As Boolean = False
 
-    Public Shared Sub login5()
-        Dim login As New LoginForm2
-        Application.Run(login)
-    End Sub
     ' TODO: Insert code to perform custom authentication using the provided username and password 
     ' (See http://go.microsoft.com/fwlink/?LinkId=35339).  
     ' The custom principal can then be attached to the current thread's principal as follows: 
@@ -16,19 +13,9 @@ Public Class LoginForm2
     ' such as the username, display name, etc.
 
     Private Sub OK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK.Click
-
-        Dim b As Boolean
-        If UsernameTextBox.Text = "URMCLAB" Then b = True
-
-        'AD.Authenticate(Me.UsernameTextBox.Text, Me.PasswordTextBox.Text)
-        MainMenu.Valid = b
-        MainMenu.Username = UsernameTextBox.Text
-        If b = True Then
-
-            Me.Close()
-
-
-        Else
+        ' AD.Authenticate(Me.UsernameTextBox.Text, Me.PasswordTextBox.Text)
+        Valid = UsernameTextBox.Text = "URMCLAB"
+        If Not Valid Then
             Dim msg As String
             Dim title As String
             Dim style As MsgBoxStyle
@@ -48,15 +35,4 @@ Public Class LoginForm2
         Me.Close()
     End Sub
 
-    Private Sub LoginForm2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-    End Sub
-
-    Private Sub UsernameLabel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UsernameLabel.Click
-
-    End Sub
-
-    Private Sub UsernameTextBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UsernameTextBox.TextChanged
-       
-    End Sub
 End Class

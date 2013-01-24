@@ -5,12 +5,11 @@ Imports System.Text.RegularExpressions
 
 Public Class MolisEntry
 
-
-    Sub MolisEnter()
+    Shared myOrder As MolisEntry
+    Public Shared Sub MolisEnter()
         If WinExists("Molis") Then
 
-
-            Dim myorder As New MolisEntry
+            myOrder = New MolisEntry
             Application.Run(myorder)
 
         Else
@@ -29,10 +28,10 @@ Public Class MolisEntry
             End If
         End If
 
-        TextBoxOrderNumber.Focus()
-        TextBoxOrderNumber.Clear()
-
-
+        If myOrder IsNot Nothing Then
+            myOrder.TextBoxOrderNumber.Focus()
+            myOrder.TextBoxOrderNumber.Clear()
+        End If
 
     End Sub
 

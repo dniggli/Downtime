@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class TrackSMSfrom
+Partial Class TrackUrineHemForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -132,7 +132,6 @@ Partial Class TrackSMSfrom
         '
         'SUBMITTRACK
         '
-        Me.SUBMITTRACK.Enabled = False
         Me.SUBMITTRACK.Location = New System.Drawing.Point(486, 104)
         Me.SUBMITTRACK.Name = "SUBMITTRACK"
         Me.SUBMITTRACK.Size = New System.Drawing.Size(123, 23)
@@ -145,9 +144,9 @@ Partial Class TrackSMSfrom
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(460, 157)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(120, 13)
+        Me.Label6.Size = New System.Drawing.Size(149, 13)
         Me.Label6.TabIndex = 12
-        Me.Label6.Text = "TRACKING COMMENT"
+        Me.Label6.Text = "NEW TRACKING COMMENT"
         '
         'trackcomment
         '
@@ -160,11 +159,11 @@ Partial Class TrackSMSfrom
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(460, 236)
+        Me.Label7.Location = New System.Drawing.Point(463, 235)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(87, 13)
+        Me.Label7.Size = New System.Drawing.Size(116, 13)
         Me.Label7.TabIndex = 14
-        Me.Label7.Text = "TRACKING TAG"
+        Me.Label7.Text = "NEW TRACKING TAG"
         '
         'tracktagbox
         '
@@ -203,7 +202,7 @@ Partial Class TrackSMSfrom
         'trklocatn
         '
         Me.trklocatn.FormattingEnabled = True
-        Me.trklocatn.Items.AddRange(New Object() {"OT->STOR", "EX->STOR"})
+        Me.trklocatn.Items.AddRange(New Object() {"UA->STORE"})
         Me.trklocatn.Location = New System.Drawing.Point(463, 320)
         Me.trklocatn.Name = "trklocatn"
         Me.trklocatn.Size = New System.Drawing.Size(195, 21)
@@ -212,13 +211,13 @@ Partial Class TrackSMSfrom
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(582, 236)
+        Me.Label10.Location = New System.Drawing.Point(583, 236)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(98, 13)
+        Me.Label10.Size = New System.Drawing.Size(75, 13)
         Me.Label10.TabIndex = 21
-        Me.Label10.Text = "Format (??##-###)"
+        Me.Label10.Text = "Format (?###)"
         '
-        'TrackSMSfrom
+        'Trackurinehemfrom
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -243,8 +242,8 @@ Partial Class TrackSMSfrom
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.ORDERNUMBER)
         Me.Controls.Add(Me.Label1)
-        Me.Name = "TrackSMSfrom"
-        Me.Text = "Traking"
+        Me.Name = "Trackurinehemfrom"
+        Me.Text = "Urine Hem Traking"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

@@ -482,11 +482,11 @@ Public Class Addons
     End Sub
 
 
-    Sub Techid2()
+    'Sub Techid2()
 
-        ordertechid.Text = main.Username
+    '    ordertechid.Text = main.Username
 
-    End Sub
+    'End Sub
 
 
     Private Sub read_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles buttonRead.Click

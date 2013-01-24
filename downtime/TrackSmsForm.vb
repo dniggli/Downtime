@@ -1,55 +1,16 @@
-﻿Class Trackurinehemfrom
+﻿Imports downtimeC
+
+Public Class TrackSmsForm
 
     ''' <summary>
     ''' Starts the Tracking Thread
     ''' </summary>
     ''' <remarks></remarks>
-    Public Shared Sub Tracking2()
-        Dim Track As New Trackurinehemfrom
+    Public Shared Sub StartThread()
+        Dim Track As New TrackSmsForm
         Application.Run(Track)
 
     End Sub
-
-    Sub writeDowntimeTable2()
-        Dim alphabet As String = "abcdefghijklmnopqrstuvwxyz"
-        Dim ran As New Random
-        Dim length As Integer = ran.Next(0, 20) ' get a random length
-
-        Dim ranletter As String = alphabet.Substring(ran.Next(0, 25), 1)
-
-
-
-
-        Dim ordernumber1 As String = String.Empty
-        Dim trackcomnt As String = String.Empty
-        Dim tracktag As String = String.Empty
-        Dim trakloct As String = String.Empty
-        Dim trcktech As String = String.Empty
-
-        ordernumber1 = ORDERNUMBER.Text
-        trackcomnt = trackcomment.Text
-        tracktag = tracktagbox.Text
-        trakloct = trklocatn.Text
-        trcktech = Techidbox.Text
-
-
-        Dim comm As New MySqlCommand("update dtdb1.dttracking set ordernumber = ?ordernumber,TRACKING= '" & tracktag & "',TRACKINGCOMMENT='" & trackcomnt & "',tracklocation = '" & trakloct & "', tracktechid = '" & trcktech & "'  WHERE ordernumber = '" & ordernumber1 & "'", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
-
-        comm.Parameters.AddWithValue("?ordernumber", ordernumber1)
-
-
-        'Dim comm As New MySqlCommand("insert into dtdb1.dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" _
-        '& ordernumber1 & "','" & tracktag & "','" & trackcomnt & "','" & trakloct & "','" & trcktech & "')", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
-
-
-        comm.Connection.Open()
-        comm.ExecuteNonQuery()
-        comm.Connection.Close()
-
-        ORDERNUMBER.Focus()
-
-    End Sub
-
 
     Sub writeDowntimeTable()
         Dim alphabet As String = "abcdefghijklmnopqrstuvwxyz"
@@ -74,23 +35,68 @@
         trcktech = Techidbox.Text
 
 
+        Dim comm As New MySqlCommand("update dtdb1.dttracking set ordernumber = ?ordernumber,TRACKING= '" & tracktag & "',TRACKINGCOMMENT='" & trackcomnt & "',tracklocation = '" & trakloct & "', tracktechid = '" & trcktech & "'  WHERE ordernumber = '" & ordernumber1 & "' and tracklocation = '" & trakloct & "'", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
+
+        comm.Parameters.AddWithValue("?ordernumber", ordernumber1)
 
 
-        Dim comm As New MySqlCommand("insert into dtdb1.dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" _
-                           & ordernumber1 & "','" & tracktag & "','" & trackcomnt & "','" & trakloct & "','" & trcktech & "')", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
+        'Dim comm As New MySqlCommand("insert into dtdb1.dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" _
+        '& ordernumber1 & "','" & tracktag & "','" & trackcomnt & "','" & trakloct & "','" & trcktech & "')", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
 
 
         comm.Connection.Open()
         comm.ExecuteNonQuery()
         comm.Connection.Close()
 
+        ORDERNUMBER.Focus()
+
     End Sub
 
+
+    Sub writeDowntimeTable2()
+        Dim alphabet As String = "abcdefghijklmnopqrstuvwxyz"
+        Dim ran As New Random
+        Dim length As Integer = ran.Next(0, 20) ' get a random length
+
+        Dim ranletter As String = alphabet.Substring(ran.Next(0, 25), 1)
+
+
+
+
+        Dim ordernumber1 As String = String.Empty
+        Dim trackcomnt As String = String.Empty
+        Dim tracktag As String = String.Empty
+        Dim trakloct As String = String.Empty
+        Dim trcktech As String = String.Empty
+
+        ordernumber1 = ORDERNUMBER.Text
+        trackcomnt = trackcomment.Text
+        tracktag = tracktagbox.Text
+        trakloct = trklocatn.Text
+        trcktech = Techidbox.Text
+
+
+        'Dim comm As New MySqlCommand("update dtdb1.dttracking set ordernumber = ?ordernumber,TRACKING= '" & tracktag & "',TRACKINGCOMMENT='" & trackcomnt & "',tracklocation = '" & trakloct & "', tracktechid = '" & trcktech & "'  WHERE ordernumber = '" & ordernumber1 & "'", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
+
+        'comm.Parameters.AddWithValue("?ordernumber", ordernumber1)
+
+
+        Dim comm As New MySqlCommand("insert into dtdb1.dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" _
+        & ordernumber1 & "','" & tracktag & "','" & trackcomnt & "','" & trakloct & "','" & trcktech & "')", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
+
+
+        comm.Connection.Open()
+        comm.ExecuteNonQuery()
+        comm.Connection.Close()
+
+        ORDERNUMBER.Focus()
+
+    End Sub
 
 
     Sub readDowntimeTable()
         SUBMITTRACK.Focus()
-        Dim da As New MySqlDataAdapter("select * from dtdb1.dttracking where ordernumber like '" & Me.ORDERNUMBER.Text & "' and tracklocation like '" & Me.trklocatn.Text & "'  ORDER BY ID DESC LIMIT 1", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;")
+        Dim da As New MySqlDataAdapter("select * from dtdb1.dttracking where ordernumber like '" & Me.ORDERNUMBER.Text & "' and tracklocation like '" & Me.trklocatn.Text & "' ORDER BY ID DESC LIMIT 1", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;")
         Dim t As New DataTable
 
         da.Fill(t)
@@ -118,11 +124,14 @@
             title = "MsgBox"   ' Define title.
             ' Display message.
             response = MsgBox(msg, style, title)
-            If response = MsgBoxResult.Yes Then trackcomment.Focus()
+            If response = MsgBoxResult.Yes Then
+                tracktagbox.Focus()
+                SUBMITTRACK.Enabled = True
+            End If
             If response = MsgBoxResult.No Then msgboxno()
         End If
         trackcomment.Text = OLDTRACKTAG.Text + "," + oldtrackingcomment.Text
-
+        SUBMITTRACK.Enabled = True
         Application.DoEvents()   'Display the changes immediately (redraw the label text)
         System.Threading.Thread.Sleep(500) 'do it slow enough so we can actually read the text before it changes, pause half a second
 
@@ -130,7 +139,7 @@
 
     Sub Techid1()
 
-        Techidbox.Text = main.Username
+        Techidbox.Text = GlobalMutableState.userName
 
     End Sub
 
@@ -164,6 +173,7 @@
     End Sub
 
     Private Sub SUBMITTRACK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SUBMITTRACK.Click
+
         If tracktagbox.Text = String.Empty Then
             MsgBox("track tag missing", MsgBoxStyle.OkOnly, "MsgBox")
 
@@ -174,7 +184,7 @@
 
             Exit Sub
         End If
-        If tracktagbox.Text.Length <> 4 Then
+        If tracktagbox.Text.Length <> 8 Then
             Dim msg As String
             Dim title As String
             Dim style As MsgBoxStyle
@@ -190,13 +200,12 @@
         End If
 
         If trackcomment.Text = String.Empty Then
-            writeDowntimeTable()
-        End If
-
-        If Not trackcomment.Text = String.Empty Then
             writeDowntimeTable2()
         End If
 
+        If Not trackcomment.Text = String.Empty Then
+            writeDowntimeTable()
+        End If
         For Each C As Control In Me.Controls
             If TypeOf C Is TextBox Then
                 Dim TB As TextBox = C
@@ -205,7 +214,7 @@
 
                     Dim tracktag As String = TB.Text
                     Dim subTRACKTAG As Integer = Microsoft.VisualBasic.Right(tracktag, 3)
-                    Dim subtracktag1 As String = Microsoft.VisualBasic.Left(tracktag, 1)
+                    Dim subtracktag1 As String = Microsoft.VisualBasic.Left(tracktag, 5)
                     subTRACKTAG += 1
 
 
@@ -217,6 +226,7 @@
 
 
                     TB.Text = subtracktag1 + subTRACKTAG_increment
+
                     Continue For
                 End If
                 TB.Clear()
@@ -224,6 +234,47 @@
         Next
         ORDERNUMBER.Enabled = True
         ORDERNUMBER.Focus()
+    End Sub
+
+    Sub ORDERNUMBER_keypress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles SUBMITTRACK.KeyPress, ORDERNUMBER.KeyPress
+
+        If e.KeyChar = Chr(13) Then
+            trackcheck()
+        End If
+
+    End Sub
+
+    Sub trackcheck()
+        SUBMITTRACK.Enabled = True
+        If tracktagbox.Text = String.Empty Then
+            checktracktag()
+        End If
+        If ORDERNUMBER.Text.Length = 10 Then
+            readDowntimeTable()
+            tracktagbox.Focus()
+        End If
+        Techidbox.Text = GlobalMutableState.userName
+    End Sub
+
+    Private Sub ORDERNUMBER_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ORDERNUMBER.TextChanged
+        'SUBMITTRACK.Enabled = True
+        'If (ORDERNUMBER.Text.Length = 10 And tracktagbox.Text = String.Empty) Then
+        '    checktracktag()
+        'End If
+        'If ORDERNUMBER.Text.Length = 10 Then
+        '    readDowntimeTable()
+        '    tracktagbox.Focus()
+        'End If
+        'Techidbox.Text = main.Username
+
+        'Dim locat As String = Microsoft.VisualBasic.Right(ORDERNUMBER.Text, 2)
+        'If locat = "23" Then trklocatn.Text = "Coag Storage"
+        'If locat = "00" Then trklocatn.Text = "Chem Storage"
+        'If locat = "40" Then trklocatn.Text = "Chem Storage"
+        'If locat = "79" Then trklocatn.Text = "Chem Storage"
+        'If locat = "19" Then trklocatn.Text = "Chem Storage"
+        'If locat = "27" Then trklocatn.Text = "Chem Storage"
+        'If locat = "18" Then trklocatn.Text = "Hematology storage"
     End Sub
 
     Sub checktracktag()
@@ -260,30 +311,8 @@
         Exit Sub
 
 
+
     End Sub
-
-    Private Sub ORDERNUMBER_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ORDERNUMBER.TextChanged
-        SUBMITTRACK.Enabled = True
-        If (ORDERNUMBER.Text.Length = 10 And tracktagbox.Text = String.Empty) Then
-            checktracktag()
-        End If
-        If ORDERNUMBER.Text.Length = 10 Then
-            readDowntimeTable()
-            tracktagbox.Focus()
-        End If
-        Techidbox.Text = main.Username
-
-        'Dim locat As String = Microsoft.VisualBasic.Right(ORDERNUMBER.Text, 2)
-        'If locat = "23" Then trklocatn.Text = "Coag Storage"
-        'If locat = "00" Then trklocatn.Text = "Chem Storage"
-        'If locat = "40" Then trklocatn.Text = "Chem Storage"
-        'If locat = "79" Then trklocatn.Text = "Chem Storage"
-        'If locat = "19" Then trklocatn.Text = "Chem Storage"
-        'If locat = "27" Then trklocatn.Text = "Chem Storage"
-        'If locat = "18" Then trklocatn.Text = "Hematology storage"
-    End Sub
-
-
     Sub locattrack()
 
         With trklocatn
@@ -292,19 +321,21 @@
     End Sub
 
 
-
-
-    Private Sub tracktagbox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tracktagbox.TextChanged
-
-    End Sub
-
     Private Sub Techidbox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Techidbox.TextChanged
-        Techidbox.Text = main.Username
+        Techidbox.Text = GlobalMutableState.userName
     End Sub
 
 
     Private Sub MySqlConnectionBindingSource_CurrentChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
+    End Sub
+
+    Private Sub trklocatn_Selected()
+        Dim da As New MySqlDataAdapter("select * from dtdb1.dttracking.tracklocation", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;")
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        locattrack()
     End Sub
 
     Sub tracktag_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles tracktagbox.KeyPress
@@ -315,21 +346,11 @@
 
     End Sub
 
-
-    Private Sub trklocatn_Selected()
-        Dim da As New MySqlDataAdapter("select * from dtdb1.dttracking.tracklocation", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;")
-    End Sub
-
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        locattrack()
-    End Sub
-
     Private Sub trklocatn_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles trklocatn.SelectedIndexChanged
-        If trklocatn.Text = "UA->STORE" Then
-            tracktagbox.Enabled = True
+        If (trklocatn.Text = "OT->STOR" Or trklocatn.Text = "EX->STOR") Then
             trackcomment.Enabled = True
+            tracktagbox.Enabled = True
             ORDERNUMBER.Enabled = True
         End If
-        ORDERNUMBER.Focus()
     End Sub
 End Class
