@@ -29,7 +29,7 @@ namespace TestSendHL7
             var codes = new List<string>();
             codes.Add("CMP");
             
-            var co = new OrderMessage("mrn", "firstName", "lastName", "orderNumber00","20121023", "ward",Sex.U, codes, new SpecimenType("00","SST",Option.Some("SER")));
+            var co = new OrderMessage("mrn", "firstName", "lastName", "orderNumber00","20121023", "ward",Sex.U, codes, new SpecimenType {extension = "00", diSpecimenType = Option.Some("SER")});
             var hl = co.toHl7();
 
             //send the hl7 message

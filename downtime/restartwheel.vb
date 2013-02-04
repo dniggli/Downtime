@@ -116,11 +116,6 @@ Public Class RestartWheel
 
     End Sub
 
-    Private Sub SplitContainer1_Panel1_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles SplitContainer1.Panel1.Paint
-
-    End Sub
-
-
     Private Sub Buttondelettrack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Buttondelettrack.Click
         Dim msg As String
         Dim title As String
@@ -227,10 +222,6 @@ Public Class RestartWheel
 
     End Sub
 
-    Private Sub SplitContainer1_Panel2_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles SplitContainer1.Panel2.Paint
-
-    End Sub
-
     Private Sub ButtonNumberReset_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonNumberReset.Click
 
 
@@ -326,11 +317,6 @@ Public Class RestartWheel
 
 
     End Sub
-
-    Private Sub Label1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Label1.Click
-
-    End Sub
-
 
     Private Sub ComboBoxNewOrderNumber_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles ComboBoxNewOrderNumber.KeyDown
         e.SuppressKeyPress = True

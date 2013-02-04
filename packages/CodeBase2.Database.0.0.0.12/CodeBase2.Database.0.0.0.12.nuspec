@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>CodeBase2.Database</id>
+    <version>0.0.0.12</version>
+    <title>CodeBase2.Database</title>
+    <authors>Chris Van Vranken</authors>
+    <owners>Chris Van Vranken</owners>
+    <projectUrl>https://github.com/urmc-pathology/codebase</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Commonly used tools and functions any database</description>
+    <releaseNotes>Initial CodeBase2 release for NuGet</releaseNotes>
+    <tags>database codebase</tags>
+    <references>
+      <reference file="CodeBase2.Database.dll" />
+    </references>
+  </metadata>
+</package>

@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-using downtime;
 using System.Collections;
 using Microsoft.VisualBasic;
 using CodeBase2;
 using FunctionalCSharp;
+using HL7;
 
 namespace downtimeC
 {
@@ -20,23 +20,27 @@ namespace downtimeC
         readonly Dictionary<string, Func<string>> interactions = new Dictionary<string, Func<string>>();
         readonly Dictionary<string, string> queries = new Dictionary<string, string>();
 
-  
-        public MainMenu(DateTime StartupTime): base(StartupTime)
+        //mysql database connection
+        readonly GetMySQL getMySql = new GetMySQL();
+        readonly GetSqlServer getSqlServer = new GetSqlServer();
+        readonly Hospital hospital;
+        public MainMenu(DateTime StartupTime, Hospital hospital): base(StartupTime)
         {
             InitializeComponent();
+            var setupTableData = new SetupTableData(getMySql, getSqlServer);
+            this.hospital = hospital;
             //setup buttons handlers
-            new FormStart(ButtonOrderEntry, () => new OrderEntryForm(StartupTime));
+            new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(StartupTime, setupTableData,getMySql,hospital));
             new FormStart(ButtonSmsArchiveTracking, () => new TrackSmsForm(StartupTime));
-            new FormStart(ButtonAutolabReprint, () => new AutolabAliquotForm());
-            new FormStart(ButtonAliquotReprint, () => new AliquotForm());
-            new FormStart(ButtonPlaceAddon, () => new Addons());
+            new FormStart(ButtonAliquotReprint, () => new AliquotForm(getMySql));
+            new FormStart(ButtonPlaceAddon, () => new AddOnForm(getMySql));
             new FormStart(ButtonHemArchiveTracking, () => new TrackHemForm(StartupTime));
             new FormStart(ButtonUrineHemTracking, () => new TrackUrineHemForm(StartupTime));
             new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm(StartupTime));
             new FormStart(ButtonCoagArchiveTracking, () => new TrackCoagForm(StartupTime));
-            new FormStart(ButtonDowntimeRecovery, () => new RecoveryForm());
-            new FormStart(ButtonDIEntry, () => new DIOrderEntryForm());
-            new FormStart(ButtonMolisEntry, () => new MolisEntry());
+            new FormStart(ButtonDowntimeRecovery, () => new RecoveryForm(getMySql));
+            new FormStart(ButtonDIEntry, () => new DIOrderEntryForm(getMySql));
+            new FormStart(ButtonMolisEntry, () => new MolisEntry(getMySql));
             
 
             queries.Add("STAT Query", "SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.OTHERTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS FROM dtdb1.Table1 GROUP BY Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS HAVING(((Table1.PRIORITY) Like \"S\")) ORDER BY Table1.ordernumber;");
@@ -86,36 +90,20 @@ namespace downtimeC
                 //return the readiedQuery
                 .Return<string>();
 
-           runqueryForm(readiedQuery, this.ComboBoxSelectQuery.Text);
-
- 
+              new StatOrderQueryForm(readiedQuery, this.ComboBoxSelectQuery.Text); 
         }
-
-
-        public void runqueryForm(string q, string Queryname)
-        {
-            Hashtable args = new Hashtable();
-            args.Add("Query", q);
-            args.Add("QueryName", Queryname);
-
-            ParameterizedThreadStart param = new ParameterizedThreadStart(StatOrderQueryForm.ThreadStart);
-            new Thread(param).Start(args);
-        }
-
-
-
 
 
         private void ButtonRestartOrderNumber_Click(System.Object sender, System.EventArgs e)
         {
           Interaction.MsgBox("Must enter user name 'URMCLAB' with NO password!", MsgBoxStyle.OkOnly, "Reminder");
 
-            LoginForm2 Login = new LoginForm2();
+          StartupLoginForm Login = new StartupLoginForm();
             Login.ShowDialog();
 
-            if (Login.Valid)
+            if (Login.valid)
             {
-                 new RestartWheel().ShowDialog();
+                 new RestartWheel(getMySql).ShowDialog();
             }
         }
 

@@ -20,7 +20,6 @@ using HL7;
 using FunctionalCSharp;
 using Microsoft.VisualBasic.CompilerServices;
 using downtimeC.LabelPrinting;
-using downtime;
 
 namespace downtimeC
 {
@@ -31,14 +30,25 @@ namespace downtimeC
         public static string FSTNAME = "";
         public static int Tdate;
 
-        public static System.Text.StringBuilder strNecessary = new System.Text.StringBuilder("");
-
         GetMySQL mySql = new GetMySQL();
 
         Dictionary<TextBox, SpecimenType> specimensDict;
 
+        //protected OrderEntryForm()
+        //{
+        //    InitializeComponent();
+        //}
 
-        public OrderEntryForm(DateTime StartupTime) : base(StartupTime)
+        //readonly GetMySQL getMySql;
+        //public OrderEntryForm(GetMySQL getMySql)
+        //{
+        //    InitializeComponent();
+        //    this.getMySql = getMySql;
+        //}
+
+        readonly SetupTableData setupTableData;
+        public OrderEntryForm(DateTime StartupTime, SetupTableData setupTableData)
+            : base(StartupTime)
         {
             Load += orderentry_Load;
             InitializeComponent();
@@ -70,42 +80,20 @@ namespace downtimeC
 
         private void orderentry_Load(System.Object sender, System.EventArgs e)
         {
-            foreach (Control C in this.Controls)
-            {
-                if (C is TextBox || C is ComboBox)
-                {
-                   C.Enabled = false;
-                }
-            }
+            this.DisableAll<TextBox>();
+            this.DisableAll<ComboBox>();
+     
             TextBoxbillingnumber.Enabled = true;
-            printerlist();
-            cliniclist();
+
+            ComboBoxprinter.Items.Add(mySql.FilledColumn("select name from pathdirectory.device d join pathdirectory.device_has_group dg on d.Device_ID = dg.Device_ID where Group_ID = '41' order by name"));
+            ComboBoxWard.Items.AddRange(this.setupTableData.wards);
+         
+
             ComboBoxprinter.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             ComboBoxprinter.AutoCompleteSource = AutoCompleteSource.ListItems;
             ComboBoxWard.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             ComboBoxWard.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
-
-
-        public void printerlist()
-        {
-            DataTable dtble = mySql.FilledTable("select name from pathdirectory.device d join pathdirectory.device_has_group dg on d.Device_ID = dg.Device_ID where Group_ID = '41' order by name");
-            foreach (DataRow dr in dtble.Rows)
-            {
-                ComboBoxprinter.Items.Add(dr["name"].ToString());
-            }
-
-        }
-        public void cliniclist()
-        {
-            DataTable dtble = mySql.FilledTable("select * from dtdb1.CLINIC");
-            foreach (DataRow dr in dtble.Rows)
-            {
-                ComboBoxWard.Items.Add(dr["Clinic_code"].ToString());
-            }
-        }
-
-
 
         //http://www.vbmysql.com/articles/vbnet-mysql-tutorial/the-vbnet-mysql-tutorial-part-4
 
@@ -138,6 +126,7 @@ namespace downtimeC
 
             var p = new MySqlParameter("?CollectionTime", collectiontime.Text);
             mySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + ComboBoxWard.Text + "',PRIORITY = '" + priority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + colldate.Text + "',TECHID = '" + ordertechid.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
+
 
             foreach (Control C in this.Controls)
             {
@@ -448,35 +437,23 @@ namespace downtimeC
 
         }
 
+
         public void writeandprint()
         {
-            writeDowntimeTable();
+            //writeDowntimeTable()
             if (priority.Text == "S")
-                printDowntimeLables();
-            if (priority.Text == "R")
-                printDowntimeLablesR();
-            if (priority.Text == "U")
-                printDowntimeLables();
-
-            foreach (Control C in this.Controls)
             {
-                if (C is TextBox)
-                {
-                    TextBox TB = (TextBox)C;
-                    if (object.ReferenceEquals(TB, this.ComboBoxprinter))
-                    {
-                        var printer = TB.Text;
-                        TB.Text = printer;
-                        continue;
-                    }
-
-                    TB.Clear();
-                }
+                this.priority.Text = "STAT";
+                printDowntimeLables(Priority.Stat);
             }
-            ComboBoxoldorder.Text = string.Empty;
+            if (priority.Text == "R")
+                printDowntimeLables(Priority.Routine);
+            if (priority.Text == "U")
+                printDowntimeLables(Priority.Stat);
 
-            int STRLENGTH = strNecessary.Length;
-            strNecessary.Remove(0, STRLENGTH);
+            this.ClearAllTextBoxes();
+
+            ordernumber.Focus();
         }
 
         public void checklocation()
@@ -899,127 +876,130 @@ namespace downtimeC
             mySql.ExecuteNonQuery("insert into dtdb1.Table1 (ordernumber,COLLECTIONTIME,RECEIVETIME,LOCATION,PRIORITY,MRN,DOB,FIRSTNAME,REDTEST,BLUETEST,LAVHEMTEST,GREENTEST,LAVCHEMTEST,GRYTEST,URINEHEM,URINECHEM,BLOODGAS,PROBLEM,CALLS,ORDERCOMMENT,LASTNAME,SENDOUT,SEROLOGY,HEPPETITAS,COLLECTDATE,TECHID,CSFTEST,FLUIDTEST,VIRALLOADTEST, BILLINGNUMBER)VALUES('" + ordernumber + "', '" + collectiontime1 + "','" + receivetime1 + "','" + location1 + "', '" + priority1 + "', '" + mrn.Text + "','" + dob1 + "','" + firstname.Text + "', '" + redtest.Text + "', '" + bt + "', '" + lht + "','" + gt + "', '" + lct + "', '" + grt + "','" + uh + "','" + uc + "','" + bg + "', '" + prob + "','" + cal + "','" + ordcmt + "','" + lastname1 + "','" + senot + "','" + serr + "', '" + hep + "','" + colld + "','" + techids + "','" + csf + "','" + fluid + "','" + viral + "', '" + BILLING + "')");
         }
 
+      
 
-        //Dave: Give it a password to connect!!!!  in both the readDowntimeTable and writeDowntimeTable subroutines
-        public void printDowntimeLables()
-        {
-            List<string> test = new List<string>();
-            if (this.priority.Text == "S")
-                this.priority.Text = "STAT";
+ 
 
-            if (!(this.firstname.Text == string.Empty))
-            {
-                LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
-                this.DateTimePicker1.Text);
-                fn2.LabelPrint2(this.ComboBoxprinter.Text);
-            }
-            if (!(this.firstname.Text == string.Empty))
-            {
-                LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
-                this.DateTimePicker1.Text);
-                fn2.LabelPrint2(this.ComboBoxprinter.Text);
-            }
-            printDTLabel2(this.comment.Text, "", "CMT");
-            printDTLabel2(this.redtest.Text, "00", "SST");
-            printDTLabel2(this.bluetest.Text, "23", "BLU");
-            printDTLabel2(this.greentest.Text, "40", "GRN");
-            printDTLabel2(this.lavchemtest.Text, "79", "LAV");
-            printDTLabel2(this.lavhemtest.Text, "18", "LAV");
-            printDTLabel2(this.graytest.Text, "19", "GRY");
-            printDTLabel2(this.urinechem.Text, "27", "URC");
-            printDTLabel2(this.urinehem.Text, "UA", "UAC");
-            printDTLabel2(this.bloodgas.Text, "20", "SYR");
-            printDTLabel2(this.sendout.Text, "1N", "REF");
-            printDTLabel2(this.ser.Text, "41", "SRL");
-            printDTLabel2(this.hepp.Text, "42", "SHP");
-            printDTLabel2(this.csfbox.Text, "26", "CSF");
-            printDTLabel2(this.fluidbox.Text, "38", "FLD");
-            printDTLabel2(this.Viralloadbox.Text, "74", "LAV");
-            printDTLabel2(this.OTHERBOX.Text, "", "OTH");
-            printDTLabel2(this.TextBoxIMMUNO.Text, "2R", "SST");
+        ////Dave: Give it a password to connect!!!!  in both the readDowntimeTable and writeDowntimeTable subroutines
+        //public void printDowntimeLables()
+        //{
+        //    List<string> test = new List<string>();
+        //    if (this.priority.Text == "S")
+        //        this.priority.Text = "STAT";
 
-
-
-            //Dim filepath = "lbl.txt"
-            //Dim fs As New FileStream(filepath, FileMode.Open, FileAccess.Write, FileShare.Write)
-
-            //Threading.Thread.Sleep(500)
-            //Dim writing As New StreamWriter(fs, System.Text.Encoding.UTF8)
-
-            //writing.WriteLine(strNecessary)
+        //    if (!(this.firstname.Text == string.Empty))
+        //    {
+        //        LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
+        //        this.DateTimePicker1.Text);
+        //        fn2.LabelAppendDemographic(this.ComboBoxprinter.Text);
+        //    }
+        //    if (!(this.firstname.Text == string.Empty))
+        //    {
+        //        LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
+        //        this.DateTimePicker1.Text);
+        //        fn2.LabelAppendDemographic(this.ComboBoxprinter.Text);
+        //    }
+        //    printDTLabel2(this.comment.Text, "", "CMT");
+        //    printDTLabel2(this.redtest.Text, "00", "SST");
+        //    printDTLabel2(this.bluetest.Text, "23", "BLU");
+        //    printDTLabel2(this.greentest.Text, "40", "GRN");
+        //    printDTLabel2(this.lavchemtest.Text, "79", "LAV");
+        //    printDTLabel2(this.lavhemtest.Text, "18", "LAV");
+        //    printDTLabel2(this.graytest.Text, "19", "GRY");
+        //    printDTLabel2(this.urinechem.Text, "27", "URC");
+        //    printDTLabel2(this.urinehem.Text, "UA", "UAC");
+        //    printDTLabel2(this.bloodgas.Text, "20", "SYR");
+        //    printDTLabel2(this.sendout.Text, "1N", "REF");
+        //    printDTLabel2(this.ser.Text, "41", "SRL");
+        //    printDTLabel2(this.hepp.Text, "42", "SHP");
+        //    printDTLabel2(this.csfbox.Text, "26", "CSF");
+        //    printDTLabel2(this.fluidbox.Text, "38", "FLD");
+        //    printDTLabel2(this.Viralloadbox.Text, "74", "LAV");
+        //    printDTLabel2(this.OTHERBOX.Text, "", "OTH");
+        //    printDTLabel2(this.TextBoxIMMUNO.Text, "2R", "SST");
 
 
-            //writing.Close()
-            //fs.Close()
-            //fs.Dispose()
 
-            PrintLabels.apply(ComboBoxprinter.Text);
-        }
+        //    //Dim filepath = "lbl.txt"
+        //    //Dim fs As New FileStream(filepath, FileMode.Open, FileAccess.Write, FileShare.Write)
 
-        public void printDTLabel1(string tests, string extension, string specimentype)
-        {
-            LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, tests, extension, specimentype, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
-            this.DateTimePicker1.Text);
-            fn2.LabelPrint1(this.ComboBoxprinter.Text);
-        }
+        //    //Threading.Thread.Sleep(500)
+        //    //Dim writing As New StreamWriter(fs, System.Text.Encoding.UTF8)
 
-        public void printDTLabel(string tests, string extension, string specimentype)
-        {
-            LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, tests, extension, specimentype, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
-            this.DateTimePicker1.Text);
-            fn2.LabelPrint(this.ComboBoxprinter.Text);
-        }
-
-        public void printDowntimeLablesR()
-        {
-            List<string> test = new List<string>();
-            if (this.priority.Text == "S")
-                this.priority.Text = "STAT";
+        //    //writing.WriteLine(strNecessary)
 
 
-            if (!(this.firstname.Text == string.Empty))
-            {
-                LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
-                this.DateTimePicker1.Text);
-                fn2.LabelPrint2(this.ComboBoxprinter.Text);
-            }
+        //    //writing.Close()
+        //    //fs.Close()
+        //    //fs.Dispose()
 
-            if (!(this.firstname.Text == string.Empty))
-            {
-                LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
-                this.DateTimePicker1.Text);
-                fn2.LabelPrint2(this.ComboBoxprinter.Text);
-            }
+        //    PrintLabels.apply(ComboBoxprinter.Text);
+        //}
 
-            printDTLabel1(this.comment.Text, "", "CMT");
+        //public void printDTLabel1(string tests, string extension, string specimentype)
+        //{
+        //    LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, tests, extension, specimentype, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
+        //    this.DateTimePicker1.Text);
+        //    fn2.LabelAppendComment(this.ComboBoxprinter.Text);
+        //}
 
-            printDTLabel(this.redtest.Text, "00", "SST");
-            printDTLabel(this.bluetest.Text, "23", "BLU");
-            printDTLabel(this.greentest.Text, "40", "GRN");
-            printDTLabel(this.lavchemtest.Text, "79", "LAV");
-            printDTLabel(this.lavhemtest.Text, "18", "LAV");
-            printDTLabel(this.graytest.Text, "19", "GRY");
-            printDTLabel(this.urinechem.Text, "27", "URC");
-            printDTLabel(this.urinehem.Text, "UA", "UAC");
-            printDTLabel(this.bloodgas.Text, "20", "SYR");
-            printDTLabel(this.sendout.Text, "05", "REF");
-            printDTLabel(this.ser.Text, "41", "SRL");
-            printDTLabel(this.hepp.Text, "42", "SHP");
-            printDTLabel(this.csfbox.Text, "26", "CSF");
-            printDTLabel(this.fluidbox.Text, "38", "FLD");
-            printDTLabel(this.Viralloadbox.Text, "74", "LAV");
-            printDTLabel(this.OTHERBOX.Text, "", "OTH");
-            printDTLabel(this.TextBoxIMMUNO.Text, "2R", "SST");
+        //public void printDTLabel(string tests, string extension, string specimentype)
+        //{
+        //    LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, tests, extension, specimentype, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
+        //    this.DateTimePicker1.Text);
+        //    fn2.LabelAppendCollection(this.ComboBoxprinter.Text);
+        //}
 
-            PrintLabels.apply(ComboBoxprinter.Text);
+        //public void printDowntimeLablesR()
+        //{
+        //    List<string> test = new List<string>();
+        //    if (this.priority.Text == "S")
+        //        this.priority.Text = "STAT";
 
-        }
-        public void printDTLabel2(string tests, string extension, string specimentype)
-        {
-            LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, tests, extension, specimentype, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
-            this.DateTimePicker1.Text);
-            fn2.LabelPrint(this.ComboBoxprinter.Text);
-        }
+
+        //    if (!(this.firstname.Text == string.Empty))
+        //    {
+        //        LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
+        //        this.DateTimePicker1.Text);
+        //        fn2.LabelAppendDemographic(this.ComboBoxprinter.Text);
+        //    }
+
+        //    if (!(this.firstname.Text == string.Empty))
+        //    {
+        //        LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, this.collectiontime.Text, "", "", this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
+        //        this.DateTimePicker1.Text);
+        //        fn2.LabelAppendDemographic(this.ComboBoxprinter.Text);
+        //    }
+
+        //    printDTLabel1(this.comment.Text, "", "CMT");
+
+        //    printDTLabel(this.redtest.Text, "00", "SST");
+        //    printDTLabel(this.bluetest.Text, "23", "BLU");
+        //    printDTLabel(this.greentest.Text, "40", "GRN");
+        //    printDTLabel(this.lavchemtest.Text, "79", "LAV");
+        //    printDTLabel(this.lavhemtest.Text, "18", "LAV");
+        //    printDTLabel(this.graytest.Text, "19", "GRY");
+        //    printDTLabel(this.urinechem.Text, "27", "URC");
+        //    printDTLabel(this.urinehem.Text, "UA", "UAC");
+        //    printDTLabel(this.bloodgas.Text, "20", "SYR");
+        //    printDTLabel(this.sendout.Text, "05", "REF");
+        //    printDTLabel(this.ser.Text, "41", "SRL");
+        //    printDTLabel(this.hepp.Text, "42", "SHP");
+        //    printDTLabel(this.csfbox.Text, "26", "CSF");
+        //    printDTLabel(this.fluidbox.Text, "38", "FLD");
+        //    printDTLabel(this.Viralloadbox.Text, "74", "LAV");
+        //    printDTLabel(this.OTHERBOX.Text, "", "OTH");
+        //    printDTLabel(this.TextBoxIMMUNO.Text, "2R", "SST");
+
+        //    PrintLabels.apply(ComboBoxprinter.Text);
+
+        //}
+        //public void printDTLabel2(string tests, string extension, string specimentype)
+        //{
+        //    LabelPrinting.LabelData fn2 = new LabelPrinting.LabelData(this.ordernumber.Text, tests, extension, specimentype, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.ComboBoxWard.Text, "Collected",
+        //    this.DateTimePicker1.Text);
+        //    fn2.LabelAppendCollection(this.ComboBoxprinter.Text);
+        //}
     }
 }
 

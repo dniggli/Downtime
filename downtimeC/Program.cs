@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using downtime;
 
 namespace downtimeC
 {
@@ -23,7 +22,7 @@ namespace downtimeC
             if (Login.valid)
             {
                 GlobalMutableState.userName = Login.userName;
-                Application.Run(new MainMenu(System.DateTime.Now));
+                Application.Run(new MainMenu(System.DateTime.Now,Login.hospital));
             }           
         }
     }

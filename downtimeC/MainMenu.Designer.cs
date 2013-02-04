@@ -32,7 +32,6 @@
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.Label3 = new System.Windows.Forms.Label();
             this.ButtonPlaceAddon = new System.Windows.Forms.Button();
-            this.ButtonAutolabReprint = new System.Windows.Forms.Button();
             this.ButtonAliquotReprint = new System.Windows.Forms.Button();
             this.ButtonOrderEntry = new System.Windows.Forms.Button();
             this.Label4 = new System.Windows.Forms.Label();
@@ -75,7 +74,6 @@
             // 
             this.SplitContainer1.Panel1.Controls.Add(this.Label3);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonPlaceAddon);
-            this.SplitContainer1.Panel1.Controls.Add(this.ButtonAutolabReprint);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonAliquotReprint);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonOrderEntry);
             this.SplitContainer1.Panel1.Margin = new System.Windows.Forms.Padding(3);
@@ -113,18 +111,9 @@
             this.ButtonPlaceAddon.Text = "Place Addon";
             this.ButtonPlaceAddon.UseVisualStyleBackColor = true;
             // 
-            // ButtonAutolabReprint
-            // 
-            this.ButtonAutolabReprint.Location = new System.Drawing.Point(98, 107);
-            this.ButtonAutolabReprint.Name = "ButtonAutolabReprint";
-            this.ButtonAutolabReprint.Size = new System.Drawing.Size(149, 37);
-            this.ButtonAutolabReprint.TabIndex = 6;
-            this.ButtonAutolabReprint.Text = "Autolab Re-Print";
-            this.ButtonAutolabReprint.UseVisualStyleBackColor = true;
-            // 
             // ButtonAliquotReprint
             // 
-            this.ButtonAliquotReprint.Location = new System.Drawing.Point(282, 107);
+            this.ButtonAliquotReprint.Location = new System.Drawing.Point(202, 103);
             this.ButtonAliquotReprint.Name = "ButtonAliquotReprint";
             this.ButtonAliquotReprint.Size = new System.Drawing.Size(149, 37);
             this.ButtonAliquotReprint.TabIndex = 7;
@@ -303,7 +292,6 @@
         internal System.Windows.Forms.SplitContainer SplitContainer1;
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.Button ButtonPlaceAddon;
-        internal System.Windows.Forms.Button ButtonAutolabReprint;
         internal System.Windows.Forms.Button ButtonAliquotReprint;
         internal System.Windows.Forms.Button ButtonOrderEntry;
         internal System.Windows.Forms.Label Label4;

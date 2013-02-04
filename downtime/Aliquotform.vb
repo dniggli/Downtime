@@ -1,21 +1,13 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports HL7
+Imports downtimeC
+
 Public Class AliquotForm
     Public Shared ALIQUOTSTR As New System.Text.StringBuilder("")
-    ''' <summary>
-    ''' Starts the Order Thread
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Shared Sub aliquot()
-        Dim myorder As New aliquotform
-        Application.Run(myorder)
-
-    End Sub
 
 
     'prints empgraphic labels for stats only!!
     Sub printdemographiclabels()
-
-
         Dim test As New List(Of String)
         If Me.priority.Text = "S" Then Me.priority.Text = "STAT"
 
@@ -386,8 +378,8 @@ Public Class AliquotForm
             End If
         Next
         ordernumber.Focus()
-        Dim STRLENGTH As Integer = orderentry.strNecessary.Length
-        orderentry.strNecessary.Remove(0, STRLENGTH)
+        Dim STRLENGTH As Integer = GlobalMutableState.strNecessary.Length
+        GlobalMutableState.strNecessary.Remove(0, STRLENGTH)
 
     End Sub
 

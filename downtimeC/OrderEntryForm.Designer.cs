@@ -378,6 +378,7 @@
             this.ButtonPrint.Text = "Print1";
             this.ButtonPrint.UseVisualStyleBackColor = true;
             this.ButtonPrint.Visible = false;
+            this.ButtonPrint.Click += new System.EventHandler(this.ButtonPrint_Click);
             // 
             // comment
             // 

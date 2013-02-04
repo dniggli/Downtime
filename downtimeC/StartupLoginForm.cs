@@ -21,20 +21,21 @@ namespace downtimeC
         public Boolean valid = true;
 
         public string userName = "";
-
+        public Hospital hospital = Hospital.Strong;
         private void OK_Click(System.Object sender, System.EventArgs e)
         {
 
             //valid = AD.Authenticate(Me.UsernameTextBox.Text, Me.PasswordTextBox.Text)
             
-            if (valid)
+            if (valid && !string.IsNullOrEmpty(this.comboBoxHospital.Text))
             {
                 userName = UsernameTextBox.Text;
+                hospital = (this.comboBoxHospital.Text == "Highland") ? Hospital.Highland : Hospital.Strong;
                 this.Close();
             }
             else
             {
-               var response = Interaction.MsgBox("invalid username or password", MsgBoxStyle.OkOnly, "MsgBox");
+               var response = Interaction.MsgBox("invalid username, password, or hospital", MsgBoxStyle.OkOnly, "MsgBox");
                 if (response == MsgBoxResult.Ok)
                     UsernameTextBox.Focus();
             }

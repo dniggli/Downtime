@@ -11,5 +11,6 @@ namespace downtimeC
    public static class GlobalMutableState
     {
        public static string userName = "";
+     
     }
 }

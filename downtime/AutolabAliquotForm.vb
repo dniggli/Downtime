@@ -1,16 +1,10 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports CodeBase2.MySql.URMC
+Imports downtimeC
+Imports HL7
+
 Public Class AutolabAliquotForm
     Public Shared ALIQUOTSTR As New System.Text.StringBuilder("")
-    ''' <summary>
-    ''' Starts the Order Thread
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Shared Sub autolab()
-        Dim myorder As New autolabaliquotform
-        Application.Run(myorder)
-
-    End Sub
 
 
     'prints empgraphic labels for stats only!!
@@ -39,9 +33,9 @@ Public Class AutolabAliquotForm
         Dim PrinterDNSName As String = NameToIP(printer.ToUpper).ToString
         If Not PrinterDNSName.Contains(".") Then
             printer = CodeBase2.DNS.NameToIPString(PrinterDNSName)
-            Send_IP_Printer.PrintLabel(printer, orderentry.strNecessary.ToString)
+            Send_IP_Printer.PrintLabel(printer, GlobalMutableState.strNecessary.ToString)
         Else
-            Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), orderentry.strNecessary.ToString)
+            Send_IP_Printer.PrintLabel(NameToIP(printer.ToUpper), GlobalMutableState.strNecessary.ToString)
         End If
 
     End Sub
@@ -364,8 +358,8 @@ Public Class AutolabAliquotForm
             End If
         Next
         ordernumber.Focus()
-        Dim STRLENGTH As Integer = orderentry.strNecessary.Length
-        orderentry.strNecessary.Remove(0, STRLENGTH)
+        Dim STRLENGTH As Integer = GlobalMutableState.strNecessary.Length
+        GlobalMutableState.strNecessary.Remove(0, STRLENGTH)
 
     End Sub
 

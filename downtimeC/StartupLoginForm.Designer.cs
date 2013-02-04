@@ -36,6 +36,7 @@
             this.PasswordLabel = new System.Windows.Forms.Label();
             this.UsernameLabel = new System.Windows.Forms.Label();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.comboBoxHospital = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,11 +101,23 @@
             this.LogoPictureBox.TabIndex = 7;
             this.LogoPictureBox.TabStop = false;
             // 
+            // comboBoxHospital
+            // 
+            this.comboBoxHospital.FormattingEnabled = true;
+            this.comboBoxHospital.Items.AddRange(new object[] {
+            "Strong",
+            "Highland"});
+            this.comboBoxHospital.Location = new System.Drawing.Point(283, 139);
+            this.comboBoxHospital.Name = "comboBoxHospital";
+            this.comboBoxHospital.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHospital.TabIndex = 13;
+            // 
             // StartupLoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(419, 222);
+            this.Controls.Add(this.comboBoxHospital);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.OK);
             this.Controls.Add(this.PasswordTextBox);
@@ -129,6 +142,7 @@
         internal System.Windows.Forms.Label PasswordLabel;
         internal System.Windows.Forms.Label UsernameLabel;
         internal System.Windows.Forms.PictureBox LogoPictureBox;
+        private System.Windows.Forms.ComboBox comboBoxHospital;
 
     }
 }
