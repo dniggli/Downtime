@@ -13,9 +13,9 @@ using downtimeC.LabelPrinting;
 namespace downtimeC
 {
 
-    public partial class StoredComboBox : ComboBox, IStoredControl
+    public partial class StoredTextBox : TextBox, IStoredControl
     {
-        public StoredComboBox()
+        public StoredTextBox()
         {
             InitializeComponent();
         }

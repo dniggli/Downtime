@@ -1,6 +1,6 @@
 ﻿namespace downtimeC
 {
-    partial class StoredTextBox
+    partial class PriorityComboBox
     {
         /// <summary>
         /// Required designer variable.

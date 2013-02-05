@@ -15,8 +15,8 @@ namespace downtimeC
 {
     public partial class TrackSmsForm : TrackingBase
     {
-        public TrackSmsForm(DateTime StartupTime)
-            : base(StartupTime)
+        public TrackSmsForm()
+            : base()
         {
             InitializeComponent();
         }

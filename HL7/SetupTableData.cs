@@ -6,6 +6,7 @@ using CodeBase2;
 using CodeBase2.EmbeddedResources;
 using FunctionalCSharp;
 using HL7;
+using CodeBase2.MySql.URMC;
 namespace downtimeC
 {
     /// <summary>
@@ -16,13 +17,18 @@ namespace downtimeC
 
       public readonly String[] wards;
 
-      public readonly Dictionary<string,string> DISpecimenTranslation;
+      public readonly ReadOnlyDictionary<string, string> DISpecimenTranslation;
 
-      public SetupTableData(GetMySQL getMySql, GetSqlServer getSqlServer)
+      public readonly ReadOnlyDictionary<string, string> LabelersByIp;
+
+      public SetupTableData(GetMySQL getMySql, GetSqlServer getSqlServer, Hospital hospital)
       {
           wards = getMySql.FilledColumn("select Clinic_code from dtdb1.CLINIC");
 
-          DISpecimenTranslation = getSqlServer.FilledDictionary("SELECT [type], [translation] FROM [downtime].[dbo].[diTranslation]");
+          DISpecimenTranslation = getSqlServer.FilledDictionary("SELECT [type], [translation] FROM [downtime].[dbo].[diTranslation]").ToReadOnly();
+
+          LabelersByIp = Send_IP_Printer.GetLabelersListOfIPs_byGroup(string.Format("/{0}/Specimen Management",Enum.GetName(typeof(Hospital),hospital))).ToReadOnly();
+          
       }
 
     }

@@ -24,20 +24,21 @@ namespace downtimeC
         readonly GetMySQL getMySql = new GetMySQL();
         readonly GetSqlServer getSqlServer = new GetSqlServer();
         readonly Hospital hospital;
-        public MainMenu(DateTime StartupTime, Hospital hospital): base(StartupTime)
+        public MainMenu(Hospital hospital): base()
         {
             InitializeComponent();
-            var setupTableData = new SetupTableData(getMySql, getSqlServer);
             this.hospital = hospital;
+            var setupTableData = new SetupTableData(getMySql, getSqlServer, hospital);
+            
             //setup buttons handlers
-            new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(StartupTime, setupTableData,getMySql,hospital));
-            new FormStart(ButtonSmsArchiveTracking, () => new TrackSmsForm(StartupTime));
-            new FormStart(ButtonAliquotReprint, () => new AliquotForm(getMySql));
-            new FormStart(ButtonPlaceAddon, () => new AddOnForm(getMySql));
-            new FormStart(ButtonHemArchiveTracking, () => new TrackHemForm(StartupTime));
-            new FormStart(ButtonUrineHemTracking, () => new TrackUrineHemForm(StartupTime));
-            new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm(StartupTime));
-            new FormStart(ButtonCoagArchiveTracking, () => new TrackCoagForm(StartupTime));
+            new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(setupTableData,getMySql,hospital));
+            new FormStart(ButtonSmsArchiveTracking, () => new TrackSmsForm());
+            new FormStart(ButtonAliquotReprint, () => new AliquotForm(getMySql,setupTableData));
+            new FormStart(ButtonPlaceAddon, () => new AddOnForm(getMySql, setupTableData));
+            new FormStart(ButtonHemArchiveTracking, () => new TrackHemForm());
+            new FormStart(ButtonUrineHemTracking, () => new TrackUrineHemForm());
+            new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm());
+            new FormStart(ButtonCoagArchiveTracking, () => new TrackCoagForm());
             new FormStart(ButtonDowntimeRecovery, () => new RecoveryForm(getMySql));
             new FormStart(ButtonDIEntry, () => new DIOrderEntryForm(getMySql));
             new FormStart(ButtonMolisEntry, () => new MolisEntry(getMySql));

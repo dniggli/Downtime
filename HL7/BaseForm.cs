@@ -11,7 +11,7 @@ namespace downtimeC
 {
     public partial class BaseForm : Form
     {
-       protected readonly DateTime StartupTime;
+
 
         /// <summary>
         /// Required for Visual Studio Designer to work.
@@ -21,10 +21,5 @@ namespace downtimeC
            InitializeComponent();
        }
 
-        public BaseForm(DateTime StartupTime)
-        {
-            this.StartupTime = StartupTime;
-            InitializeComponent();
-        }
     }
 }

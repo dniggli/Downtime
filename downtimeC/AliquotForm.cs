@@ -25,9 +25,11 @@ namespace downtimeC
         }
 
         readonly GetMySQL getMySql;
-        public AliquotForm(GetMySQL getMySql)
+        readonly SetupTableData setupTableData;
+        public AliquotForm(GetMySQL getMySql, SetupTableData setupTableData)
         {
             InitializeComponent();
+            this.setupTableData = setupTableData;
             this.getMySql = getMySql;
         }
 
@@ -41,7 +43,7 @@ this.DateTimePicker1.Text);
 
                 collectiontime.LabelAppend(labelData, Priority.Routine);
                 collectiontime.LabelAppend(labelData, Priority.Routine);
-                labelData.doPrint(ComboBoxprinter.Text);
+                labelData.doPrint(ComboBoxprinter.Text, setupTableData);
             }
 
         }
@@ -57,7 +59,7 @@ this.DateTimePicker1.Text);
             tubeTypeTextboxes.forEach(tb => tb.LabelAppend(labelData,priority));
 
 
-            labelData.doPrint(ComboBoxprinter.Text);
+            labelData.doPrint(ComboBoxprinter.Text, setupTableData);
 
         }
 

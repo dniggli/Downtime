@@ -406,7 +406,7 @@ namespace downtimeC
 
     private void TextBoxOrderNumber_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
     {
-        if (e.KeyChar == Microsoft.VisualBasic.Strings.Chr(13)) {
+        if (e.KeyChar == Strings.Chr(13)) {
             Button1_Click(this, EventArgs.Empty);
         }
     }

@@ -11,6 +11,12 @@ namespace downtimeC
 {
    public static class FormExtensions
     {
+       public static void ClearAllInputControls(this Form form, params Control[] except)
+       {
+           ClearAllTextBoxes(form, except.Where(c => c is TextBox).Cast<TextBox>().ToArray());
+           ClearAllComboBoxes(form, except.Where(c => c is ComboBox).Cast<ComboBox>().ToArray());
+       }
+
        /// <summary>
        /// Clear all Textboxes of the form except for the given textboxes.
        /// </summary>
@@ -18,8 +24,22 @@ namespace downtimeC
        /// <param name="except"></param>
        public static void ClearAllTextBoxes(this Form form, params TextBox[] except)
        {
-
            ActionAllControl<TextBox>(form, tb => tb.Clear(), except);
+       }
+
+       /// <summary>
+       /// Clear all Textboxes of the form except for the given textboxes.
+       /// </summary>
+       /// <param name="form"></param>
+       /// <param name="except"></param>
+       public static void ClearAllComboBoxes(this Form form, params ComboBox[] except)
+       {
+           ActionAllControl<ComboBox>(form, cmb => {
+               if (cmb.Items.Count > 0)
+               {
+                   cmb.SelectedIndex = -1;
+               }
+           }, except);
        }
 
        /// <summary>

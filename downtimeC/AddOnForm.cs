@@ -25,9 +25,11 @@ namespace downtimeC
         }
 
         readonly GetMySQL getMySql;
-        public AddOnForm(GetMySQL getMySql)
+        readonly SetupTableData setupTableData;
+        public AddOnForm(GetMySQL getMySql, SetupTableData setupTableData)
         {
             InitializeComponent();
+            this.setupTableData = setupTableData;
             this.getMySql = getMySql;
         }
 
@@ -42,7 +44,7 @@ namespace downtimeC
             tubeTypeTextboxes.forEach(tb => tb.LabelAppend(labelData, priority));
 
 
-            labelData.doPrint(ComboBoxprinter.Text);
+            labelData.doPrint(ComboBoxprinter.Text, setupTableData);
 
         }
 

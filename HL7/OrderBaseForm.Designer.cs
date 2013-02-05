@@ -39,7 +39,7 @@
             this.Label28 = new System.Windows.Forms.Label();
             this.ordertechid = new System.Windows.Forms.TextBox();
             this.Label27 = new System.Windows.Forms.Label();
-            this.colldate = new downtimeC.StoredTextBox();
+            this.TextboxCollectDate = new downtimeC.StoredTextBox();
             this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.Label26 = new System.Windows.Forms.Label();
             this.sendout = new downtimeC.TubeTypeTextBox();
@@ -78,7 +78,6 @@
             this.Label9 = new System.Windows.Forms.Label();
             this.mrn = new downtimeC.StoredTextBox();
             this.Label8 = new System.Windows.Forms.Label();
-            this.priority = new downtimeC.StoredTextBox();
             this.Label7 = new System.Windows.Forms.Label();
             this.labelWard = new System.Windows.Forms.Label();
             this.receivetime = new downtimeC.StoredTextBox();
@@ -96,12 +95,13 @@
             this.TextBoxbillingnumber = new System.Windows.Forms.TextBox();
             this.comboBoxWard = new downtimeC.StoredComboBox();
             this.Label34 = new System.Windows.Forms.Label();
-            this.TextBoxIMMUNO = new System.Windows.Forms.TextBox();
+            this.TextBoxIMMUNO = new downtimeC.TubeTypeTextBox();
             this.editorder = new System.Windows.Forms.Button();
             this.Buttoneditprevious = new System.Windows.Forms.Button();
             this.Label32 = new System.Windows.Forms.Label();
             this.ComboBoxoldorder = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelCollectDate = new System.Windows.Forms.Label();
+            this.ComboBoxPriority = new downtimeC.PriorityComboBox();
             this.SuspendLayout();
             // 
             // ComboBoxprinter
@@ -217,14 +217,14 @@
             this.Label27.TabIndex = 256;
             this.Label27.Text = "Tech ID";
             // 
-            // colldate
+            // TextboxCollectDate
             // 
-            this.colldate.DataColumnName = "";
-            this.colldate.Location = new System.Drawing.Point(827, 565);
-            this.colldate.Name = "colldate";
-            this.colldate.Size = new System.Drawing.Size(135, 20);
-            this.colldate.TabIndex = 255;
-            this.colldate.Visible = false;
+            this.TextboxCollectDate.DataColumnName = "";
+            this.TextboxCollectDate.Location = new System.Drawing.Point(827, 565);
+            this.TextboxCollectDate.Name = "TextboxCollectDate";
+            this.TextboxCollectDate.Size = new System.Drawing.Size(135, 20);
+            this.TextboxCollectDate.TabIndex = 255;
+            this.TextboxCollectDate.Visible = false;
             // 
             // DateTimePicker1
             // 
@@ -618,15 +618,6 @@
             this.Label8.TabIndex = 211;
             this.Label8.Text = "mrn";
             // 
-            // priority
-            // 
-            this.priority.DataColumnName = "priority";
-            this.priority.Location = new System.Drawing.Point(39, 399);
-            this.priority.MaxLength = 1;
-            this.priority.Name = "priority";
-            this.priority.Size = new System.Drawing.Size(33, 20);
-            this.priority.TabIndex = 210;
-            // 
             // Label7
             // 
             this.Label7.AutoSize = true;
@@ -785,9 +776,15 @@
             // 
             // TextBoxIMMUNO
             // 
+            this.TextBoxIMMUNO.DataColumnName = "";
+            this.TextBoxIMMUNO.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.TextBoxIMMUNO.Location = new System.Drawing.Point(394, 343);
             this.TextBoxIMMUNO.Name = "TextBoxIMMUNO";
             this.TextBoxIMMUNO.Size = new System.Drawing.Size(275, 20);
+            this.TextBoxIMMUNO.SpecimenExtension = "2R";
+            this.TextBoxIMMUNO.SpecimenExtensionHighland = "";
+            this.TextBoxIMMUNO.SpecimenType = "SST";
+            this.TextBoxIMMUNO.SpecimenTypeHighland = "";
             this.TextBoxIMMUNO.TabIndex = 268;
             // 
             // editorder
@@ -826,21 +823,37 @@
             this.ComboBoxoldorder.Size = new System.Drawing.Size(114, 21);
             this.ComboBoxoldorder.TabIndex = 272;
             // 
-            // label6
+            // labelCollectDate
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(827, 541);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 13);
-            this.label6.TabIndex = 274;
-            this.label6.Text = "Collect Date";
+            this.labelCollectDate.AutoSize = true;
+            this.labelCollectDate.Location = new System.Drawing.Point(827, 541);
+            this.labelCollectDate.Name = "labelCollectDate";
+            this.labelCollectDate.Size = new System.Drawing.Size(65, 13);
+            this.labelCollectDate.TabIndex = 274;
+            this.labelCollectDate.Text = "Collect Date";
+            this.labelCollectDate.Visible = false;
+            // 
+            // ComboBoxPriority
+            // 
+            this.ComboBoxPriority.DataColumnName = "";
+            this.ComboBoxPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxPriority.FormattingEnabled = true;
+            this.ComboBoxPriority.Items.AddRange(new object[] {
+            "R",
+            "S",
+            "U"});
+            this.ComboBoxPriority.Location = new System.Drawing.Point(42, 399);
+            this.ComboBoxPriority.Name = "ComboBoxPriority";
+            this.ComboBoxPriority.Size = new System.Drawing.Size(121, 21);
+            this.ComboBoxPriority.TabIndex = 275;
             // 
             // OrderBaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 788);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.ComboBoxPriority);
+            this.Controls.Add(this.labelCollectDate);
             this.Controls.Add(this.Label32);
             this.Controls.Add(this.ComboBoxoldorder);
             this.Controls.Add(this.Buttoneditprevious);
@@ -861,7 +874,7 @@
             this.Controls.Add(this.Label28);
             this.Controls.Add(this.ordertechid);
             this.Controls.Add(this.Label27);
-            this.Controls.Add(this.colldate);
+            this.Controls.Add(this.TextboxCollectDate);
             this.Controls.Add(this.DateTimePicker1);
             this.Controls.Add(this.Label26);
             this.Controls.Add(this.sendout);
@@ -900,7 +913,6 @@
             this.Controls.Add(this.Label9);
             this.Controls.Add(this.mrn);
             this.Controls.Add(this.Label8);
-            this.Controls.Add(this.priority);
             this.Controls.Add(this.Label7);
             this.Controls.Add(this.labelWard);
             this.Controls.Add(this.receivetime);
@@ -960,7 +972,7 @@
         internal System.Windows.Forms.Label Label33;
         internal System.Windows.Forms.Label Label34;
         internal System.Windows.Forms.Label Label32;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelCollectDate;
         public downtimeC.StoredComboBox comboBoxWard;
         public System.Windows.Forms.ComboBox ComboBoxprinter;
         public downtimeC.TubeTypeTextBox OTHERBOX;
@@ -968,7 +980,7 @@
         public downtimeC.TubeTypeTextBox fluidbox;
         public downtimeC.TubeTypeTextBox csfbox;
         public System.Windows.Forms.TextBox ordertechid;
-        public downtimeC.StoredTextBox colldate;
+        public downtimeC.StoredTextBox TextboxCollectDate;
         public System.Windows.Forms.DateTimePicker DateTimePicker1;
         public downtimeC.TubeTypeTextBox sendout;
         public downtimeC.TubeTypeTextBox ser;
@@ -988,15 +1000,15 @@
         public downtimeC.TubeTypeTextBox redtest;
         public downtimeC.StoredTextBox DOB;
         public downtimeC.StoredTextBox mrn;
-        public downtimeC.StoredTextBox priority;
         public downtimeC.StoredTextBox receivetime;
         public downtimeC.TubeTypeTextBox collectiontime;
         public downtimeC.StoredTextBox lastname;
         public System.Windows.Forms.Button ButtonFill;
         public downtimeC.StoredTextBox firstname;
-        public System.Windows.Forms.TextBox TextBoxIMMUNO;
+        public downtimeC.TubeTypeTextBox TextBoxIMMUNO;
         public System.Windows.Forms.Button editorder;
         public System.Windows.Forms.Button Buttoneditprevious;
         public System.Windows.Forms.ComboBox ComboBoxoldorder;
+        public downtimeC.PriorityComboBox ComboBoxPriority;
     }
 }

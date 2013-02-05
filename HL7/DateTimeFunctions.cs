@@ -112,10 +112,10 @@ using CodeBase2;
             string monthendString = monthend.ToString();
             if (monthend > 99)
             {
-                string newmonthstart = Microsoft.VisualBasic.Strings.Left(monthendString, 2);
+                int letter = int.Parse(Microsoft.VisualBasic.Strings.Left(monthendString, 2));
                 string newmonthend = Microsoft.VisualBasic.Strings.Right(monthendString, 1);
-                newmonthstart = newmonthstart + 55;
-                monthend = int.Parse(Microsoft.VisualBasic.Strings.Chr(int.Parse(newmonthstart)) + newmonthend);
+                letter = letter + 55;
+                monthend = int.Parse(Microsoft.VisualBasic.Strings.Chr(letter) + newmonthend);
             }
 
 

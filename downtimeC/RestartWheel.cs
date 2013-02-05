@@ -192,10 +192,10 @@ namespace downtimeC
         string monthend = Convert.ToString(Convert.ToInt32(endmonth) + Convert.ToInt32(endmnth));
 
         if (int.Parse(monthend) > 99) {
-            string newmonthstart = Strings.Left(monthend, 2);
+            int newmonthstart = int.Parse(Strings.Left(monthend, 2));
             string newmonthend = Strings.Right(monthend, 1);
             newmonthstart = newmonthstart + 55;
-            monthend = Microsoft.VisualBasic.Strings.Chr(int.Parse(newmonthstart)) + newmonthend;
+            monthend = Microsoft.VisualBasic.Strings.Chr(newmonthstart) + newmonthend;
         }
         string monthday = monthend + endday;
         return (monthday);
@@ -243,8 +243,8 @@ namespace downtimeC
         }
 
         string ordernums = Strings.Right(datanumber, 3);
-        string letters = Strings.Left(datanumber, 2);
-        string alphanum = date2ordernumber(System.DateTime.Now.ToString()) + Microsoft.VisualBasic.Strings.Chr(int.Parse(letters)) + ordernums;
+        char letters = Strings.Chr(int.Parse(Strings.Left(datanumber, 2)));
+        string alphanum = date2ordernumber(System.DateTime.Now.ToString()) + letters + ordernums;
         string ordnumend = letters + ordernums;
 
 

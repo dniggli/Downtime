@@ -18,12 +18,7 @@ namespace downtimeC
         /// <summary>
         /// Required for VisualStudio designer
         /// </summary>
-        protected TrackingBase()
-        {
-            InitializeComponent();
-        }
-
-        public TrackingBase(DateTime StartupTime) : base(StartupTime)
+        public TrackingBase() : base()
         {
             InitializeComponent();
         }
@@ -258,8 +253,7 @@ namespace downtimeC
                 writeDowntimeTable();
             }
 
-            this.ClearAllTextBoxes(this.tracktagbox);
-   
+            this.ClearAllInputControls(this.tracktagbox);
             this.tracktagbox.Text = IncrementTrackingTag(this.tracktagbox.Text);
           
 

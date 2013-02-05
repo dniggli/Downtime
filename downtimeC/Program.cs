@@ -22,7 +22,8 @@ namespace downtimeC
             if (Login.valid)
             {
                 GlobalMutableState.userName = Login.userName;
-                Application.Run(new MainMenu(System.DateTime.Now,Login.hospital));
+                GlobalMutableState.StartupDate = System.DateTime.Now;
+                Application.Run(new MainMenu(Login.hospital));
             }           
         }
     }

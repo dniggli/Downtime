@@ -15,7 +15,7 @@ namespace downtimeC
 {
     public partial class TrackHemForm : TrackingBase
     {
-        public TrackHemForm(DateTime StartupTime) : base(StartupTime)
+        public TrackHemForm() : base()
         {
             InitializeComponent();
         }

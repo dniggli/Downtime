@@ -18,7 +18,8 @@ namespace downtimeC.LabelPrinting
     public enum Priority
     {
         Stat,
-        Routine
+        Routine,
+        Urgent
     }
 
     public class LabelData
@@ -81,7 +82,7 @@ namespace downtimeC.LabelPrinting
         /// <param name="ldata"></param>
         /// <param name="printer"></param>
         /// <remarks></remarks>
-        public void LabelAppendCollection(string testlist, string specimenType, string extension)
+        internal void LabelAppendCollection(string testlist, string specimenType, string extension)
         {
             if (testlist == string.Empty)
                 return;
@@ -150,7 +151,7 @@ namespace downtimeC.LabelPrinting
         /// <param name="ldata1"></param>
         /// <param name="printer"></param>
         /// <remarks></remarks>
-        public void LabelAppendComment(string testlist, string specimenType, string extension)
+        internal void LabelAppendComment(string testlist, string specimenType, string extension)
         {
             if (testlist == string.Empty)
                 return;
@@ -197,7 +198,7 @@ namespace downtimeC.LabelPrinting
         /// <param name="ldata2"></param>
         /// <param name="printer"></param>
         /// <remarks></remarks>
-        public void LabelAppendDemographic(string testlist, string specimenType, string extension)
+        internal void LabelAppendDemographic(string testlist, string specimenType, string extension)
         {
             if (testlist == string.Empty)
                 return;
@@ -239,7 +240,7 @@ namespace downtimeC.LabelPrinting
         /// <param name="ldata"></param>
         /// <param name="printer"></param>
         /// <remarks></remarks>
-        public void LabelAppendAliquotStat(string testlist, string specimenType, string extension)
+        internal void LabelAppendAliquotStat(string testlist, string specimenType, string extension)
         {
             if (testlist == string.Empty)
                 return;
@@ -303,7 +304,7 @@ namespace downtimeC.LabelPrinting
         /// <param name="ldata"></param>
         /// <param name="printer"></param>
         /// <remarks></remarks>
-        public void LabelAppendAliquotRoutine(string testlist, string specimenType, string extension)
+        internal void LabelAppendAliquotRoutine(string testlist, string specimenType, string extension)
         {
             if (testlist == string.Empty)
                 return;
@@ -375,11 +376,11 @@ namespace downtimeC.LabelPrinting
 
 
 
-        public void doPrint(string printer)
+        public void doPrint(string printer, SetupTableData setupTableData)
         {
             //RawPrinterHelper.SendStringToPrinter(printer, orderentry.strNecessary.ToString)
-            Dictionary<string, string> NameToIP = Send_IP_Printer.GetLabelersListOfIPs_byGroup("/Strong/Specimen Management");
-            string PrinterDNSName = NameToIP[printer.ToUpper()].ToString();
+            
+            string PrinterDNSName = setupTableData.LabelersByIp[printer.ToUpper()].ToString();
             if (!PrinterDNSName.Contains("."))
             {
                 printer = CodeBase2.DNS.NameToIPString(PrinterDNSName);
@@ -387,7 +388,7 @@ namespace downtimeC.LabelPrinting
             }
             else
             {
-                Send_IP_Printer.PrintLabel(NameToIP[printer.ToUpper()], strNecessary.ToString());
+                Send_IP_Printer.PrintLabel(setupTableData.LabelersByIp[printer.ToUpper()], strNecessary.ToString());
             }
         }
     }

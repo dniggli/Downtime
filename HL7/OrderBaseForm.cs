@@ -17,18 +17,18 @@ namespace HL7
         {
             InitializeComponent();
         }
-
-        public OrderBaseForm(DateTime StartupTime, SetupTableData setupTableData, GetMySQL getMySQL)
-            : base(StartupTime)
+        readonly SetupTableData setupTableData;
+        public OrderBaseForm(SetupTableData setupTableData, GetMySQL getMySQL)
+            : base()
         {
             InitializeComponent();
-
+            this.setupTableData = setupTableData;
         #if DEBUG
             this.ButtonFill.Visible = true;
             this.buttonRead.Visible = true;
         #endif
 
-            ComboBoxprinter.Items.Add(getMySQL.FilledColumn("select name from pathdirectory.device d join pathdirectory.device_has_group dg on d.Device_ID = dg.Device_ID where Group_ID = '41' order by name"));
+            ComboBoxprinter.Items.AddRange(setupTableData.LabelersByIp.Keys.ToArray());
             comboBoxWard.Items.AddRange(setupTableData.wards);
 
 
@@ -52,60 +52,56 @@ namespace HL7
 
         }
 
-        //prints demographic labels or routines
-        public void printdemographiclabels()
-        {
-            if (!(this.firstname.Text == string.Empty))
-            {
-                var labelData = new LabelData(this.ordernumber.Text, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
-this.DateTimePicker1.Text);
+        //prints demographic labels
+        //public void printdemographiclabels(LabelData labelData)
+        //{
+        //    if (!(this.firstname.Text == string.Empty))
+        //    {
+        //        collectiontime.LabelAppend(labelData, ComboBoxPriority.getPriority);
+        //        collectiontime.LabelAppend(labelData, ComboBoxPriority.getPriority);
+        //    }
 
-                collectiontime.LabelAppend(labelData, Priority.Routine);
-                collectiontime.LabelAppend(labelData, Priority.Routine);
-                labelData.doPrint(ComboBoxprinter.Text);
-            }
-
+        //}
+      
+        /// <summary>
+        /// Return all TubeTypeTextBoxes that match the given LabelPrintMode
+        /// </summary>
+        public IEnumerable<TubeTypeTextBox> getTubeTypeTextBoxesMatching(params LabelPrintMode[] printMode)
+        {           
+                 return this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>().Where(x =>printMode.Contains(x.LabelPrintMode)).OrderBy(x =>x.SpecimenExtension);
+            
         }
 
-        public IEnumerable<TubeTypeTextBox> getAllTubeTypeTextBoxes
+        /// <summary>
+        /// Return all TubeTypeTextBoxes that match the given LabelPrintMode
+        /// </summary>
+        public IEnumerable<TubeTypeTextBox> getTestLabelTextBoxes
         {
-            get
-            {
-             return this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>();
-            }
+            get {
+            return getTubeTypeTextBoxesMatching(LabelPrintMode.Aliquot, LabelPrintMode.Collection);
+        }
         }
 
-        public void printDowntimeLables(Priority priority)
+
+        /// <summary>
+        /// Print collection, comment, and (collection or aliquot) labels
+        /// </summary>
+        protected void printLabels()
         {
-            //get all tubeTypeTextboxes in this form
-           
-            var labelData = new LabelData(this.ordernumber.Text, this.priority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
+            //PrintDowntimeLabels
+            var labelData = new LabelData(this.ordernumber.Text, this.ComboBoxPriority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
     this.DateTimePicker1.Text);
 
+         
+            collectiontime.LabelAppend(labelData, ComboBoxPriority.getPriority);
+            comment.LabelAppend(labelData, ComboBoxPriority.getPriority);
+            getTestLabelTextBoxes.forEach(tb => tb.LabelAppend(labelData, ComboBoxPriority.getPriority));
+            
+         
 
-            getAllTubeTypeTextBoxes.forEach(tb => tb.LabelAppend(labelData, priority));
+          //  labelData.doPrint(ComboBoxprinter.Text, setupTableData);
 
-
-            labelData.doPrint(ComboBoxprinter.Text);
-
-        }
-
-        protected void writeandprint()
-        {
-            //writeDowntimeTable()
-            if (priority.Text == "S")
-            {
-                this.priority.Text = "STAT";
-                printDowntimeLables(Priority.Stat);
-            }
-            if (priority.Text == "R")
-                printDowntimeLables(Priority.Routine);
-            if (priority.Text == "U")
-                printDowntimeLables(Priority.Stat);
-
-            this.ClearAllTextBoxes();
-
-            ordernumber.Focus();
+          
         }
 
     }
