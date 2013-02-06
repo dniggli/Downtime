@@ -25,16 +25,6 @@ namespace downtimeC
 
         public void writeDowntimeTable2()
         {
-            string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            Random ran = new Random();
-            int length = ran.Next(0, 20);
-            // get a random length
-
-            string ranletter = alphabet.Substring(ran.Next(0, 25), 1);
-
-
-
-
             string ordernumber1 = string.Empty;
             string trackcomnt = string.Empty;
             string tracktag = string.Empty;
@@ -62,13 +52,7 @@ namespace downtimeC
 
         public void writeDowntimeTable()
         {
-            string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            Random ran = new Random();
-            int length = ran.Next(0, 20);
-            // get a random length
-
-            string ranletter = alphabet.Substring(ran.Next(0, 25), 1);
-
+      
 
 
 

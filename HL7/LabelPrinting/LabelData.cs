@@ -95,7 +95,7 @@ namespace downtimeC.LabelPrinting
             label += "^FX COLLECTION LABEL ^FS" + Constants.vbNewLine;
             label += "^FO  0, 15,^A0B,29        ^FD" + orderNumber.Substring(4) + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 13,^A0,29         ^FD" + orderNumber + "-" + extension + "^FS" + Constants.vbNewLine;
-            if (priority == "STAT")
+            if (priority == "STAT" || priority == "U")
             {
                 label += "^FO260, 3                 ^GB 60, 13,35,,100^FS";
             }
@@ -164,7 +164,7 @@ namespace downtimeC.LabelPrinting
             label += "^FX COLLECTION LABEL ^FS" + Constants.vbNewLine;
             label += "^FO  0, 15,^A0B,29        ^FD" + orderNumber.Substring(4) + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 13,^A0,29         ^FD" + orderNumber + "" + extension + "^FS" + Constants.vbNewLine;
-            if (priority == "STAT")
+            if (priority == "STAT" || priority == "U")
             {
                 label += "^FO260, 3                 ^GB 60, 13,35,,100^FS";
             }
@@ -213,7 +213,7 @@ namespace downtimeC.LabelPrinting
             label += "^FX COLLECTION LABEL ^FS" + Constants.vbNewLine;
             label += "^FO  0, 15,^A0B,29        ^FD" + orderNumber.Substring(4) + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 13,^A0,29         ^FD" + orderNumber + "" + extension + "^FS" + Constants.vbNewLine;
-            if (priority == "STAT")
+            if (priority == "STAT" || priority == "U")
             {
                 label += "^FO260, 3                 ^GB 60, 13,35,,100^FS";
             }

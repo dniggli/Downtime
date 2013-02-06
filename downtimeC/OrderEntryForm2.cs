@@ -67,13 +67,6 @@ namespace downtimeC
 
         public void writeDowntimeTable()
         {
-            var alphabet = "abcdefghijklmnopqrstuvwxyz";
-            Random ran = new Random();
-            int length = ran.Next(0, 20);
-            // get a random length
-
-            var ranletter = alphabet.Substring(ran.Next(0, 25), 1);
-
             TextboxCollectDate.Text = DateTimePicker1.Text;
 
             if (NotAn_X_Mrn)
@@ -85,13 +78,13 @@ namespace downtimeC
             }
 
             var p = new MySqlParameter("?CollectionTime", collectiontime.Text);
-            mySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + ComboBoxPriority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + TextboxCollectDate.Text + "',TECHID = '" + ordertechid.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
+            mySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + ComboBoxPriority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + TextboxCollectDate.Text + "',TECHID = '" + TextBoxTechId.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
 
 
             this.DisableAll<TextBox>();
             this.DisableAll<ComboBox>();
           
-            ComboBoxprinter.Enabled = true;
+            ComboboxPrinter.Enabled = true;
             ComboBoxoldorder.Enabled = true;
             TextBoxbillingnumber.Enabled = true;
         }
@@ -180,15 +173,8 @@ namespace downtimeC
         }
 
 
-
-
-
-        public void ButtonPrint_Click(System.Object sender, System.EventArgs e)
-        {
-            ButtonClick();
-        }
-        public void ButtonClick()
-        {
+        protected override void OnPrintClick() {
+        
             if (!string.IsNullOrEmpty(redtest.Text))
             {
                 var eAS = redtest.Text.Split(new char[] { ',' }).Select(x => x.Trim(' '));
@@ -357,7 +343,7 @@ namespace downtimeC
             {
                 ComboBoxoldorder.Items.Add(ordernumber.Text + "   " + lastname.Text + "," + firstname.Text);
             }
-            this.ClearAllInputControls(this.ComboBoxprinter);
+            this.ClearAllInputControls(this.ComboboxPrinter, this.TextBoxTechId);
             ordernumber.Focus();
         }
         public void sendHL7(string mrn, string firstName, string lastName, string ordernumber, string ward, IEnumerable<string> codes, SpecimenType specimenType)
@@ -439,47 +425,7 @@ namespace downtimeC
             }
         }
 
-        public void checkfororder()
-        {
-            var n = mySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" + this.ordernumber.Text + "' ORDER BY ID DESC LIMIT 1");
-
-            ordernumber.Enabled = false;
-
-            try
-            {
-                DataRow q = n.Rows[0];
-                if (!(q["firstname"].ToString() == string.Empty))
-                {
-                    MsgBoxResult response = Interaction.MsgBox("Order already exists. Do you wish to edit?", MsgBoxStyle.YesNo, "MsgBox");
-                    if (response == MsgBoxResult.Yes)
-                        readDowntimeTable();
-                    if (response == MsgBoxResult.No)
-                    {
-                        ordernumber.Clear();
-                        return;
-
-                    }
-                }
-            }
-            catch (Exception msgbox)
-            {
-            }
-            if (firstname.Text == string.Empty)
-            {
-                // Display message.
-                if (Interaction.MsgBox("Order Does Not exist exists.", MsgBoxStyle.OkOnly, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    ordernumber.Clear();
-                    editorder.Enabled = true;
-                    Buttoneditprevious.Enabled = true;
-
-
-                }
-            }
-            this.EnableAll<TextBox>();
-            this.EnableAll<ComboBox>();
-
-        }
+     
 
         /// <summary>
         /// Make sure Billing number TextBox does not match: "S000*" or "SX*"
@@ -561,54 +507,6 @@ namespace downtimeC
             }
         }
 
-        public void readDowntimeTable()
-        {
-            mySql.FilledRowOption("select * from dtdb1.Table1 where ordernumber like '" + this.ordernumber.Text + "' ORDER BY ID DESC LIMIT 1").forEach(r =>
-            {
-
-                //Try
-
-                //ordernumber.Text = r("ordernumber").ToString
-                firstname.Text = r["firstname"].ToString();
-                lastname.Text = r["lastname"].ToString();
-                mrn.Text = r["mrn"].ToString();
-                collectiontime.Text = r["collectiontime"].ToString();
-                receivetime.Text = r["receivetime"].ToString();
-                ComboBoxPriority.Text = r["priority"].ToString();
-                comboBoxWard.Text = r["location"].ToString();
-                bluetest.Text = r["bluetest"].ToString();
-                redtest.Text = r["redtest"].ToString();
-                greentest.Text = r["greentest"].ToString();
-                urinechem.Text = r["urinechem"].ToString();
-                urinehem.Text = r["urinehem"].ToString();
-                graytest.Text = r["grytest"].ToString();
-                comment.Text = r["ordercomment"].ToString();
-                problem.Text = r["problem"].ToString();
-                lavchemtest.Text = r["lavchemtest"].ToString();
-                lavhemtest.Text = r["lavhemtest"].ToString();
-                bloodgas.Text = r["bloodgas"].ToString();
-                DOB.Text = r["dob"].ToString();
-                cal1.Text = r["calls"].ToString();
-                sendout.Text = r["SENDOUT"].ToString();
-                hepp.Text = r["heppetitas"].ToString();
-                ser.Text = r["serology"].ToString();
-                TextboxCollectDate.Text = r["collectdate"].ToString();
-                csfbox.Text = r["CSFTEST"].ToString();
-                fluidbox.Text = r["FLUIDTEST"].ToString();
-                Viralloadbox.Text = r["VIRALLOADTEST"].ToString();
-                OTHERBOX.Text = r["OTHERTEST"].ToString();
-                TextBoxIMMUNO.Text = r["IMMUNOTEST"].ToString();
-                TextBoxbillingnumber.Text = r["BILLINGNUMBER"].ToString();
-                Application.DoEvents();
-                //Display the changes immediately (redraw the label text)
-                System.Threading.Thread.Sleep(500);
-                //do it slow enough so we can actually read the text before it changes, pause half a second
-                //Catch exitsub As Exception
-            });
-            //End Try
-        }
-
-
 
 
 
@@ -617,10 +515,40 @@ namespace downtimeC
             if (ordernumber.Text.Length == 8)
             {
                 ordernumber.Enabled = false;
-                ordertechid.Text = GlobalMutableState.userName;
-                checkfororder();
+                TextBoxTechId.Text = GlobalMutableState.userName;
+
+                Option<DataRow> order = orderLookup(this.ordernumber.Text);
+
+                if (order.isDefined)
+                {
+                    MsgBoxResult response = Interaction.MsgBox("Order already exists. Do you wish to edit?", MsgBoxStyle.YesNo, "MsgBox");
+                    if (response == MsgBoxResult.Yes)
+                    {
+                        readDowntimeTable(order.get);
+
+                    }
+                    else
+                    {
+                        ordernumber.Clear();
+                        return;
+                    }
+                }
+                else
+                {
+                    // Display message.
+                    Interaction.MsgBox("Order Does Not exist.", MsgBoxStyle.OkOnly, "MsgBox");
+
+                    ordernumber.Clear();
+                    editorder.Enabled = true;
+                    Buttoneditprevious.Enabled = true;
+                }
+                this.EnableAll<TextBox>();
+                this.EnableAll<ComboBox>();
             }
+
         }
+        
+
 
 
 
@@ -628,7 +556,7 @@ namespace downtimeC
         {
             Buttoneditprevious.Enabled = false;
             ordernumber.Enabled = true;
-            buttonRead.Enabled = true;
+            DebugButtonRead.Enabled = true;
             editorder.Enabled = false;
             ordernumber.Focus();
 
@@ -682,84 +610,75 @@ namespace downtimeC
             }
         }
 
-        private void ComboBoxprinter_KeyPress(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                ButtonClick();
+        //private void buttonRead_Click_1(System.Object sender, System.EventArgs e)
+        //{
+        //    int n = 98106501;
+        //    int nend = 98107000;
+        //    while ((n < nend))
+        //    {
+        //        AddOrders(n.ToString());
+        //        n = n + 1;
+        //    }
 
-            }
-        }
-
-        private void buttonRead_Click_1(System.Object sender, System.EventArgs e)
-        {
-            int n = 98106501;
-            int nend = 98107000;
-            while ((n < nend))
-            {
-                AddOrders(n.ToString());
-                n = n + 1;
-            }
-
-        }
+        //}
 
 
-        public void AddOrders(string ordernumber)
-        {
+        //public void AddOrders(string ordernumber)
+        //{
 
-            var alphabet = "abcdefghijklmnopqrstuvwxyz";
-            Random ran = new Random();
-            int length = ran.Next(0, 20);
-            // get a random length
+        //    var alphabet = "abcdefghijklmnopqrstuvwxyz";
+        //    Random ran = new Random();
+        //    int length = ran.Next(0, 20);
+        //    // get a random length
 
-            var ranletter = alphabet.Substring(ran.Next(0, 25), 1);
+        //    var ranletter = alphabet.Substring(ran.Next(0, 25), 1);
 
 
 
 
-            var lastname1 = lastname.Text;
-            var collectiontime1 = collectiontime.Text;
-            var receivetime1 = receivetime.Text;
-            var location1 = comboBoxWard.Text;
-            var dob1 = DOB.Text;
+        //    var lastname1 = lastname.Text;
+        //    var collectiontime1 = collectiontime.Text;
+        //    var receivetime1 = receivetime.Text;
+        //    var location1 = comboBoxWard.Text;
+        //    var dob1 = DOB.Text;
 
-            var bt = bluetest.Text;
-            var lht = lavhemtest.Text;
-            var gt = greentest.Text;
-            var lct = lavchemtest.Text;
-            var grt = graytest.Text;
-            var uh = urinehem.Text;
-            var uc = urinechem.Text;
-            var bg = bloodgas.Text;
-            var prob = problem.Text;
-            var ordcmt = comment.Text;
-            var cal = cal1.Text;
-            var hep = hepp.Text;
-            var serr = ser.Text;
-            var senot = sendout.Text;
+        //    var bt = bluetest.Text;
+        //    var lht = lavhemtest.Text;
+        //    var gt = greentest.Text;
+        //    var lct = lavchemtest.Text;
+        //    var grt = graytest.Text;
+        //    var uh = urinehem.Text;
+        //    var uc = urinechem.Text;
+        //    var bg = bloodgas.Text;
+        //    var prob = problem.Text;
+        //    var ordcmt = comment.Text;
+        //    var cal = cal1.Text;
+        //    var hep = hepp.Text;
+        //    var serr = ser.Text;
+        //    var senot = sendout.Text;
 
-            var techids = ordertechid.Text;
-            var csf = csfbox.Text;
-            var fluid = fluidbox.Text;
-            var viral = Viralloadbox.Text;
-            var other = OTHERBOX.Text;
-            var BILLING = TextBoxbillingnumber.Text;
-            var IMMUNO = TextBoxIMMUNO.Text;
+        //    var techids = TextBoxTechId.Text;
+        //    var csf = csfbox.Text;
+        //    var fluid = fluidbox.Text;
+        //    var viral = Viralloadbox.Text;
+        //    var other = OTHERBOX.Text;
+        //    var BILLING = TextBoxbillingnumber.Text;
+        //    var IMMUNO = TextBoxIMMUNO.Text;
 
-            TextboxCollectDate.Text = DateTimePicker1.Text;
+        //    TextboxCollectDate.Text = DateTimePicker1.Text;
 
-            if (NotAn_X_Mrn)
-            {
-                while (mrn.Text.Length < 12)
-                {
-                    mrn.Text = "0" + mrn.Text;
-                }
-            }
+        //    if (NotAn_X_Mrn)
+        //    {
+        //        while (mrn.Text.Length < 12)
+        //        {
+        //            mrn.Text = "0" + mrn.Text;
+        //        }
+        //    }
 
 
 
-            mySql.ExecuteNonQuery("insert into dtdb1.Table1 (ordernumber,COLLECTIONTIME,RECEIVETIME,LOCATION,PRIORITY,MRN,DOB,FIRSTNAME,REDTEST,BLUETEST,LAVHEMTEST,GREENTEST,LAVCHEMTEST,GRYTEST,URINEHEM,URINECHEM,BLOODGAS,PROBLEM,CALLS,ORDERCOMMENT,LASTNAME,SENDOUT,SEROLOGY,HEPPETITAS,COLLECTDATE,TECHID,CSFTEST,FLUIDTEST,VIRALLOADTEST, BILLINGNUMBER)VALUES('" + ordernumber + "', '" + collectiontime1 + "','" + receivetime1 + "','" + location1 + "', '" + ComboBoxPriority.Text + "', '" + mrn.Text + "','" + dob1 + "','" + firstname.Text + "', '" + redtest.Text + "', '" + bt + "', '" + lht + "','" + gt + "', '" + lct + "', '" + grt + "','" + uh + "','" + uc + "','" + bg + "', '" + prob + "','" + cal + "','" + ordcmt + "','" + lastname1 + "','" + senot + "','" + serr + "', '" + hep + "','" + TextboxCollectDate.Text + "','" + techids + "','" + csf + "','" + fluid + "','" + viral + "', '" + BILLING + "')");
-        }
+        //    mySql.ExecuteNonQuery("insert into dtdb1.Table1 (ordernumber,COLLECTIONTIME,RECEIVETIME,LOCATION,PRIORITY,MRN,DOB,FIRSTNAME,REDTEST,BLUETEST,LAVHEMTEST,GREENTEST,LAVCHEMTEST,GRYTEST,URINEHEM,URINECHEM,BLOODGAS,PROBLEM,CALLS,ORDERCOMMENT,LASTNAME,SENDOUT,SEROLOGY,HEPPETITAS,COLLECTDATE,TECHID,CSFTEST,FLUIDTEST,VIRALLOADTEST, BILLINGNUMBER)VALUES('" + ordernumber + "', '" + collectiontime1 + "','" + receivetime1 + "','" + location1 + "', '" + ComboBoxPriority.Text + "', '" + mrn.Text + "','" + dob1 + "','" + firstname.Text + "', '" + redtest.Text + "', '" + bt + "', '" + lht + "','" + gt + "', '" + lct + "', '" + grt + "','" + uh + "','" + uc + "','" + bg + "', '" + prob + "','" + cal + "','" + ordcmt + "','" + lastname1 + "','" + senot + "','" + serr + "', '" + hep + "','" + TextboxCollectDate.Text + "','" + techids + "','" + csf + "','" + fluid + "','" + viral + "', '" + BILLING + "')");
+        //}
 
      
 

@@ -27,7 +27,7 @@ namespace downtimeC
             
                 if (base.Text == "S")
                 {
-                    return "Stat";
+                    return "STAT";
                 }
                 else 
                 {
