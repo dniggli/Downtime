@@ -91,7 +91,8 @@ namespace downtimeC
                 //return the readiedQuery
                 .Return<string>();
 
-              new StatOrderQueryForm(readiedQuery, this.ComboBoxSelectQuery.Text); 
+            var queryForm =  new StatOrderQueryForm(readiedQuery, this.ComboBoxSelectQuery.Text, getMySql);
+            queryForm.Show();
         }
 
 

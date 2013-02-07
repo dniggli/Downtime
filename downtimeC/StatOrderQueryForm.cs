@@ -27,17 +27,10 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        public StatOrderQueryForm(GetMySQL getMySql)
-        {
-            InitializeComponent();
-            this.getMySql = getMySql;
-        }
-
     string QUERY;
     string QUERYName;
-
-    public StatOrderQueryForm(string query, string queryName)
+    readonly GetMySQL getMySql;
+    public StatOrderQueryForm(string query, string queryName, GetMySQL getMySql)
     {
         // This call is required by the Windows Form Designer.
         InitializeComponent();
@@ -45,21 +38,17 @@ namespace downtimeC
         // Add any initialization after the InitializeComponent() call.
         this.QUERY = query;
         this.QUERYName = queryName;
+        this.getMySql = getMySql;
     }
 
     private void Form2_Load(System.Object sender, System.EventArgs e)
     {
-        //Dim statorder As New MySqlDataAdapter("SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.CALLS FROM dtdb1.Table1 GROUP BY Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.CALLS HAVING(((Table1.PRIORITY) Like ""S"")) ORDER BY Table1.ordernumber;", "server=lis-s22104-db1;Database=dtdb1;uid=dniggli;pwd=vvo084")
-        MySqlDataAdapter statorder = new MySqlDataAdapter(QUERY, "server=lis-s22104-db1;Database=dtdb1;uid=dniggli;pwd=vvo084");
+        
+        
         this.Text = QUERYName;
-        DataTable t = new DataTable();
-
-        statorder.Fill(t);
-
-
-        this.DataGridView1.DataSource = t;
-
-
+         getMySql.Async(this).FilledTable(QUERY, dt => {
+             this.DataGridView1.DataSource = dt;
+        });
     }
 
 

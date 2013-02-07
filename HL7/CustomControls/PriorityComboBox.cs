@@ -36,24 +36,24 @@ namespace downtimeC
             }
         }
 
-        public Priority getPriority
+        public Option<Priority> getPriorityOption
         {
             get
             {
                 if (base.Text == "R") {
-                    return Priority.Routine;
+                    return Option.Some(Priority.Routine);
                 }
                 else if (base.Text == "S")
                 {
-                    return Priority.Stat;
+                    return Option.Some(Priority.Stat);
                 }
                 else if (base.Text == "U")
                 {
-                    return Priority.Urgent;
+                    return Option.Some(Priority.Urgent);
                 }
                 else
                 {
-                    throw new NotImplementedException("Undefined Priority");
+                   return Option.None<Priority>();
                 }
                 
             }

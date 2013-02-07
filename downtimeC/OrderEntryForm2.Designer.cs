@@ -38,9 +38,6 @@
             // 
             this.TextBoxbillingnumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxbillingnumber_KeyPress);
             // 
-            // ComboboxPrinter
-            // 
-            // 
             // OTHERBOX
             // 
             this.OTHERBOX.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
@@ -68,9 +65,6 @@
             // hepp
             // 
             this.hepp.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // buttonRead
-            // 
             // 
             // cal1
             // 
@@ -112,13 +106,18 @@
             // 
             this.redtest.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
             // 
-            // ButtonFill
+            // DebugButtonFill
             // 
             this.DebugButtonFill.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             // 
             // TextBoxIMMUNO
             // 
             this.TextBoxIMMUNO.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
+            // 
+            // editorder
+            // 
+            this.editorder.Visible = true;
+            this.editorder.Click += new System.EventHandler(this.editorder_Click);
             // 
             // Buttoneditprevious
             // 
@@ -128,9 +127,6 @@
             // 
             this.ComboBoxoldorder.Visible = true;
             this.ComboBoxoldorder.SelectedIndexChanged += new System.EventHandler(this.ComboBoxoldorder_SelectedIndexChanged);
-            // 
-            // ButtonPrint
-            // 
             // 
             // Label32
             // 

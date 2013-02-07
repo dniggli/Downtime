@@ -39,20 +39,20 @@ namespace downtimeC
             this.DisableAll<ComboBox>(this.ComboboxPrinter);
         }
     
-        public void printDowntimeLables(Priority priority)
-        {                
-            //get all tubeTypeTextboxes in this form
-            var tubeTypeTextboxes = this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>();
-            var labelData = new LabelData(this.ordernumber.Text, this.comboBoxWard.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
-    this.DateTimePicker1.Text);
+    //    public void printDowntimeLables(Priority priority)
+    //    {                
+    //        //get all tubeTypeTextboxes in this form
+    //        var tubeTypeTextboxes = this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>();
+    //        var labelData = new LabelData(this.ordernumber.Text, this.comboBoxWard.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
+    //this.DateTimePicker1.Text);
        
 
-            tubeTypeTextboxes.forEach(tb => tb.LabelAppend(labelData,priority));
+    //        tubeTypeTextboxes.forEach(tb => tb.LabelAppend(labelData,priority));
 
 
-            labelData.doPrint(ComboboxPrinter.Text, setupTableData);
+    //        labelData.doPrint(ComboboxPrinter.Text, setupTableData);
 
-        }
+    //    }
 
 
 
@@ -97,7 +97,14 @@ namespace downtimeC
                 {
                     if (orderExists())
                     {
-                        checkPrinterAndPrintTheDemographicLabels();
+                        if (validateAndPromptPrinter())
+                        {
+                           // printdemographiclabels();
+                            printLabels();
+                        }
+
+                        this.ClearAllTextBoxes();
+                        ordernumber.Focus();
                     }
                 }
             }
@@ -122,41 +129,25 @@ namespace downtimeC
 
         }
 
-       
 
-        private void checkPrinterAndPrintTheDemographicLabels()
-        {
-            if (validateAndPromptPrinter()) {
-                if (orderExists())
-                {
-                        printdemographiclabels();
-                }
-                else
-                {
-                    return;
-                }
-            }
 
-            this.ClearAllTextBoxes();
-            ordernumber.Focus();
-        }
 
-            /// <summary>
-            /// prints demographic labels or routines
-            /// </summary>
-                public void printdemographiclabels()
-                {
-                    if (!(this.firstname.Text == string.Empty))
-                    {
-                        var labelData = new LabelData(this.ordernumber.Text, this.comboBoxWard.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
-        this.DateTimePicker1.Text);
+//        /// <summary>
+//        /// prints demographic labels or routines
+//        /// </summary>
+//        public void printdemographiclabels()
+//        {
+//            if (!(this.firstname.Text == string.Empty))
+//            {
+//                var labelData = new LabelData(this.ordernumber.Text, this.comboBoxWard.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
+//this.DateTimePicker1.Text);
 
-                        collectiontime.LabelAppend(labelData, Priority.Routine);
-                        collectiontime.LabelAppend(labelData, Priority.Routine);
-                        labelData.doPrint(ComboboxPrinter.Text, setupTableData);
-                    }
+//                collectiontime.LabelAppend(labelData, Priority.Routine);
+//                collectiontime.LabelAppend(labelData, Priority.Routine);
+//                labelData.doPrint(ComboboxPrinter.Text, setupTableData);
+//            }
 
-                }
+//        }
 
      
      

@@ -172,9 +172,37 @@ namespace downtimeC
             return alphanum;
         }
 
+        bool validateTimeFormat(string fieldName, string fieldValue, Control control)
+        {
+            System.Text.RegularExpressions.Match F = Regex.Match(fieldValue, "([0-9]{2}):([0-9]{2})");
+            if (!F.Success)
+            {
+                if (Interaction.MsgBox(string.Format("{0} must be in proper format(##:##)",fieldName), MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
+                {
+                    control.Focus();
+                    return false;
+                       // User chose Yes.
+                    // Perform some action.
+                }
+            }
+            return true;
+        }
 
-        protected override void OnPrintClick() {
-        
+        bool validateControlIsFilled(string message, string fieldValue, Control control)
+        {
+            if (fieldValue == string.Empty)
+            {
+                if (Interaction.MsgBox(message, MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
+                {
+                    control.Focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void validateAndPrint()
+        {
             if (!string.IsNullOrEmpty(redtest.Text))
             {
                 var eAS = redtest.Text.Split(new char[] { ',' }).Select(x => x.Trim(' '));
@@ -246,57 +274,16 @@ namespace downtimeC
             catch (Exception msgbox)
             {
             }
-            if (this.comboBoxWard.Text == string.Empty)
+
+            if (!validateControlIsFilled("No Location Entered", comboBoxWard.Text, comboBoxWard)) return;
+
+            if (!validateTimeFormat("Collection Time", collectiontime.Text, collectiontime)) return;
+
+            if (!validateTimeFormat("Receive Time", receivetime.Text, receivetime)) return;
+
+            if (!(Strings.Left(mrn.Text, 1) == "X"))
             {
-                if (Interaction.MsgBox("No Location Enterd", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    comboBoxWard.Focus();
-                    return;
-                }
-            }
-
-            var a = collectiontime.Text;
-
-            System.Text.RegularExpressions.Match d = Regex.Match(a, "([0-9]{2}):([0-9]{2})");
-            if (!d.Success)
-            {
-                if (Interaction.MsgBox("collection time not in proper format ##:##", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    mrn.Focus();
-                    return;
-                    // User chose Yes.
-                    // Perform some action.
-                }
-            }
-
-
-            var E1 = receivetime.Text;
-
-            System.Text.RegularExpressions.Match F = Regex.Match(E1, "([0-9]{2}):([0-9]{2})");
-            if (!F.Success)
-            {
-                if (Interaction.MsgBox("Receive time must be in proper format(##:##)", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    mrn.Focus();
-                    return;
-                    // User chose Yes.
-                    // Perform some action.
-                }
-            }
-
-            string xact = Strings.Left(mrn.Text, 1);
-            if (!(xact == "X"))
-            {
-                if (mrn.Text == string.Empty)
-                {
-                    if (Interaction.MsgBox("Must enter MRN", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                    {
-                        mrn.Focus();
-                        return;
-                        // User chose Yes.
-                        // Perform some action.
-                    }
-                }
+                if (!validateControlIsFilled("Must enter MRN", mrn.Text, mrn)) return;
             }
 
             if (BillingNumberNotLike_S000_SX)
@@ -333,7 +320,7 @@ namespace downtimeC
                     }
                 }
             }
-            
+
             printLabels();
             writeDowntimeTable(); //update data about the order in the DB
 
@@ -345,6 +332,12 @@ namespace downtimeC
             }
             this.ClearAllInputControls(this.ComboboxPrinter, this.TextBoxTechId);
             ordernumber.Focus();
+        }
+        protected override void OnPrintClick() {
+            this.ordernumber.TextChanged -= ordernumber_TextChanged;
+            validateAndPrint();
+            this.ordernumber.TextChanged += ordernumber_TextChanged;
+           
         }
         public void sendHL7(string mrn, string firstName, string lastName, string ordernumber, string ward, IEnumerable<string> codes, SpecimenType specimenType)
         {

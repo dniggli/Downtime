@@ -164,20 +164,37 @@ namespace HL7
         /// </summary>
         protected void printLabels()
         {
-            //PrintDowntimeLabels
-            var labelData = new LabelData(this.ordernumber.Text, this.ComboBoxPriority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
-    this.DateTimePicker1.Text);
+            if (ComboBoxPriority.getPriorityOption.isDefined)
+            {
 
-         
-            collectiontime.LabelAppend(labelData, ComboBoxPriority.getPriority);
-            comment.LabelAppend(labelData, ComboBoxPriority.getPriority);
-            getTestLabelTextBoxes.forEach(tb => tb.LabelAppend(labelData, ComboBoxPriority.getPriority));
-            
-         
+                //PrintDowntimeLabels
+                var labelData = new LabelData(this.ordernumber.Text, this.ComboBoxPriority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
+        this.DateTimePicker1.Text);
 
-           labelData.doPrint(this.ComboboxPrinter.Text, setupTableData);
 
-          
+                collectiontime.LabelAppend(labelData, ComboBoxPriority.getPriorityOption.get);
+                comment.LabelAppend(labelData, ComboBoxPriority.getPriorityOption.get);
+                getTestLabelTextBoxes.forEach(tb => tb.LabelAppend(labelData, ComboBoxPriority.getPriorityOption.get));
+
+
+
+                labelData.doPrint(this.ComboboxPrinter.Text, setupTableData);
+
+            }
+            else
+            {
+                priorityValidate();
+            }
+        }
+
+        protected bool priorityValidate()
+        {
+            if (ComboBoxPriority.getPriorityOption.isEmpty)
+            {
+                MessageBox.Show("Priority needs to be set", "Priority needs to be set", MessageBoxButtons.OK);
+                ComboBoxPriority.Focus();
+            }
+            return ComboBoxPriority.getPriorityOption.isDefined;
         }
 
         public void readDowntimeTable(DataRow order)
@@ -202,6 +219,7 @@ namespace HL7
         {
             GlobalMutableState.userName = this.TextBoxTechId.Text;
         }
+
 
     }
 }

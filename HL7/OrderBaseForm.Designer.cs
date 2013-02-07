@@ -92,7 +92,7 @@
             this.firstname = new downtimeC.StoredTextBox();
             this.ordernumber = new downtimeC.StoredTextBox();
             this.Label33 = new System.Windows.Forms.Label();
-            this.TextBoxbillingnumber = new System.Windows.Forms.TextBox();
+            this.TextBoxbillingnumber = new downtimeC.StoredTextBox();
             this.comboBoxWard = new downtimeC.StoredComboBox();
             this.Label34 = new System.Windows.Forms.Label();
             this.TextBoxIMMUNO = new downtimeC.TubeTypeTextBox();
@@ -762,6 +762,7 @@
             // 
             // TextBoxbillingnumber
             // 
+            this.TextBoxbillingnumber.DataColumnName = "BILLINGNUMBER";
             this.TextBoxbillingnumber.Location = new System.Drawing.Point(42, 161);
             this.TextBoxbillingnumber.MaxLength = 13;
             this.TextBoxbillingnumber.Name = "TextBoxbillingnumber";
@@ -808,6 +809,7 @@
             this.editorder.TabStop = false;
             this.editorder.Text = "Edit Order";
             this.editorder.UseVisualStyleBackColor = true;
+            this.editorder.Visible = false;
             // 
             // Buttoneditprevious
             // 
@@ -1018,7 +1020,7 @@
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.Label Label2;
         public downtimeC.StoredTextBox ordernumber;
-        public System.Windows.Forms.TextBox TextBoxbillingnumber;
+        public downtimeC.StoredTextBox TextBoxbillingnumber;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Label Label33;
         internal System.Windows.Forms.Label Label34;
