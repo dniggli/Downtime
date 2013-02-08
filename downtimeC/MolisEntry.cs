@@ -41,18 +41,8 @@ namespace downtimeC
             Application.Run(myOrder);
 
         } else {
-            string msg = null;
-            string title = null;
-            MsgBoxStyle style = default(MsgBoxStyle);
-            MsgBoxResult response = default(MsgBoxResult);
-
-            msg = "You must be logged into Molis";
-            // Define message.
-            style = MsgBoxStyle.DefaultButton1;
-            title = "MsgBox";
-            // Define title.
-            // Display message.
-            response = Interaction.MsgBox(msg, style, title);
+    
+           var response = Interaction.MsgBox("You must be logged into Molis",  MsgBoxStyle.DefaultButton1, "MsgBox");
             if (response == MsgBoxResult.Ok) {
                 return;
             }
@@ -69,11 +59,8 @@ namespace downtimeC
     public void RetriveDTData()
     {
         string ordernumbers = Strings.Left(TextBoxOrderNumber.Text, 8);
-        //Dim da As New MySqlDataAdapter("select * from dtdb1.Table1 where ordernumber like '74206574' ORDER BY ID DESC LIMIT 1", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;")
-        MySqlDataAdapter da = new MySqlDataAdapter("select * from dtdb1.Table1 where ordernumber like '" + ordernumbers + "' ORDER BY ID DESC LIMIT 1", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;");
-        DataTable t = new DataTable();
 
-        da.Fill(t);
+        DataTable t = getMySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" + ordernumbers + "' ORDER BY ID DESC LIMIT 1");
 
         try {
             DataRow r = t.Rows[0];
@@ -272,16 +259,10 @@ namespace downtimeC
             }
             AutoItHelper.AutoItX.Sleep(800);
 
-
-
-
-
             AutoItHelper.AutoItX.Send("{TAB}");
             AutoItHelper.AutoItX.Send("{SPACE}");
 
-
             AutoItHelper.AutoItX.Sleep(200);
-
 
             AutoItHelper.AutoItX.WinActivate("MolisEntry");
             TextBoxOrderNumber.Focus();

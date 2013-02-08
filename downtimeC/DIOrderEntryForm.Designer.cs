@@ -41,7 +41,6 @@
             this.ButtonSubmit.TabIndex = 5;
             this.ButtonSubmit.Text = "Submit";
             this.ButtonSubmit.UseVisualStyleBackColor = true;
-            this.ButtonSubmit.Click += new System.EventHandler(this.ButtonSubmit_Click);
             // 
             // Label1
             // 
@@ -58,7 +57,6 @@
             this.TextBoxOrderNumber.Name = "TextBoxOrderNumber";
             this.TextBoxOrderNumber.Size = new System.Drawing.Size(166, 20);
             this.TextBoxOrderNumber.TabIndex = 3;
-            this.TextBoxOrderNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxOrderNumber_KeyPress);
             // 
             // DIOrderEntryForm
             // 

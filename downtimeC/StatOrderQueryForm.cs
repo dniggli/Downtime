@@ -268,11 +268,6 @@ namespace downtimeC
 
     }
 
-
-    private void PrintDocument1_PrintPage_1(System.Object sender, System.Drawing.Printing.PrintPageEventArgs e)
-    {
-    }
-
     private void Button1_Click(System.Object sender, System.EventArgs e)
     {
         PrintPreviewDialog dlg = new PrintPreviewDialog();
@@ -286,33 +281,12 @@ namespace downtimeC
         //This code gives you the page setup form...
 
         PageSetupDialog psDlg = new PageSetupDialog();
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-    private void PrintPreviewDialog1_Load(System.Object sender, System.EventArgs e)
-    {
     }
 
 
     public void Button2_Click(System.Object sender, System.EventArgs e)
     {
-
-
-
-        MySqlDataAdapter db = new MySqlDataAdapter(QUERY, new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-        DataTable dt = new DataTable();
-
-        db.Fill(dt);
+        DataTable dt = getMySql.FilledTable(QUERY);       
 
         try {
             StreamWriter sw1 = new StreamWriter("C:\\Program Files\\downtime\\Testlist.csv", false);
@@ -360,19 +334,7 @@ namespace downtimeC
 
         sw.Close();
 
-
-        string msg = null;
-        string title = null;
-        MsgBoxStyle style = default(MsgBoxStyle);
-        MsgBoxResult response = default(MsgBoxResult);
-
-        msg = "Your file is done. Would you like to open?";
-        // Define message.
-        style = MsgBoxStyle.YesNo;
-        title = "MsgBox";
-        // Define title.
-        //Display message.
-        response = Interaction.MsgBox(msg, style, title);
+       var response = Interaction.MsgBox("MsgBox", MsgBoxStyle.YesNo, "Your file is done. Would you like to open?");
         if (response == MsgBoxResult.Yes) {
             Microsoft.Office.Interop.Excel.Application excel = default(Microsoft.Office.Interop.Excel.Application);
 
@@ -392,15 +354,10 @@ namespace downtimeC
 
             }
         }
-        if (response == MsgBoxResult.Yes) {
-            return;
-        }
-
     }
     public string getstring(byte[] value)
     {
-        System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
-        return enc.GetString(value);
+        return new System.Text.ASCIIEncoding().GetString(value);
     }
     static bool InitStaticVariableHelper(Microsoft.VisualBasic.CompilerServices.StaticLocalInitFlag flag)
     {

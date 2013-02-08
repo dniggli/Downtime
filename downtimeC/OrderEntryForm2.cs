@@ -348,7 +348,7 @@ namespace downtimeC
             var co = new OrderMessage(mrn, firstName, lastName, ordernumber, "", ward, Sex.U, codes, specimenType);
             var hl = co.toHl7();
 
-            if (DialogResult.Yes == MessageBox.Show("Send HL7 to DI?", "Send HL7 to DI?", MessageBoxButtons.YesNo))
+            if (DialogResult.Yes == MessageBox.Show("Send Order Message to DI?", "Send Order Message to DI?", MessageBoxButtons.YesNo))
             {
 
                 //send the hl7 message
@@ -483,9 +483,7 @@ namespace downtimeC
 
                         lastname.Focus();
 
-                    }
-                    if (response1 == MsgBoxResult.No)
-                    {
+                    } else {
                         TextBoxbillingnumber.Focus();
                     }
                 }

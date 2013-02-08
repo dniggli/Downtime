@@ -85,32 +85,16 @@ namespace downtimeC
 
 
         } else {
-            string msg = null;
-            string title = null;
-            MsgBoxStyle style = default(MsgBoxStyle);
-            MsgBoxResult response = default(MsgBoxResult);
-
-            msg = "Must Open OrderEntry Lookup Screen";
-            // Define message.
-            style = MsgBoxStyle.DefaultButton1;
-            title = "MsgBox";
-            // Define title.
-            // Display message.
-            response = Interaction.MsgBox(msg, style, title);
-            if (response == MsgBoxResult.Ok)
-                return;
-
+         Interaction.MsgBox("Must Open OrderEntry Lookup Screen", MsgBoxStyle.OkOnly, "MsgBox");
         }
 
     }
 
     public void automatedrecovery(string startnumber)
     {
-        //Dim da As New MySqlDataAdapter("select * from dtdb1.Table1 where ordernumber like '68166609' ORDER BY ID DESC LIMIT 1", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;")
-        MySqlDataAdapter da = new MySqlDataAdapter("select * from dtdb1.Table1 where ordernumber like '" + startnumber + "' ORDER BY ID DESC LIMIT 1", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;");
-        DataTable t = new DataTable();
 
-        da.Fill(t);
+        var t = getMySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" + startnumber + "' ORDER BY ID DESC LIMIT 1");
+ 
 
         try {
             DataRow r = t.Rows[0];
@@ -147,18 +131,8 @@ namespace downtimeC
             string BILLING = r["BILLINGNUMBER"].ToString();
 
             if (BILLING == string.Empty) {
-                string msg = null;
-                string title = null;
-                MsgBoxStyle style = default(MsgBoxStyle);
-                MsgBoxResult response = default(MsgBoxResult);
-
-                msg = "No Billing #";
-                // Define message.
-                style = MsgBoxStyle.DefaultButton1;
-                title = "MsgBox";
-                // Define title.
-                // Display message.
-                response = Interaction.MsgBox(msg, style, title);
+ 
+             var response = Interaction.MsgBox("No Billing #", MsgBoxStyle.DefaultButton1, "MsgBox");
                 if (response == MsgBoxResult.Ok) {
                     this.Visible = true;
                     TextBoxOrderNumber.Focus();
@@ -169,38 +143,38 @@ namespace downtimeC
 
             Dictionary<string, string[]> DICT = new Dictionary<string, string[]>();
 
-            DICT.Add("bluetest", Microsoft.VisualBasic.Strings.Split(bluetest, ","));
+            DICT.Add("bluetest", Strings.Split(bluetest, ","));
 
-            DICT.Add("redtest", Microsoft.VisualBasic.Strings.Split(redtest, ","));
+            DICT.Add("redtest", Strings.Split(redtest, ","));
 
-            DICT.Add("greentest", Microsoft.VisualBasic.Strings.Split(greentest, ","));
+            DICT.Add("greentest", Strings.Split(greentest, ","));
 
-            DICT.Add("lavhemtest", Microsoft.VisualBasic.Strings.Split(lavhemtest, ","));
-
-
-            DICT.Add("lavchemtest", Microsoft.VisualBasic.Strings.Split(lavchemtest, ","));
+            DICT.Add("lavhemtest", Strings.Split(lavhemtest, ","));
 
 
-
-            DICT.Add("serology", Microsoft.VisualBasic.Strings.Split(ser, ","));
-
-            DICT.Add("heppat", Microsoft.VisualBasic.Strings.Split(hepp, ","));
-
-            DICT.Add("urinehem", Microsoft.VisualBasic.Strings.Split(urinehem, ","));
-
-            DICT.Add("urinechem", Microsoft.VisualBasic.Strings.Split(urinechem, ","));
-
-            DICT.Add("bloodgas", Microsoft.VisualBasic.Strings.Split(bloodgas, ","));
+            DICT.Add("lavchemtest", Strings.Split(lavchemtest, ","));
 
 
 
-            DICT.Add("gray", Microsoft.VisualBasic.Strings.Split(graytest, ","));
+            DICT.Add("serology", Strings.Split(ser, ","));
 
-            DICT.Add("viral", Microsoft.VisualBasic.Strings.Split(Viralloadbox, ","));
+            DICT.Add("heppat", Strings.Split(hepp, ","));
 
-            DICT.Add("csf", Microsoft.VisualBasic.Strings.Split(csfbox, ","));
+            DICT.Add("urinehem", Strings.Split(urinehem, ","));
 
-            DICT.Add("fluid", Microsoft.VisualBasic.Strings.Split(fluidbox, ","));
+            DICT.Add("urinechem", Strings.Split(urinechem, ","));
+
+            DICT.Add("bloodgas", Strings.Split(bloodgas, ","));
+
+
+
+            DICT.Add("gray", Strings.Split(graytest, ","));
+
+            DICT.Add("viral", Strings.Split(Viralloadbox, ","));
+
+            DICT.Add("csf", Strings.Split(csfbox, ","));
+
+            DICT.Add("fluid", Strings.Split(fluidbox, ","));
 
 
 

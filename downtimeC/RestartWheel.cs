@@ -29,146 +29,46 @@ namespace downtimeC
             this.getMySql = getMySql;
         }
 
-    string monthday = "";
-    string ordernumber = "";
-    string TDate = "";
+        string ordernumber = "";
+        string TDate = "";
 
-    Dictionary<string, string> dict = new Dictionary<string, string>();
-
- 
-    public void Deleteoldinfo()
-    {
-
-
-        MySqlCommand comm1 = new MySqlCommand("truncate table dtdb1.ordernumber", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-
-        comm1.Connection.Open();
-        comm1.ExecuteNonQuery();
-        comm1.Connection.Close();
-
-    }
-
-
-
-    public void Deleteoldtrackinfo()
-    {
-        MySqlCommand comm = new MySqlCommand("truncate table dtdb1.dttracking", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-
-        comm.Connection.Open();
-        comm.ExecuteNonQuery();
-        comm.Connection.Close();
-
-    }
-
-
+        Dictionary<string, string> dict = new Dictionary<string, string>();
 
     public void submitneworder()
     {
-        MySqlCommand comm2 = new MySqlCommand("truncate table dtdb1.Table1", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-
-        comm2.Connection.Open();
-        comm2.ExecuteNonQuery();
-        comm2.Connection.Close();
-
+        getMySql.ExecuteNonQuery("truncate table dtdb1.Table1");
 
 
         TDate = DateTimeFunctions.datetomysql(System.DateTime.Now.ToString());
 
-        //..........//////use to reinstate alpha-neumaric(also un-comment line items 540-547 in orderentry)\\\\\\\\.........
+        //..........//////use to reinstate alpha-numeric(also un-comment line items 540-547 in orderentry)\\\\\\\\.........
 
 
-        MySqlCommand comm = new MySqlCommand("insert into dtdb1.ordernumber (Ordernumber, Date) VALUES ('" + ordernumber + "', '" + TDate + "');", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-
-        //Dim comm As New MySqlCommand("insert into dtdb1.ordernumber (Ordernumber, Date) VALUES ('5000', '" & TDate & "');", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
-        comm.Connection.Open();
-        comm.ExecuteNonQuery();
-        comm.Connection.Close();
-
+        getMySql.ExecuteNonQuery("insert into dtdb1.ordernumber (Ordernumber, Date) VALUES ('" + ordernumber + "', '" + TDate + "');");
     }
 
 
     private void Button1_Click(System.Object sender, System.EventArgs e)
     {
-
-
         if (ComboBoxNewOrderNumber.SelectedIndex.ToString().Length > 1) {
-            string msg1 = null;
-            string title1 = null;
-            MsgBoxStyle style1 = default(MsgBoxStyle);
-            MsgBoxResult response1 = default(MsgBoxResult);
-
-            msg1 = "Ordernumber has not been selected.  Please select Ordernubmer";
-            // Define message.
-            style1 = MsgBoxStyle.OkOnly;
-            title1 = "MsgBox";
-            // Define title.
-            // Display message.
-            response1 = Interaction.MsgBox(msg1, style1, title1);
-            if (response1 == MsgBoxResult.Ok) {
-                return;
-            }
-
+           Interaction.MsgBox("Ordernumber has not been selected.  Please select Ordernubmer", MsgBoxStyle.OkOnly, "MsgBox"); 
+           return;
         }
 
-
-        string msg = null;
-        string title = null;
-        MsgBoxStyle style = default(MsgBoxStyle);
-        MsgBoxResult response = default(MsgBoxResult);
-
-        msg = "Are you Sure you Want to Clear ALL DATA????";
-        // Define message.
-        style = MsgBoxStyle.YesNo;
-        title = "MsgBox";
-        // Define title.
-        // Display message.
-        response = Interaction.MsgBox(msg, style, title);
+       var response = Interaction.MsgBox("Are you Sure you Want to Clear ALL DATA????", MsgBoxStyle.YesNo, "MsgBox");
         if (response == MsgBoxResult.Yes) {
-            Deleteoldinfo();
+            getMySql.ExecuteNonQuery("truncate table dtdb1.ordernumber");
             submitneworder();
-
+            Interaction.MsgBox("Old Data Has Been Cleard and Ordernumber Has Been Reset.", MsgBoxStyle.OkOnly, "MsgBox");
         }
-        if (response == MsgBoxResult.No) {
-            return;
-        }
-
-
-
-        msg = "Old Data Has Been Cleard and Ordernumber Has Been Reset.";
-        // Define message.
-        style = MsgBoxStyle.OkOnly;
-        title = "MsgBox";
-        // Define title.
-        // Display message.
-        response = Interaction.MsgBox(msg, style, title);
-
-        if (response == MsgBoxResult.Ok) {
-        }
-
-
     }
 
     private void Buttondelettrack_Click(System.Object sender, System.EventArgs e)
     {
-        string msg = null;
-        string title = null;
-        MsgBoxStyle style = default(MsgBoxStyle);
-        MsgBoxResult response = default(MsgBoxResult);
-
-        msg = "Are you Sure you Want to reset tracking?";
-        // Define message.
-        style = MsgBoxStyle.YesNo;
-        title = "MsgBox";
-        // Define title.
-        // Display message.
-        response = Interaction.MsgBox(msg, style, title);
+       var response = Interaction.MsgBox("Are you Sure you Want to reset tracking?", MsgBoxStyle.YesNo, "MsgBox");
         if (response == MsgBoxResult.Yes) {
-            Deleteoldtrackinfo();
-
+            getMySql.ExecuteNonQuery("truncate table dtdb1.dttracking");
         }
-        if (response == MsgBoxResult.No)
-            return;
-
     }
 
     public string date2ordernumber(string dates)
@@ -205,59 +105,37 @@ namespace downtimeC
 
     private void restartwheel_Load(System.Object sender, System.EventArgs e)
     {
+            var dr = getMySql.FilledRow("select * from dtdb1.NumberWheel;");
+     
+            string datanumber = dr["OrderNumberAlpha"].ToString();
+            string lownumber = dr["OrderNumberNumer"].ToString();
+            int n = Convert.ToInt32(lownumber);
+
+            while (n < 8001)
+            {
+                string nonalphaordernumber = (date2ordernumber(System.DateTime.Now.ToString()) + n.ToString());
+                ComboBoxNewOrderNumber.Items.Add(nonalphaordernumber);
+
+                dict.Add(nonalphaordernumber, n.ToString());
+
+                n = n + 500;
+            }
 
 
 
+            string ordernums = Strings.Right(datanumber, 3);
+            char letters = Strings.Chr(int.Parse(Strings.Left(datanumber, 2)));
 
 
 
+            string alphanum = date2ordernumber(System.DateTime.Now.ToString()) + letters + ordernums;
+            string ordnumend = letters + ordernums;
 
-        //.......................///////////// Create Alpha-neumaric OrderNumber \\\\\\\\\\\\\\\\\........................
+            ComboBoxNewOrderNumber.Items.Add(alphanum);
 
+            dict.Add(alphanum, ordnumend);
 
-
-        MySqlDataAdapter DatabaseNumber = new MySqlDataAdapter("select * from dtdb1.NumberWheel;", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;");
-
-        DataTable dt = new DataTable();
-        DatabaseNumber.Fill(dt);
-
-        DataRow dr = dt.Rows[0];
-
-        string datanumber = dr["OrderNumberAlpha"].ToString();
-        string lownumber = dr["OrderNumberNumer"].ToString();
-
-
-
-
-        int n = Convert.ToInt32(lownumber);
-
-        while (n < 8001) {
-            string nonalphaordernumber = (date2ordernumber(System.DateTime.Now.ToString()) + n.ToString());
-            ComboBoxNewOrderNumber.Items.Add(nonalphaordernumber);
-
-            dict.Add(nonalphaordernumber, n.ToString());
-
-            n = n + 500;
-
-
-        }
-
-        string ordernums = Strings.Right(datanumber, 3);
-        char letters = Strings.Chr(int.Parse(Strings.Left(datanumber, 2)));
-        string alphanum = date2ordernumber(System.DateTime.Now.ToString()) + letters + ordernums;
-        string ordnumend = letters + ordernums;
-
-
-
-        ComboBoxNewOrderNumber.Items.Add(alphanum);
-
-        dict.Add(alphanum, ordnumend);
-
-
-
-
-
-
+        
     }
 
 
@@ -272,12 +150,8 @@ namespace downtimeC
             }
 
         }
-
-        MySqlDataAdapter ch = new MySqlDataAdapter("SELECT Date FROM dtdb1.ordernumber order BY Date DESC lIMIT 1;", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;");
-        DataTable dtble = new DataTable();
-        ch.Fill(dtble);
-
-        DataRow q = dtble.Rows[0];
+     
+        DataRow q = getMySql.FilledRow("SELECT Date FROM dtdb1.ordernumber order BY Date DESC lIMIT 1;");
         System.DateTime datestring = q.Field<DateTime>("Date");
 
         System.DateTime checkdate = System.DateTime.Now.Date;
@@ -285,66 +159,25 @@ namespace downtimeC
 
 
         if (!(checkdate == datestring)) {
-            MySqlCommand comm1 = new MySqlCommand("truncate table dtdb1.ordernumber", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
 
-            comm1.Connection.Open();
-            comm1.ExecuteNonQuery();
-            comm1.Connection.Close();
+            getMySql.ExecuteNonQuery("truncate table dtdb1.ordernumber");
+        
 
             submitneworder();
 
-            string msg1 = null;
-            string title1 = null;
-            MsgBoxStyle style1 = default(MsgBoxStyle);
-            MsgBoxResult response1 = default(MsgBoxResult);
-
-            msg1 = "Order Number Has Been Reset";
-            // Define message.
-            style1 = MsgBoxStyle.OkOnly;
-            title1 = "MsgBox";
-            // Define title.
-            // Display message.
-            response1 = Interaction.MsgBox(msg1, style1, title1);
-
-
+            Interaction.MsgBox("Order Number Has Been Reset",  MsgBoxStyle.OkOnly, "MsgBox");
 
         } else {
-            string msg = null;
-            string title = null;
-            MsgBoxStyle style = default(MsgBoxStyle);
-            MsgBoxResult response = default(MsgBoxResult);
+     
+           var response = Interaction.MsgBox("Order Number has already been reset for today.  Would you like to reset it again?"
+                , MsgBoxStyle.YesNo, "MsgBox");
 
-            msg = "Order Number has already been reset for today.  Would you like to reset it again?";
-            // Define message.
-            style = MsgBoxStyle.YesNo;
-            title = "MsgBox";
-            // Define title.
-            // Display message.
-            response = Interaction.MsgBox(msg, style, title);
-
-            if (response == MsgBoxResult.No) {
-
-            } else if (response == MsgBoxResult.Yes) {
-                MySqlCommand comm1 = new MySqlCommand("truncate table dtdb1.ordernumber", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-
-                comm1.Connection.Open();
-                comm1.ExecuteNonQuery();
-                comm1.Connection.Close();
+           if (response == MsgBoxResult.Yes) {
+                getMySql.ExecuteNonQuery("truncate table dtdb1.ordernumber");
 
                 submitneworder();
 
-                string msg1 = null;
-                string title1 = null;
-                MsgBoxStyle style1 = default(MsgBoxStyle);
-                MsgBoxResult response1 = default(MsgBoxResult);
-
-                msg1 = "Order Number Has Been Reset";
-                // Define message.
-                style1 = MsgBoxStyle.OkOnly;
-                title1 = "MsgBox";
-                // Define title.
-                // Display message.
-                response1 = Interaction.MsgBox(msg1, style1, title1);
+                Interaction.MsgBox("Order Number Has Been Reset", MsgBoxStyle.OkOnly, "MsgBox");
             }
 
 

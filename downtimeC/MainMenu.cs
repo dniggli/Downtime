@@ -15,7 +15,7 @@ using HL7;
 
 namespace downtimeC
 {
-    public partial class MainMenu : BaseForm
+    public partial class MainMenu : Form
     {
         readonly Dictionary<string, Func<string>> interactions = new Dictionary<string, Func<string>>();
         readonly Dictionary<string, string> queries = new Dictionary<string, string>();
@@ -78,12 +78,9 @@ namespace downtimeC
             //if there is an interaction, do the interaction
            var readiedQuery = interactions.get(this.ComboBoxSelectQuery.Text).map(interaction => interaction()).Match()
                //use the interaction as an argument to the query, do some special processing for 'Tracking Query'
-                .Some<string>(arg => string.Format(
-                    (this.ComboBoxSelectQuery.Text == "Tracking Query" && arg == "*")
-                      ?
-                        queries["Tracking Query*"]
-                      : 
-                        queries[this.ComboBoxSelectQuery.Text]
+                .Some<string>(arg => 
+                    string.Format((this.ComboBoxSelectQuery.Text == "Tracking Query" && arg == "*")
+                      ? queries["Tracking Query*"] : queries[this.ComboBoxSelectQuery.Text]
                     , arg)
                 )
                 //if there was no argument just use the query

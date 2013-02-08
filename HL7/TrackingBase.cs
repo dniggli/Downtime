@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;
 
 namespace downtimeC
 {
-    public partial class TrackingBase : BaseForm
+    public partial class TrackingBase : Form
     {
         /// <summary>
         /// Required for VisualStudio designer

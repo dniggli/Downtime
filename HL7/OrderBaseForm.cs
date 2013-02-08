@@ -12,7 +12,7 @@ using FunctionalCSharp;
 using Microsoft.VisualBasic;
 namespace HL7
 {
-    public partial class OrderBaseForm : BaseForm
+    public partial class OrderBaseForm : Form
     {
         protected OrderBaseForm()
         {

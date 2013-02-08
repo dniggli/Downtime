@@ -46,35 +46,7 @@ namespace downtimeC.LabelPrinting
             priority = _PRIORITY;
             location = _location;
             todaysdate = _todaysdate;
-        }
-
-        //public LabelData(string _ordernumber, string _tests, string _extension, string _specimentype, string _PRIORITY, string _medreqnum, string _lastname, string _firstname, string _location)
-        //{
-        //    orderNumber = _ordernumber;
-        //    extension = _extension;
-        //    specimenType = _specimentype;
-        //    priority = _PRIORITY;
-        //    testlist = _tests;
-        //    medreqnum = _medreqnum;
-        //    lastname = _lastname;
-        //    firstname = _firstname;
-        //    location = _location;
-        //}
-
-        //public LabelData(string _ordernumber, string _PRIORITY, string _medreqnum, string _lastname, string _firstname, string _location)
-        //{
-        //    orderNumber = _ordernumber;
-        //    extension = "";
-        //    specimenType = "";
-        //    priority = _PRIORITY;
-        //    testlist = "";
-        //    medreqnum = _medreqnum;
-        //    lastname = _lastname;
-        //    firstname = _firstname;
-        //    location = _location;
-        //}
-
-      
+        }    
 
         /// <summary>
         /// THIS PRINTS COLLECTION LABLES FOR TUBES 
@@ -155,8 +127,6 @@ namespace downtimeC.LabelPrinting
         {
             if (testlist == string.Empty)
                 return;
-            ArrayList sTemplatelines = new ArrayList();
-
 
             string label = null;
 
@@ -203,9 +173,6 @@ namespace downtimeC.LabelPrinting
             if (testlist == string.Empty)
                 return;
 
-            ArrayList sTemplatelines = new ArrayList();
-
-
             string label = null;
 
 
@@ -244,8 +211,6 @@ namespace downtimeC.LabelPrinting
         {
             if (testlist == string.Empty)
                 return;
-            ArrayList sTemplatelines = new ArrayList();
-
 
             string label = null;
 
@@ -308,8 +273,6 @@ namespace downtimeC.LabelPrinting
         {
             if (testlist == string.Empty)
                 return;
-            ArrayList sTemplatelines = new ArrayList();
-
 
             string label = null;
 
@@ -367,19 +330,8 @@ namespace downtimeC.LabelPrinting
 
         }
 
-
-        //public LabelData setTestsExtensionSpecimenType(string tests, string extension, string st)
-        //{
-        //    return new LabelData(orderNumber, tests, extension, st, priority, medreqnum, lastname, firstname, location, collectiontime,
-        //    todaysdate);
-        //}
-
-
-
         public void doPrint(string printer, SetupTableData setupTableData)
-        {
-            //RawPrinterHelper.SendStringToPrinter(printer, orderentry.strNecessary.ToString)
-            
+        {           
             string PrinterDNSName = setupTableData.LabelersByIp[printer.ToUpper()].ToString();
             if (!PrinterDNSName.Contains("."))
             {

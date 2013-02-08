@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "downtime", "downtime\downtime.vbproj", "{F677D482-BDC8-40D2-97C2-F39B371F0683}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7", "HL7\HL7.csproj", "{C60166B5-E748-4606-BD6A-DA84F4CA516C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSendHL7", "TestSendHL7\TestSendHL7.csproj", "{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}"
@@ -28,16 +26,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F677D482-BDC8-40D2-97C2-F39B371F0683}.Release|x86.ActiveCfg = Release|Any CPU
 		{C60166B5-E748-4606-BD6A-DA84F4CA516C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C60166B5-E748-4606-BD6A-DA84F4CA516C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C60166B5-E748-4606-BD6A-DA84F4CA516C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

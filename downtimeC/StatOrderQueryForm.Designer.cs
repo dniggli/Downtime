@@ -73,7 +73,6 @@
             this.PrintPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("PrintPreviewDialog1.Icon")));
             this.PrintPreviewDialog1.Name = "PrintPreviewDialog1";
             this.PrintPreviewDialog1.Visible = false;
-            this.PrintPreviewDialog1.Load += new System.EventHandler(this.PrintPreviewDialog1_Load);
             // 
             // DataGridView1
             // 
