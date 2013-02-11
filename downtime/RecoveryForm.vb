@@ -299,7 +299,7 @@ Public Class RecoveryForm
                         Send("{ENTER}")
                         AutoItHelper.AutoItX.Sleep(200)
                         tests = test
-                        Dim Iform As New InputBoxFormRecover
+                        Dim Iform As New InputBoxForm
 
                         Iform.ShowDialog(Me)
                         AutoItHelper.AutoItX.Sleep(200)

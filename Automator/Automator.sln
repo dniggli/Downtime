@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automator", "Automator\Automator.csproj", "{C9B789D2-E6AC-4657-89B0-30338A4C08E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoItHelper", "AutoItHelper\AutoItHelper.csproj", "{F10D29C9-6CE9-444B-B3E6-B16FB78CD680}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9B789D2-E6AC-4657-89B0-30338A4C08E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9B789D2-E6AC-4657-89B0-30338A4C08E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9B789D2-E6AC-4657-89B0-30338A4C08E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9B789D2-E6AC-4657-89B0-30338A4C08E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10D29C9-6CE9-444B-B3E6-B16FB78CD680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F10D29C9-6CE9-444B-B3E6-B16FB78CD680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10D29C9-6CE9-444B-B3E6-B16FB78CD680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F10D29C9-6CE9-444B-B3E6-B16FB78CD680}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

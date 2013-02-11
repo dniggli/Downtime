@@ -11,7 +11,7 @@ namespace HL7
         {
             get
             {
-                return new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;");
+                return new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;database=dtdb1");
             }
         }
     }

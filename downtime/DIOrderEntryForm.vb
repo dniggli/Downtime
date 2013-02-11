@@ -10,12 +10,8 @@ Public Class DIOrderEntryForm
     Public Shared DICT As Dictionary(Of String, String()) = New Dictionary(Of String, String())
     Public Shared Sub DIRecover()
         If WinExists("Instrument Manager by Data Innovations, Inc. for Roche Diagnostics - [Patient and Order Management]") Then
-
-
             Dim myorder As New DIOrderEntryForm
             Application.Run(myorder)
-
-
         Else
             Dim msg As String
             Dim title As String
@@ -104,12 +100,6 @@ Public Class DIOrderEntryForm
             Dim fullname As String = lastname + "," + firstname
 
             Dim redorgreen As String = Microsoft.VisualBasic.Right(TextBoxOrderNumber.Text, 2)
-
-
-
-
-
-
 
             WinActivate("Instrument Manager by Data Innovations, Inc. for Roche Diagnostics - [Patient and Order Management]")
             AutoItHelper.AutoItX.ControlSend("Instrument Manager by Data Innovations, Inc. for Roche Diagnostics - [Patient and Order Management]", "", "[CLASS:ThunderRT6TextBox; INSTANCE:3]", mrn, 0)
@@ -237,13 +227,6 @@ Public Class DIOrderEntryForm
                         AutoItHelper.AutoItX.Sleep(300)
                         AutoItHelper.AutoItX.ControlSend("Test Selection", "", "[CLASS:ThunderRT6ListBox; INSTANCE:2]", "{HOME}", 0)
                     End If
-
-
-
-
-
-
-
                 Next
             Next
 

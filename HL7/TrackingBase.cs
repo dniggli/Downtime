@@ -13,33 +13,18 @@ using MySql.Data.MySqlClient;
 
 namespace downtimeC
 {
-    public partial class TrackingBase : BaseForm
+    public partial class TrackingBase : Form
     {
         /// <summary>
         /// Required for VisualStudio designer
         /// </summary>
-        protected TrackingBase()
-        {
-            InitializeComponent();
-        }
-
-        public TrackingBase(DateTime StartupTime) : base(StartupTime)
+        public TrackingBase() : base()
         {
             InitializeComponent();
         }
 
         public void writeDowntimeTable2()
         {
-            string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            Random ran = new Random();
-            int length = ran.Next(0, 20);
-            // get a random length
-
-            string ranletter = alphabet.Substring(ran.Next(0, 25), 1);
-
-
-
-
             string ordernumber1 = string.Empty;
             string trackcomnt = string.Empty;
             string tracktag = string.Empty;
@@ -67,13 +52,7 @@ namespace downtimeC
 
         public void writeDowntimeTable()
         {
-            string alphabet = "abcdefghijklmnopqrstuvwxyz";
-            Random ran = new Random();
-            int length = ran.Next(0, 20);
-            // get a random length
-
-            string ranletter = alphabet.Substring(ran.Next(0, 25), 1);
-
+      
 
 
 
@@ -258,8 +237,7 @@ namespace downtimeC
                 writeDowntimeTable();
             }
 
-            this.ClearAllTextBoxes(this.tracktagbox);
-   
+            this.ClearAllInputControls(this.tracktagbox);
             this.tracktagbox.Text = IncrementTrackingTag(this.tracktagbox.Text);
           
 

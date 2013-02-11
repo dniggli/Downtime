@@ -15,7 +15,7 @@ namespace downtimeC
 {
     public partial class TrackCoagForm : TrackingBase
     {
-        public TrackCoagForm(DateTime StartupTime) : base(StartupTime)
+        public TrackCoagForm() : base()
         {
             InitializeComponent();
         }

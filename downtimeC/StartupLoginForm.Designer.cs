@@ -36,6 +36,7 @@
             this.PasswordLabel = new System.Windows.Forms.Label();
             this.UsernameLabel = new System.Windows.Forms.Label();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.comboBoxHospital = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.Cancel.Location = new System.Drawing.Point(312, 173);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(94, 23);
-            this.Cancel.TabIndex = 12;
+            this.Cancel.TabIndex = 4;
             this.Cancel.Text = "&Cancel";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
@@ -54,7 +55,7 @@
             this.OK.Location = new System.Drawing.Point(209, 173);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(94, 23);
-            this.OK.TabIndex = 11;
+            this.OK.TabIndex = 3;
             this.OK.Text = "&OK";
             this.OK.Click += new System.EventHandler(this.OK_Click);
             // 
@@ -64,14 +65,14 @@
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.PasswordChar = '*';
             this.PasswordTextBox.Size = new System.Drawing.Size(220, 20);
-            this.PasswordTextBox.TabIndex = 10;
+            this.PasswordTextBox.TabIndex = 1;
             // 
             // UsernameTextBox
             // 
             this.UsernameTextBox.Location = new System.Drawing.Point(186, 56);
             this.UsernameTextBox.Name = "UsernameTextBox";
             this.UsernameTextBox.Size = new System.Drawing.Size(220, 20);
-            this.UsernameTextBox.TabIndex = 8;
+            this.UsernameTextBox.TabIndex = 0;
             // 
             // PasswordLabel
             // 
@@ -100,11 +101,23 @@
             this.LogoPictureBox.TabIndex = 7;
             this.LogoPictureBox.TabStop = false;
             // 
+            // comboBoxHospital
+            // 
+            this.comboBoxHospital.FormattingEnabled = true;
+            this.comboBoxHospital.Items.AddRange(new object[] {
+            "Strong",
+            "Highland"});
+            this.comboBoxHospital.Location = new System.Drawing.Point(283, 139);
+            this.comboBoxHospital.Name = "comboBoxHospital";
+            this.comboBoxHospital.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHospital.TabIndex = 2;
+            // 
             // StartupLoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(419, 222);
+            this.Controls.Add(this.comboBoxHospital);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.OK);
             this.Controls.Add(this.PasswordTextBox);
@@ -129,6 +142,7 @@
         internal System.Windows.Forms.Label PasswordLabel;
         internal System.Windows.Forms.Label UsernameLabel;
         internal System.Windows.Forms.PictureBox LogoPictureBox;
+        private System.Windows.Forms.ComboBox comboBoxHospital;
 
     }
 }

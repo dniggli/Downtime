@@ -33,21 +33,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeBase2">
-      <HintPath>..\references\CodeBase2.dll</HintPath>
+    <Reference Include="CodeBase2, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CodeBase2.0.0.0.13\lib\net35\CodeBase2.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.Database">
-      <HintPath>..\references\CodeBase2.Database.dll</HintPath>
+    <Reference Include="CodeBase2.Database, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CodeBase2.Database.0.0.0.13\lib\net35\CodeBase2.Database.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.MySql">
-      <HintPath>..\references\CodeBase2.MySql.dll</HintPath>
+    <Reference Include="CodeBase2.MySql, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CodeBase2.MySql.0.0.0.13\lib\net35\CodeBase2.MySql.dll</HintPath>
     </Reference>
-    <Reference Include="FunctionalCSharp">
-      <HintPath>..\references\FunctionalCSharp.dll</HintPath>
+    <Reference Include="FunctionalCSharp, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FunctionalCSharp.0.0.0.13\lib\net35\FunctionalCSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <Private>True</Private>
       <HintPath>..\packages\MySql.Data.6.5.4\lib\net20\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -60,19 +63,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseForm.cs">
+    <Compile Include="CustomControls\PriorityComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\PriorityComboBox.Designer.cs">
+      <DependentUpon>PriorityComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\StoredTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\StoredTextBox.Designer.cs">
+      <DependentUpon>StoredTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\IStoredControl.cs" />
+    <Compile Include="CustomControls\StoredComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\StoredComboBox.Designer.cs">
+      <DependentUpon>StoredComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\TubeTypeTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\TubeTypeTextBox.Designer.cs">
+      <DependentUpon>TubeTypeTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DateTimeFunctions.cs" />
+    <Compile Include="FormExtensions.cs" />
+    <Compile Include="GetSqlServer.cs" />
+    <Compile Include="LabelPrinting\LabelData.cs" />
+    <Compile Include="OrderBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BaseForm.Designer.cs">
-      <DependentUpon>BaseForm.cs</DependentUpon>
+    <Compile Include="OrderBaseForm.Designer.cs">
+      <DependentUpon>OrderBaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormExtensions.cs" />
     <Compile Include="OrderMessage.cs" />
     <Compile Include="GroupTestToIndividualTest.cs" />
     <Compile Include="SendHl7.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecimenType.cs" />
+    <Compile Include="SetupTableData.cs" />
     <Compile Include="GlobalMutableState.cs" />
+    <Compile Include="SpecimenType.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TrackingBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,12 +120,15 @@
     <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="OrderBaseForm.resx">
+      <DependentUpon>OrderBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TrackingBase.resx">
       <DependentUpon>TrackingBase.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

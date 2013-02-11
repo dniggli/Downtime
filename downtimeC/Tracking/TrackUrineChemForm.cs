@@ -12,8 +12,8 @@ namespace downtimeC
 {
     public partial class TrackUrineChemForm : TrackingBase
     {
-        public TrackUrineChemForm(DateTime StartupTime)
-            : base(StartupTime)
+        public TrackUrineChemForm()
+            : base()
         {
             InitializeComponent();
         }

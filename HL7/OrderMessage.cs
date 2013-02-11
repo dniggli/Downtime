@@ -160,7 +160,7 @@ TCD|^^^ALK^ALK PHOS||||||Y<cr>
  
 
         private Option<string> OBR() {
-            return specimenType.diName.map(diName =>
+            return specimenType.diSpecimenType.map(diName =>
 
                "OBR|" + testIndex + "|" + orderNumberWithSpecExtension + "||^^^" + testCode + "^" + testName +
                   "|||" + DateTime.Now.ToString("yyyyMMdd") + "000000||||A||||" + diName + "|||" + ward + "\r");

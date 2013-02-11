@@ -32,7 +32,6 @@
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.Label3 = new System.Windows.Forms.Label();
             this.ButtonPlaceAddon = new System.Windows.Forms.Button();
-            this.ButtonAutolabReprint = new System.Windows.Forms.Button();
             this.ButtonAliquotReprint = new System.Windows.Forms.Button();
             this.ButtonOrderEntry = new System.Windows.Forms.Button();
             this.Label4 = new System.Windows.Forms.Label();
@@ -75,7 +74,6 @@
             // 
             this.SplitContainer1.Panel1.Controls.Add(this.Label3);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonPlaceAddon);
-            this.SplitContainer1.Panel1.Controls.Add(this.ButtonAutolabReprint);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonAliquotReprint);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonOrderEntry);
             this.SplitContainer1.Panel1.Margin = new System.Windows.Forms.Padding(3);
@@ -109,25 +107,16 @@
             this.ButtonPlaceAddon.Location = new System.Drawing.Point(282, 43);
             this.ButtonPlaceAddon.Name = "ButtonPlaceAddon";
             this.ButtonPlaceAddon.Size = new System.Drawing.Size(149, 37);
-            this.ButtonPlaceAddon.TabIndex = 8;
+            this.ButtonPlaceAddon.TabIndex = 1;
             this.ButtonPlaceAddon.Text = "Place Addon";
             this.ButtonPlaceAddon.UseVisualStyleBackColor = true;
             // 
-            // ButtonAutolabReprint
-            // 
-            this.ButtonAutolabReprint.Location = new System.Drawing.Point(98, 107);
-            this.ButtonAutolabReprint.Name = "ButtonAutolabReprint";
-            this.ButtonAutolabReprint.Size = new System.Drawing.Size(149, 37);
-            this.ButtonAutolabReprint.TabIndex = 6;
-            this.ButtonAutolabReprint.Text = "Autolab Re-Print";
-            this.ButtonAutolabReprint.UseVisualStyleBackColor = true;
-            // 
             // ButtonAliquotReprint
             // 
-            this.ButtonAliquotReprint.Location = new System.Drawing.Point(282, 107);
+            this.ButtonAliquotReprint.Location = new System.Drawing.Point(202, 103);
             this.ButtonAliquotReprint.Name = "ButtonAliquotReprint";
             this.ButtonAliquotReprint.Size = new System.Drawing.Size(149, 37);
-            this.ButtonAliquotReprint.TabIndex = 7;
+            this.ButtonAliquotReprint.TabIndex = 2;
             this.ButtonAliquotReprint.Text = "Aliquot Re-Print";
             this.ButtonAliquotReprint.UseVisualStyleBackColor = true;
             // 
@@ -136,7 +125,7 @@
             this.ButtonOrderEntry.Location = new System.Drawing.Point(98, 43);
             this.ButtonOrderEntry.Name = "ButtonOrderEntry";
             this.ButtonOrderEntry.Size = new System.Drawing.Size(149, 37);
-            this.ButtonOrderEntry.TabIndex = 1;
+            this.ButtonOrderEntry.TabIndex = 0;
             this.ButtonOrderEntry.Text = "Order Entry";
             this.ButtonOrderEntry.UseVisualStyleBackColor = true;
             // 
@@ -155,7 +144,7 @@
             this.ButtonUrineHemTracking.Location = new System.Drawing.Point(381, 50);
             this.ButtonUrineHemTracking.Name = "ButtonUrineHemTracking";
             this.ButtonUrineHemTracking.Size = new System.Drawing.Size(149, 37);
-            this.ButtonUrineHemTracking.TabIndex = 10;
+            this.ButtonUrineHemTracking.TabIndex = 5;
             this.ButtonUrineHemTracking.Text = "Urine Hem Tracking";
             this.ButtonUrineHemTracking.UseVisualStyleBackColor = true;
             // 
@@ -164,7 +153,7 @@
             this.ButtonCoagArchiveTracking.Location = new System.Drawing.Point(282, 93);
             this.ButtonCoagArchiveTracking.Name = "ButtonCoagArchiveTracking";
             this.ButtonCoagArchiveTracking.Size = new System.Drawing.Size(149, 37);
-            this.ButtonCoagArchiveTracking.TabIndex = 13;
+            this.ButtonCoagArchiveTracking.TabIndex = 7;
             this.ButtonCoagArchiveTracking.Text = "COAG Archive Tracking";
             this.ButtonCoagArchiveTracking.UseVisualStyleBackColor = true;
             // 
@@ -173,7 +162,7 @@
             this.ButtonHemArchiveTracking.Location = new System.Drawing.Point(202, 50);
             this.ButtonHemArchiveTracking.Name = "ButtonHemArchiveTracking";
             this.ButtonHemArchiveTracking.Size = new System.Drawing.Size(149, 37);
-            this.ButtonHemArchiveTracking.TabIndex = 9;
+            this.ButtonHemArchiveTracking.TabIndex = 4;
             this.ButtonHemArchiveTracking.Text = "HEM Archive Tracking";
             this.ButtonHemArchiveTracking.UseVisualStyleBackColor = true;
             // 
@@ -182,7 +171,7 @@
             this.ButtonUrineChemTracking.Location = new System.Drawing.Point(109, 93);
             this.ButtonUrineChemTracking.Name = "ButtonUrineChemTracking";
             this.ButtonUrineChemTracking.Size = new System.Drawing.Size(149, 37);
-            this.ButtonUrineChemTracking.TabIndex = 11;
+            this.ButtonUrineChemTracking.TabIndex = 6;
             this.ButtonUrineChemTracking.Text = "Urine Chem Tracking";
             this.ButtonUrineChemTracking.UseVisualStyleBackColor = true;
             // 
@@ -191,7 +180,7 @@
             this.ButtonSmsArchiveTracking.Location = new System.Drawing.Point(22, 50);
             this.ButtonSmsArchiveTracking.Name = "ButtonSmsArchiveTracking";
             this.ButtonSmsArchiveTracking.Size = new System.Drawing.Size(151, 37);
-            this.ButtonSmsArchiveTracking.TabIndex = 2;
+            this.ButtonSmsArchiveTracking.TabIndex = 3;
             this.ButtonSmsArchiveTracking.Text = "SMS Archive Tracking";
             this.ButtonSmsArchiveTracking.UseVisualStyleBackColor = true;
             // 
@@ -214,7 +203,7 @@
             this.ButtonMolisEntry.Location = new System.Drawing.Point(164, 55);
             this.ButtonMolisEntry.Name = "ButtonMolisEntry";
             this.ButtonMolisEntry.Size = new System.Drawing.Size(109, 37);
-            this.ButtonMolisEntry.TabIndex = 15;
+            this.ButtonMolisEntry.TabIndex = 11;
             this.ButtonMolisEntry.Text = "Molis Entry";
             this.ButtonMolisEntry.UseVisualStyleBackColor = true;
             // 
@@ -223,7 +212,7 @@
             this.ButtonDIEntry.Location = new System.Drawing.Point(165, 12);
             this.ButtonDIEntry.Name = "ButtonDIEntry";
             this.ButtonDIEntry.Size = new System.Drawing.Size(108, 36);
-            this.ButtonDIEntry.TabIndex = 14;
+            this.ButtonDIEntry.TabIndex = 9;
             this.ButtonDIEntry.Text = "DI Entry";
             this.ButtonDIEntry.UseVisualStyleBackColor = true;
             // 
@@ -232,7 +221,7 @@
             this.ButtonDowntimeRecovery.Location = new System.Drawing.Point(22, 56);
             this.ButtonDowntimeRecovery.Name = "ButtonDowntimeRecovery";
             this.ButtonDowntimeRecovery.Size = new System.Drawing.Size(109, 37);
-            this.ButtonDowntimeRecovery.TabIndex = 13;
+            this.ButtonDowntimeRecovery.TabIndex = 10;
             this.ButtonDowntimeRecovery.Text = "Downtime Recovery";
             this.ButtonDowntimeRecovery.UseVisualStyleBackColor = true;
             // 
@@ -251,7 +240,7 @@
             this.ButtonRestartOrderNumber.Location = new System.Drawing.Point(22, 12);
             this.ButtonRestartOrderNumber.Name = "ButtonRestartOrderNumber";
             this.ButtonRestartOrderNumber.Size = new System.Drawing.Size(109, 37);
-            this.ButtonRestartOrderNumber.TabIndex = 12;
+            this.ButtonRestartOrderNumber.TabIndex = 8;
             this.ButtonRestartOrderNumber.Text = "Restart Ordernumber / Tracking";
             this.ButtonRestartOrderNumber.UseVisualStyleBackColor = true;
             this.ButtonRestartOrderNumber.Click += new System.EventHandler(this.ButtonRestartOrderNumber_Click);
@@ -272,7 +261,7 @@
             this.ComboBoxSelectQuery.Location = new System.Drawing.Point(379, 30);
             this.ComboBoxSelectQuery.Name = "ComboBoxSelectQuery";
             this.ComboBoxSelectQuery.Size = new System.Drawing.Size(151, 21);
-            this.ComboBoxSelectQuery.TabIndex = 4;
+            this.ComboBoxSelectQuery.TabIndex = 12;
             this.ComboBoxSelectQuery.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSelectQuery_SelectedIndexChanged);
             // 
             // MainMenu
@@ -303,7 +292,6 @@
         internal System.Windows.Forms.SplitContainer SplitContainer1;
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.Button ButtonPlaceAddon;
-        internal System.Windows.Forms.Button ButtonAutolabReprint;
         internal System.Windows.Forms.Button ButtonAliquotReprint;
         internal System.Windows.Forms.Button ButtonOrderEntry;
         internal System.Windows.Forms.Label Label4;
