@@ -12,7 +12,6 @@ using System.Diagnostics;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 using System.IO;
-using ADODB;
 using HL7;
 using FunctionalCSharp;
 using Microsoft.VisualBasic.CompilerServices;
