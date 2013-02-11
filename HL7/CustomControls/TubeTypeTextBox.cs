@@ -29,6 +29,13 @@ namespace downtimeC
         Aliquot
     }
 
+    public enum HL7Destination
+    {
+        None,
+        DI,
+        MOLIS
+    }
+
     public partial class TubeTypeTextBox : TextBox, IStoredControl
     {
         public TubeTypeTextBox()
@@ -75,6 +82,15 @@ namespace downtimeC
         {
             get { return this.specimenExtensionHighland; }
             set { this.specimenExtensionHighland = value; }
+        }
+
+        private HL7Destination sendHL7 = HL7Destination.None;
+
+        [Browsable(true)]
+        public HL7Destination SendHL7
+        {
+            get { return this.sendHL7; }
+            set { this.sendHL7 = value; }
         }
 
         private LabelPrintMode labelPrintMode;

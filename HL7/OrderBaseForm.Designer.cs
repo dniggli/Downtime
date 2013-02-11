@@ -122,6 +122,7 @@
             this.OTHERBOX.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.OTHERBOX.Location = new System.Drawing.Point(391, 601);
             this.OTHERBOX.Name = "OTHERBOX";
+            this.OTHERBOX.SendHL7 = downtimeC.HL7Destination.None;
             this.OTHERBOX.Size = new System.Drawing.Size(272, 20);
             this.OTHERBOX.SpecimenExtension = "";
             this.OTHERBOX.SpecimenExtensionHighland = "";
@@ -144,10 +145,11 @@
             this.Viralloadbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.Viralloadbox.Location = new System.Drawing.Point(391, 550);
             this.Viralloadbox.Name = "Viralloadbox";
+            this.Viralloadbox.SendHL7 = downtimeC.HL7Destination.None;
             this.Viralloadbox.Size = new System.Drawing.Size(275, 20);
             this.Viralloadbox.SpecimenExtension = "74";
             this.Viralloadbox.SpecimenExtensionHighland = "";
-            this.Viralloadbox.SpecimenType = "LAV";
+            this.Viralloadbox.SpecimenType = "4LV";
             this.Viralloadbox.SpecimenTypeHighland = "";
             this.Viralloadbox.TabIndex = 25;
             // 
@@ -156,9 +158,9 @@
             this.Label30.AutoSize = true;
             this.Label30.Location = new System.Drawing.Point(391, 534);
             this.Label30.Name = "Label30";
-            this.Label30.Size = new System.Drawing.Size(78, 13);
+            this.Label30.Size = new System.Drawing.Size(99, 13);
             this.Label30.TabIndex = 260;
-            this.Label30.Text = "Viral Load Test";
+            this.Label30.Text = "Viral Load Test (74)";
             // 
             // fluidbox
             // 
@@ -166,6 +168,7 @@
             this.fluidbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.fluidbox.Location = new System.Drawing.Point(391, 493);
             this.fluidbox.Name = "fluidbox";
+            this.fluidbox.SendHL7 = downtimeC.HL7Destination.DI;
             this.fluidbox.Size = new System.Drawing.Size(275, 20);
             this.fluidbox.SpecimenExtension = "38";
             this.fluidbox.SpecimenExtensionHighland = "";
@@ -178,9 +181,9 @@
             this.Label29.AutoSize = true;
             this.Label29.Location = new System.Drawing.Point(391, 477);
             this.Label29.Name = "Label29";
-            this.Label29.Size = new System.Drawing.Size(53, 13);
+            this.Label29.Size = new System.Drawing.Size(74, 13);
             this.Label29.TabIndex = 259;
-            this.Label29.Text = "Fluid Test";
+            this.Label29.Text = "Fluid Test (38)";
             // 
             // csfbox
             // 
@@ -188,6 +191,7 @@
             this.csfbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.csfbox.Location = new System.Drawing.Point(391, 440);
             this.csfbox.Name = "csfbox";
+            this.csfbox.SendHL7 = downtimeC.HL7Destination.DI;
             this.csfbox.Size = new System.Drawing.Size(275, 20);
             this.csfbox.SpecimenExtension = "26";
             this.csfbox.SpecimenExtensionHighland = "";
@@ -200,9 +204,9 @@
             this.Label28.AutoSize = true;
             this.Label28.Location = new System.Drawing.Point(391, 424);
             this.Label28.Name = "Label28";
-            this.Label28.Size = new System.Drawing.Size(51, 13);
+            this.Label28.Size = new System.Drawing.Size(72, 13);
             this.Label28.TabIndex = 258;
-            this.Label28.Text = "CSF Test";
+            this.Label28.Text = "CSF Test (26)";
             // 
             // TextBoxTechId
             // 
@@ -258,10 +262,11 @@
             this.sendout.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.sendout.Location = new System.Drawing.Point(391, 385);
             this.sendout.Name = "sendout";
+            this.sendout.SendHL7 = downtimeC.HL7Destination.DI;
             this.sendout.Size = new System.Drawing.Size(275, 20);
             this.sendout.SpecimenExtension = "05";
             this.sendout.SpecimenExtensionHighland = "";
-            this.sendout.SpecimenType = "REF";
+            this.sendout.SpecimenType = "AST";
             this.sendout.SpecimenTypeHighland = "";
             this.sendout.TabIndex = 22;
             // 
@@ -280,6 +285,7 @@
             this.ser.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.ser.Location = new System.Drawing.Point(391, 298);
             this.ser.Name = "ser";
+            this.ser.SendHL7 = downtimeC.HL7Destination.DI;
             this.ser.Size = new System.Drawing.Size(275, 20);
             this.ser.SpecimenExtension = "41";
             this.ser.SpecimenExtensionHighland = "";
@@ -302,6 +308,7 @@
             this.hepp.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.hepp.Location = new System.Drawing.Point(391, 254);
             this.hepp.Name = "hepp";
+            this.hepp.SendHL7 = downtimeC.HL7Destination.DI;
             this.hepp.Size = new System.Drawing.Size(275, 20);
             this.hepp.SpecimenExtension = "42";
             this.hepp.SpecimenExtensionHighland = "";
@@ -345,6 +352,7 @@
             this.comment.LabelPrintMode = downtimeC.LabelPrintMode.Comment;
             this.comment.Location = new System.Drawing.Point(391, 746);
             this.comment.Name = "comment";
+            this.comment.SendHL7 = downtimeC.HL7Destination.None;
             this.comment.Size = new System.Drawing.Size(592, 20);
             this.comment.SpecimenExtension = "";
             this.comment.SpecimenExtensionHighland = "";
@@ -401,6 +409,7 @@
             this.bloodgas.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.bloodgas.Location = new System.Drawing.Point(391, 210);
             this.bloodgas.Name = "bloodgas";
+            this.bloodgas.SendHL7 = downtimeC.HL7Destination.DI;
             this.bloodgas.Size = new System.Drawing.Size(275, 20);
             this.bloodgas.SpecimenExtension = "20";
             this.bloodgas.SpecimenExtensionHighland = "";
@@ -423,6 +432,7 @@
             this.urinechem.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.urinechem.Location = new System.Drawing.Point(391, 168);
             this.urinechem.Name = "urinechem";
+            this.urinechem.SendHL7 = downtimeC.HL7Destination.DI;
             this.urinechem.Size = new System.Drawing.Size(275, 20);
             this.urinechem.SpecimenExtension = "27";
             this.urinechem.SpecimenExtensionHighland = "";
@@ -445,6 +455,7 @@
             this.urinehem.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.urinehem.Location = new System.Drawing.Point(391, 122);
             this.urinehem.Name = "urinehem";
+            this.urinehem.SendHL7 = downtimeC.HL7Destination.None;
             this.urinehem.Size = new System.Drawing.Size(275, 20);
             this.urinehem.SpecimenExtension = "UA";
             this.urinehem.SpecimenExtensionHighland = "";
@@ -467,10 +478,11 @@
             this.graytest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.graytest.Location = new System.Drawing.Point(391, 74);
             this.graytest.Name = "graytest";
+            this.graytest.SendHL7 = downtimeC.HL7Destination.DI;
             this.graytest.Size = new System.Drawing.Size(275, 20);
             this.graytest.SpecimenExtension = "19";
             this.graytest.SpecimenExtensionHighland = "";
-            this.graytest.SpecimenType = "GRY";
+            this.graytest.SpecimenType = "GYT";
             this.graytest.SpecimenTypeHighland = "";
             this.graytest.TabIndex = 15;
             // 
@@ -489,10 +501,11 @@
             this.lavchemtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.lavchemtest.Location = new System.Drawing.Point(391, 27);
             this.lavchemtest.Name = "lavchemtest";
+            this.lavchemtest.SendHL7 = downtimeC.HL7Destination.DI;
             this.lavchemtest.Size = new System.Drawing.Size(190, 20);
             this.lavchemtest.SpecimenExtension = "79";
             this.lavchemtest.SpecimenExtensionHighland = "";
-            this.lavchemtest.SpecimenType = "LAV";
+            this.lavchemtest.SpecimenType = "8LV";
             this.lavchemtest.SpecimenTypeHighland = "";
             this.lavchemtest.TabIndex = 14;
             // 
@@ -511,6 +524,7 @@
             this.greentest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.greentest.Location = new System.Drawing.Point(42, 754);
             this.greentest.Name = "greentest";
+            this.greentest.SendHL7 = downtimeC.HL7Destination.DI;
             this.greentest.Size = new System.Drawing.Size(193, 20);
             this.greentest.SpecimenExtension = "40";
             this.greentest.SpecimenExtensionHighland = "";
@@ -533,6 +547,7 @@
             this.lavhemtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.lavhemtest.Location = new System.Drawing.Point(42, 705);
             this.lavhemtest.Name = "lavhemtest";
+            this.lavhemtest.SendHL7 = downtimeC.HL7Destination.None;
             this.lavhemtest.Size = new System.Drawing.Size(226, 20);
             this.lavhemtest.SpecimenExtension = "18";
             this.lavhemtest.SpecimenExtensionHighland = "";
@@ -555,6 +570,7 @@
             this.bluetest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.bluetest.Location = new System.Drawing.Point(42, 656);
             this.bluetest.Name = "bluetest";
+            this.bluetest.SendHL7 = downtimeC.HL7Destination.None;
             this.bluetest.Size = new System.Drawing.Size(223, 20);
             this.bluetest.SpecimenExtension = "23";
             this.bluetest.SpecimenExtensionHighland = "";
@@ -577,6 +593,7 @@
             this.redtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.redtest.Location = new System.Drawing.Point(42, 600);
             this.redtest.Name = "redtest";
+            this.redtest.SendHL7 = downtimeC.HL7Destination.DI;
             this.redtest.Size = new System.Drawing.Size(220, 20);
             this.redtest.SpecimenExtension = "00";
             this.redtest.SpecimenExtensionHighland = "";
@@ -669,6 +686,7 @@
             this.collectiontime.LabelPrintMode = downtimeC.LabelPrintMode.Demographic;
             this.collectiontime.Location = new System.Drawing.Point(42, 454);
             this.collectiontime.Name = "collectiontime";
+            this.collectiontime.SendHL7 = downtimeC.HL7Destination.None;
             this.collectiontime.Size = new System.Drawing.Size(223, 20);
             this.collectiontime.SpecimenExtension = "";
             this.collectiontime.SpecimenExtensionHighland = "";
@@ -793,10 +811,11 @@
             this.TextBoxIMMUNO.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
             this.TextBoxIMMUNO.Location = new System.Drawing.Point(391, 343);
             this.TextBoxIMMUNO.Name = "TextBoxIMMUNO";
+            this.TextBoxIMMUNO.SendHL7 = downtimeC.HL7Destination.None;
             this.TextBoxIMMUNO.Size = new System.Drawing.Size(275, 20);
             this.TextBoxIMMUNO.SpecimenExtension = "2R";
             this.TextBoxIMMUNO.SpecimenExtensionHighland = "";
-            this.TextBoxIMMUNO.SpecimenType = "SST";
+            this.TextBoxIMMUNO.SpecimenType = "STI";
             this.TextBoxIMMUNO.SpecimenTypeHighland = "";
             this.TextBoxIMMUNO.TabIndex = 21;
             // 

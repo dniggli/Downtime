@@ -52,7 +52,7 @@ namespace HL7
                 // Receive the response back
                 int bytes = 0;
                 s.ReceiveTimeout = 3000;
-                bytes = s.Receive(bytesReceived, bytesReceived.Length, 0);
+                bytes = s.Receive(bytesReceived, bytesReceived.Length, 0); //fails here.
                 string page = Encoding.ASCII.GetString(bytesReceived, 0, bytes);
                 s.Close();
 
@@ -66,7 +66,7 @@ namespace HL7
                     return HL7Status.NACK;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return HL7Status.EXCEPTION;
             }

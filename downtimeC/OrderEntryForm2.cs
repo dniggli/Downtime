@@ -305,7 +305,7 @@ namespace downtimeC
             }
 
 
-            foreach (TubeTypeTextBox box in getTestLabelTextBoxes)
+            foreach (TubeTypeTextBox box in getTestLabelTextBoxes.Where(x => x.SendHL7 == HL7Destination.DI))
             {
                 var tests = box.Text;
                 if ((!string.IsNullOrEmpty(tests)))
