@@ -164,11 +164,7 @@ namespace downtimeC
         }
 
         protected override void OnPrintClick() {
-
-            if (validateAndPromptForComboboxWard())
-            {
                 printLabels();
-            }
         }
     }
 }

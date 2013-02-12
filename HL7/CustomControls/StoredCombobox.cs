@@ -13,7 +13,7 @@ using downtimeC.LabelPrinting;
 namespace downtimeC
 {
 
-    public partial class StoredComboBox : ComboBox, IStoredControl
+    public partial class StoredComboBox : OptionComboBox, IStoredControl
     {
         public StoredComboBox()
         {

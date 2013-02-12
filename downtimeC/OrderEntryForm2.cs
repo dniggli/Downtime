@@ -171,21 +171,7 @@ namespace downtimeC
             return alphanum;
         }
 
-        bool validateTimeFormat(string fieldName, string fieldValue, Control control)
-        {
-            System.Text.RegularExpressions.Match F = Regex.Match(fieldValue, "([0-9]{2}):([0-9]{2})");
-            if (!F.Success)
-            {
-                if (Interaction.MsgBox(string.Format("{0} must be in proper format(##:##)",fieldName), MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    control.Focus();
-                    return false;
-                       // User chose Yes.
-                    // Perform some action.
-                }
-            }
-            return true;
-        }
+
 
         bool validateControlIsFilled(string message, string fieldValue, Control control)
         {
@@ -276,24 +262,9 @@ namespace downtimeC
 
             if (!validateControlIsFilled("No Location Entered", comboBoxWard.Text, comboBoxWard)) return;
 
-            if (!validateTimeFormat("Collection Time", collectiontime.Text, collectiontime)) return;
-
-            if (!validateTimeFormat("Receive Time", receivetime.Text, receivetime)) return;
-
             if (!(Strings.Left(mrn.Text, 1) == "X"))
             {
                 if (!validateControlIsFilled("Must enter MRN", mrn.Text, mrn)) return;
-            }
-
-            if (BillingNumberNotLike_S000_SX)
-            {
-                if (Interaction.MsgBox("MUST ENTER BILLING # LIKE 'S000##########' OR 'SX#######'", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    TextBoxbillingnumber.Focus();
-                    return;
-                    // User chose Yes.
-                    // Perform some action.
-                }
             }
 
             if (this.ordernumber.Text == string.Empty)
@@ -419,29 +390,12 @@ namespace downtimeC
 
      
 
-        /// <summary>
-        /// Make sure Billing number TextBox does not match: "S000*" or "SX*"
-        /// </summary>
-        public bool BillingNumberNotLike_S000_SX
-        {
-            get {
-              return !(Operators.LikeString(TextBoxbillingnumber.Text, "S000*",CompareMethod.Text) || Operators.LikeString(TextBoxbillingnumber.Text, "SX*",CompareMethod.Text));
-            }
-        }
+
 
         public void FINDDEMOGRAPHIC()
         {
-            if (BillingNumberNotLike_S000_SX)
-            {
-                if (Interaction.MsgBox("MUST ENTER BILLING # LIKE 'S000##########' OR 'SX#######'", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    TextBoxbillingnumber.Focus();
-                    return;
-                    // User chose Yes.
-                    // Perform some action.
-                }
-            }
-
+            if (!TextBoxbillingnumber.Validate()) return;
+          
             var t = mySql.FilledTable("select * from dtdb1.Table1 where billingnumber like '" + this.TextBoxbillingnumber.Text + "' ORDER BY ID DESC LIMIT 1");
 
 

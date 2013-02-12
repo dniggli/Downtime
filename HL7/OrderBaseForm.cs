@@ -82,13 +82,36 @@ namespace HL7
         {
             if (e.KeyCode == Keys.Enter)
             {
-                OnPrintClick();
+                if (validateInputControls())
+                {
+                    OnPrintClick();
+                }
             }
         }
 
         private void ButtonPrint_Click(object sender, System.EventArgs e)
         {
-            OnPrintClick();
+            if (validateInputControls())
+            {
+                OnPrintClick();
+            }
+        }
+
+        /// <summary>
+        /// check all required controls.  prompt the user to fill them out if they have not
+        /// </summary>
+        /// <returns> true if all are valid. false if one needs to be filled out</returns>
+        protected bool validateInputControls()
+        {
+            //get all the required controls.
+            var optionControls = this.Controls.Cast<Control>().Where(x => x is IOption).Cast<IOption>()
+                .Where(x => x.Required);
+
+            //run validation on each one. this will prompt the user to fill them out if they have not
+            foreach (var oc in optionControls) {
+                if (!oc.Validate()) return false;
+            }
+            return true;   
         }
 
         private void DebugButtonFill_Click(System.Object sender, System.EventArgs e)
@@ -143,30 +166,27 @@ namespace HL7
         }
         }
 
-        /// <summary>
-        /// true if comboBoxWard is not empty, if empty prompts user to enter ward,then focuses on ward and returns false.
-        /// </summary>
-        /// <returns></returns>
-        public bool validateAndPromptForComboboxWard()
-        {
-            if (this.comboBoxWard.Text == string.Empty)
-            {
-                var response = Interaction.MsgBox("No Location Entered", MsgBoxStyle.DefaultButton1, "MsgBox");
-                if (response == MsgBoxResult.Ok)
-                    comboBoxWard.Text = "";
-                comboBoxWard.Focus();
-            }
-            return this.comboBoxWard.Text != string.Empty;
-        }
+        ///// <summary>
+        ///// true if comboBoxWard is not empty, if empty prompts user to enter ward,then focuses on ward and returns false.
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool validateAndPromptForComboboxWard()
+        //{
+        //    if (this.comboBoxWard.Text == string.Empty)
+        //    {
+        //        var response = Interaction.MsgBox("No Location Entered", MsgBoxStyle.DefaultButton1, "MsgBox");
+        //        if (response == MsgBoxResult.Ok)
+        //            comboBoxWard.Text = "";
+        //        comboBoxWard.Focus();
+        //    }
+        //    return this.comboBoxWard.Text != string.Empty;
+        //}
 
         /// <summary>
         /// Print collection, comment, and (collection or aliquot) labels
         /// </summary>
         protected void printLabels()
         {
-            if (ComboBoxPriority.getPriorityOption.isDefined)
-            {
-
                 //PrintDowntimeLabels
                 var labelData = new LabelData(this.ordernumber.Text, this.ComboBoxPriority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
         this.DateTimePicker1.Text);
@@ -177,25 +197,19 @@ namespace HL7
                 getTestLabelTextBoxes.forEach(tb => tb.LabelAppend(labelData, ComboBoxPriority.getPriorityOption.get));
 
 
-
                 labelData.doPrint(this.ComboboxPrinter.Text, setupTableData);
-
-            }
-            else
-            {
-                priorityValidate();
-            }
         }
 
-        protected bool priorityValidate()
-        {
-            if (ComboBoxPriority.getPriorityOption.isEmpty)
-            {
-                MessageBox.Show("Priority needs to be set", "Priority needs to be set", MessageBoxButtons.OK);
-                ComboBoxPriority.Focus();
-            }
-            return ComboBoxPriority.getPriorityOption.isDefined;
-        }
+
+        //protected bool priorityValidate()
+        //{
+        //    if (ComboBoxPriority.getPriorityOption.isEmpty)
+        //    {
+        //        MessageBox.Show("Priority needs to be set", "Priority needs to be set", MessageBoxButtons.OK);
+        //        ComboBoxPriority.Focus();
+        //    }
+        //    return ComboBoxPriority.getPriorityOption.isDefined;
+        //}
 
         public void readDowntimeTable(DataRow order)
         {

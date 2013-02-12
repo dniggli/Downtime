@@ -13,7 +13,7 @@ using downtimeC.LabelPrinting;
 namespace downtimeC
 {
 
-    public partial class StoredTextBox : TextBox, IStoredControl
+    public partial class StoredTextBox : OptionTextBox, IStoredControl
     {
         public StoredTextBox()
         {

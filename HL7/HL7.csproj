@@ -63,6 +63,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomControls\IOption.cs" />
+    <Compile Include="CustomControls\OptionTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\OptionTextBox.Designer.cs">
+      <DependentUpon>OptionTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\OptionComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\OptionComboBox.Designer.cs">
+      <DependentUpon>OptionComboBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\PriorityComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

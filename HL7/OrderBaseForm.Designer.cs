@@ -1,4 +1,5 @@
-﻿namespace HL7
+﻿using downtimeC;
+namespace HL7
 {
     partial class OrderBaseForm
     {
@@ -28,107 +29,84 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ComboboxPrinter = new System.Windows.Forms.ComboBox();
-            this.OTHERBOX = new downtimeC.TubeTypeTextBox();
             this.Label31 = new System.Windows.Forms.Label();
-            this.Viralloadbox = new downtimeC.TubeTypeTextBox();
             this.Label30 = new System.Windows.Forms.Label();
-            this.fluidbox = new downtimeC.TubeTypeTextBox();
             this.Label29 = new System.Windows.Forms.Label();
-            this.csfbox = new downtimeC.TubeTypeTextBox();
             this.Label28 = new System.Windows.Forms.Label();
             this.TextBoxTechId = new System.Windows.Forms.TextBox();
             this.Label27 = new System.Windows.Forms.Label();
-            this.TextboxCollectDate = new downtimeC.StoredTextBox();
             this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.Label26 = new System.Windows.Forms.Label();
-            this.sendout = new downtimeC.TubeTypeTextBox();
             this.Label24 = new System.Windows.Forms.Label();
-            this.ser = new downtimeC.TubeTypeTextBox();
             this.Label23 = new System.Windows.Forms.Label();
-            this.hepp = new downtimeC.TubeTypeTextBox();
             this.Label22 = new System.Windows.Forms.Label();
             this.DebugButtonRead = new System.Windows.Forms.Button();
             this.Label25 = new System.Windows.Forms.Label();
-            this.comment = new downtimeC.TubeTypeTextBox();
             this.Label21 = new System.Windows.Forms.Label();
-            this.cal1 = new downtimeC.StoredTextBox();
             this.Label20 = new System.Windows.Forms.Label();
-            this.problem = new downtimeC.StoredTextBox();
             this.Label19 = new System.Windows.Forms.Label();
-            this.bloodgas = new downtimeC.TubeTypeTextBox();
             this.Label18 = new System.Windows.Forms.Label();
-            this.urinechem = new downtimeC.TubeTypeTextBox();
             this.Label17 = new System.Windows.Forms.Label();
-            this.urinehem = new downtimeC.TubeTypeTextBox();
             this.Label16 = new System.Windows.Forms.Label();
-            this.graytest = new downtimeC.TubeTypeTextBox();
             this.Label15 = new System.Windows.Forms.Label();
-            this.lavchemtest = new downtimeC.TubeTypeTextBox();
             this.Label14 = new System.Windows.Forms.Label();
-            this.greentest = new downtimeC.TubeTypeTextBox();
             this.Label13 = new System.Windows.Forms.Label();
-            this.lavhemtest = new downtimeC.TubeTypeTextBox();
             this.Label12 = new System.Windows.Forms.Label();
-            this.bluetest = new downtimeC.TubeTypeTextBox();
             this.Label11 = new System.Windows.Forms.Label();
-            this.redtest = new downtimeC.TubeTypeTextBox();
             this.Label10 = new System.Windows.Forms.Label();
-            this.DOB = new downtimeC.StoredTextBox();
             this.Label9 = new System.Windows.Forms.Label();
-            this.mrn = new downtimeC.StoredTextBox();
             this.Label8 = new System.Windows.Forms.Label();
             this.Label7 = new System.Windows.Forms.Label();
             this.labelWard = new System.Windows.Forms.Label();
-            this.receivetime = new downtimeC.StoredTextBox();
             this.Label5 = new System.Windows.Forms.Label();
-            this.collectiontime = new downtimeC.TubeTypeTextBox();
             this.Label4 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
-            this.lastname = new downtimeC.StoredTextBox();
             this.DebugButtonFill = new System.Windows.Forms.Button();
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
-            this.firstname = new downtimeC.StoredTextBox();
-            this.ordernumber = new downtimeC.StoredTextBox();
             this.Label33 = new System.Windows.Forms.Label();
-            this.TextBoxbillingnumber = new downtimeC.StoredTextBox();
-            this.comboBoxWard = new downtimeC.StoredComboBox();
             this.Label34 = new System.Windows.Forms.Label();
-            this.TextBoxIMMUNO = new downtimeC.TubeTypeTextBox();
             this.editorder = new System.Windows.Forms.Button();
             this.Buttoneditprevious = new System.Windows.Forms.Button();
             this.Label32 = new System.Windows.Forms.Label();
             this.ComboBoxoldorder = new System.Windows.Forms.ComboBox();
             this.labelCollectDate = new System.Windows.Forms.Label();
-            this.ComboBoxPriority = new downtimeC.PriorityComboBox();
             this.ButtonPrint = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.ComboboxPrintType = new System.Windows.Forms.ComboBox();
+            this.ComboBoxPriority = new downtimeC.PriorityComboBox();
+            this.TextBoxIMMUNO = new downtimeC.TubeTypeTextBox();
+            this.comboBoxWard = new downtimeC.StoredComboBox();
+            this.TextBoxbillingnumber = new downtimeC.StoredTextBox();
+            this.ComboboxPrinter = new downtimeC.OptionComboBox();
+            this.OTHERBOX = new downtimeC.TubeTypeTextBox();
+            this.Viralloadbox = new downtimeC.TubeTypeTextBox();
+            this.fluidbox = new downtimeC.TubeTypeTextBox();
+            this.csfbox = new downtimeC.TubeTypeTextBox();
+            this.TextboxCollectDate = new downtimeC.StoredTextBox();
+            this.sendout = new downtimeC.TubeTypeTextBox();
+            this.ser = new downtimeC.TubeTypeTextBox();
+            this.hepp = new downtimeC.TubeTypeTextBox();
+            this.comment = new downtimeC.TubeTypeTextBox();
+            this.cal1 = new downtimeC.StoredTextBox();
+            this.problem = new downtimeC.StoredTextBox();
+            this.bloodgas = new downtimeC.TubeTypeTextBox();
+            this.urinechem = new downtimeC.TubeTypeTextBox();
+            this.urinehem = new downtimeC.TubeTypeTextBox();
+            this.graytest = new downtimeC.TubeTypeTextBox();
+            this.lavchemtest = new downtimeC.TubeTypeTextBox();
+            this.greentest = new downtimeC.TubeTypeTextBox();
+            this.lavhemtest = new downtimeC.TubeTypeTextBox();
+            this.bluetest = new downtimeC.TubeTypeTextBox();
+            this.redtest = new downtimeC.TubeTypeTextBox();
+            this.DOB = new downtimeC.StoredTextBox();
+            this.mrn = new downtimeC.StoredTextBox();
+            this.receivetime = new downtimeC.StoredTextBox();
+            this.collectiontime = new downtimeC.TubeTypeTextBox();
+            this.lastname = new downtimeC.StoredTextBox();
+            this.firstname = new downtimeC.StoredTextBox();
+            this.ordernumber = new downtimeC.StoredTextBox();
             this.SuspendLayout();
-            // 
-            // ComboboxPrinter
-            // 
-            this.ComboboxPrinter.FormattingEnabled = true;
-            this.ComboboxPrinter.Location = new System.Drawing.Point(770, 203);
-            this.ComboboxPrinter.Name = "ComboboxPrinter";
-            this.ComboboxPrinter.Size = new System.Drawing.Size(121, 21);
-            this.ComboboxPrinter.TabIndex = 30;
-            this.ComboboxPrinter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ComboBoxprinter_KeyUp);
-            // 
-            // OTHERBOX
-            // 
-            this.OTHERBOX.DataColumnName = "OTHERTEST";
-            this.OTHERBOX.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.OTHERBOX.Location = new System.Drawing.Point(391, 601);
-            this.OTHERBOX.Name = "OTHERBOX";
-            this.OTHERBOX.SendHL7 = downtimeC.HL7Destination.None;
-            this.OTHERBOX.Size = new System.Drawing.Size(272, 20);
-            this.OTHERBOX.SpecimenExtension = "";
-            this.OTHERBOX.SpecimenExtensionHighland = "";
-            this.OTHERBOX.SpecimenType = "OTH";
-            this.OTHERBOX.SpecimenTypeHighland = "";
-            this.OTHERBOX.TabIndex = 26;
             // 
             // Label31
             // 
@@ -139,20 +117,6 @@
             this.Label31.TabIndex = 262;
             this.Label31.Text = "Other";
             // 
-            // Viralloadbox
-            // 
-            this.Viralloadbox.DataColumnName = "VIRALLOADTEST";
-            this.Viralloadbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.Viralloadbox.Location = new System.Drawing.Point(391, 550);
-            this.Viralloadbox.Name = "Viralloadbox";
-            this.Viralloadbox.SendHL7 = downtimeC.HL7Destination.None;
-            this.Viralloadbox.Size = new System.Drawing.Size(275, 20);
-            this.Viralloadbox.SpecimenExtension = "74";
-            this.Viralloadbox.SpecimenExtensionHighland = "";
-            this.Viralloadbox.SpecimenType = "4LV";
-            this.Viralloadbox.SpecimenTypeHighland = "";
-            this.Viralloadbox.TabIndex = 25;
-            // 
             // Label30
             // 
             this.Label30.AutoSize = true;
@@ -162,20 +126,6 @@
             this.Label30.TabIndex = 260;
             this.Label30.Text = "Viral Load Test (74)";
             // 
-            // fluidbox
-            // 
-            this.fluidbox.DataColumnName = "FLUIDTEST";
-            this.fluidbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.fluidbox.Location = new System.Drawing.Point(391, 493);
-            this.fluidbox.Name = "fluidbox";
-            this.fluidbox.SendHL7 = downtimeC.HL7Destination.DI;
-            this.fluidbox.Size = new System.Drawing.Size(275, 20);
-            this.fluidbox.SpecimenExtension = "38";
-            this.fluidbox.SpecimenExtensionHighland = "";
-            this.fluidbox.SpecimenType = "FLD";
-            this.fluidbox.SpecimenTypeHighland = "";
-            this.fluidbox.TabIndex = 24;
-            // 
             // Label29
             // 
             this.Label29.AutoSize = true;
@@ -184,20 +134,6 @@
             this.Label29.Size = new System.Drawing.Size(74, 13);
             this.Label29.TabIndex = 259;
             this.Label29.Text = "Fluid Test (38)";
-            // 
-            // csfbox
-            // 
-            this.csfbox.DataColumnName = "CSFTEST";
-            this.csfbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.csfbox.Location = new System.Drawing.Point(391, 440);
-            this.csfbox.Name = "csfbox";
-            this.csfbox.SendHL7 = downtimeC.HL7Destination.DI;
-            this.csfbox.Size = new System.Drawing.Size(275, 20);
-            this.csfbox.SpecimenExtension = "26";
-            this.csfbox.SpecimenExtensionHighland = "";
-            this.csfbox.SpecimenType = "CSF";
-            this.csfbox.SpecimenTypeHighland = "";
-            this.csfbox.TabIndex = 23;
             // 
             // Label28
             // 
@@ -227,16 +163,6 @@
             this.Label27.TabIndex = 256;
             this.Label27.Text = "Tech ID";
             // 
-            // TextboxCollectDate
-            // 
-            this.TextboxCollectDate.DataColumnName = "collectdate";
-            this.TextboxCollectDate.Location = new System.Drawing.Point(770, 440);
-            this.TextboxCollectDate.Name = "TextboxCollectDate";
-            this.TextboxCollectDate.Size = new System.Drawing.Size(135, 20);
-            this.TextboxCollectDate.TabIndex = 255;
-            this.TextboxCollectDate.TabStop = false;
-            this.TextboxCollectDate.Visible = false;
-            // 
             // DateTimePicker1
             // 
             this.DateTimePicker1.Enabled = false;
@@ -256,20 +182,6 @@
             this.Label26.TabIndex = 253;
             this.Label26.Text = "Todays Date";
             // 
-            // sendout
-            // 
-            this.sendout.DataColumnName = "SENDOUT";
-            this.sendout.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.sendout.Location = new System.Drawing.Point(391, 385);
-            this.sendout.Name = "sendout";
-            this.sendout.SendHL7 = downtimeC.HL7Destination.DI;
-            this.sendout.Size = new System.Drawing.Size(275, 20);
-            this.sendout.SpecimenExtension = "05";
-            this.sendout.SpecimenExtensionHighland = "";
-            this.sendout.SpecimenType = "AST";
-            this.sendout.SpecimenTypeHighland = "";
-            this.sendout.TabIndex = 22;
-            // 
             // Label24
             // 
             this.Label24.AutoSize = true;
@@ -279,20 +191,6 @@
             this.Label24.TabIndex = 252;
             this.Label24.Text = "Sendout Test (1N)";
             // 
-            // ser
-            // 
-            this.ser.DataColumnName = "serology";
-            this.ser.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.ser.Location = new System.Drawing.Point(391, 298);
-            this.ser.Name = "ser";
-            this.ser.SendHL7 = downtimeC.HL7Destination.DI;
-            this.ser.Size = new System.Drawing.Size(275, 20);
-            this.ser.SpecimenExtension = "41";
-            this.ser.SpecimenExtensionHighland = "";
-            this.ser.SpecimenType = "SRL";
-            this.ser.SpecimenTypeHighland = "";
-            this.ser.TabIndex = 20;
-            // 
             // Label23
             // 
             this.Label23.AutoSize = true;
@@ -301,20 +199,6 @@
             this.Label23.Size = new System.Drawing.Size(93, 13);
             this.Label23.TabIndex = 251;
             this.Label23.Text = "Serology Test (41)";
-            // 
-            // hepp
-            // 
-            this.hepp.DataColumnName = "heppetitas";
-            this.hepp.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.hepp.Location = new System.Drawing.Point(391, 254);
-            this.hepp.Name = "hepp";
-            this.hepp.SendHL7 = downtimeC.HL7Destination.DI;
-            this.hepp.Size = new System.Drawing.Size(275, 20);
-            this.hepp.SpecimenExtension = "42";
-            this.hepp.SpecimenExtensionHighland = "";
-            this.hepp.SpecimenType = "SHP";
-            this.hepp.SpecimenTypeHighland = "";
-            this.hepp.TabIndex = 19;
             // 
             // Label22
             // 
@@ -346,20 +230,6 @@
             this.Label25.TabIndex = 248;
             this.Label25.Text = "Printer";
             // 
-            // comment
-            // 
-            this.comment.DataColumnName = "ORDERCOMMENT";
-            this.comment.LabelPrintMode = downtimeC.LabelPrintMode.Comment;
-            this.comment.Location = new System.Drawing.Point(391, 746);
-            this.comment.Name = "comment";
-            this.comment.SendHL7 = downtimeC.HL7Destination.None;
-            this.comment.Size = new System.Drawing.Size(592, 20);
-            this.comment.SpecimenExtension = "";
-            this.comment.SpecimenExtensionHighland = "";
-            this.comment.SpecimenType = "CMT";
-            this.comment.SpecimenTypeHighland = "";
-            this.comment.TabIndex = 29;
-            // 
             // Label21
             // 
             this.Label21.AutoSize = true;
@@ -368,14 +238,6 @@
             this.Label21.Size = new System.Drawing.Size(51, 13);
             this.Label21.TabIndex = 237;
             this.Label21.Text = "Comment";
-            // 
-            // cal1
-            // 
-            this.cal1.DataColumnName = "calls";
-            this.cal1.Location = new System.Drawing.Point(391, 702);
-            this.cal1.Name = "cal1";
-            this.cal1.Size = new System.Drawing.Size(138, 20);
-            this.cal1.TabIndex = 28;
             // 
             // Label20
             // 
@@ -386,14 +248,6 @@
             this.Label20.TabIndex = 235;
             this.Label20.Text = "Call";
             // 
-            // problem
-            // 
-            this.problem.DataColumnName = "problem";
-            this.problem.Location = new System.Drawing.Point(391, 655);
-            this.problem.Name = "problem";
-            this.problem.Size = new System.Drawing.Size(190, 20);
-            this.problem.TabIndex = 27;
-            // 
             // Label19
             // 
             this.Label19.AutoSize = true;
@@ -402,20 +256,6 @@
             this.Label19.Size = new System.Drawing.Size(45, 13);
             this.Label19.TabIndex = 233;
             this.Label19.Text = "Problem";
-            // 
-            // bloodgas
-            // 
-            this.bloodgas.DataColumnName = "bloodgas";
-            this.bloodgas.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.bloodgas.Location = new System.Drawing.Point(391, 210);
-            this.bloodgas.Name = "bloodgas";
-            this.bloodgas.SendHL7 = downtimeC.HL7Destination.DI;
-            this.bloodgas.Size = new System.Drawing.Size(275, 20);
-            this.bloodgas.SpecimenExtension = "20";
-            this.bloodgas.SpecimenExtensionHighland = "";
-            this.bloodgas.SpecimenType = "SYR";
-            this.bloodgas.SpecimenTypeHighland = "";
-            this.bloodgas.TabIndex = 18;
             // 
             // Label18
             // 
@@ -426,20 +266,6 @@
             this.Label18.TabIndex = 231;
             this.Label18.Text = "Blood Gas (20)";
             // 
-            // urinechem
-            // 
-            this.urinechem.DataColumnName = "urinechem";
-            this.urinechem.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.urinechem.Location = new System.Drawing.Point(391, 168);
-            this.urinechem.Name = "urinechem";
-            this.urinechem.SendHL7 = downtimeC.HL7Destination.DI;
-            this.urinechem.Size = new System.Drawing.Size(275, 20);
-            this.urinechem.SpecimenExtension = "27";
-            this.urinechem.SpecimenExtensionHighland = "";
-            this.urinechem.SpecimenType = "URC";
-            this.urinechem.SpecimenTypeHighland = "";
-            this.urinechem.TabIndex = 17;
-            // 
             // Label17
             // 
             this.Label17.AutoSize = true;
@@ -448,20 +274,6 @@
             this.Label17.Size = new System.Drawing.Size(83, 13);
             this.Label17.TabIndex = 229;
             this.Label17.Text = "Urine Chem (27)";
-            // 
-            // urinehem
-            // 
-            this.urinehem.DataColumnName = "urinehem";
-            this.urinehem.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.urinehem.Location = new System.Drawing.Point(391, 122);
-            this.urinehem.Name = "urinehem";
-            this.urinehem.SendHL7 = downtimeC.HL7Destination.None;
-            this.urinehem.Size = new System.Drawing.Size(275, 20);
-            this.urinehem.SpecimenExtension = "UA";
-            this.urinehem.SpecimenExtensionHighland = "";
-            this.urinehem.SpecimenType = "UAC";
-            this.urinehem.SpecimenTypeHighland = "";
-            this.urinehem.TabIndex = 16;
             // 
             // Label16
             // 
@@ -472,20 +284,6 @@
             this.Label16.TabIndex = 227;
             this.Label16.Text = "Urine Hem (UA)";
             // 
-            // graytest
-            // 
-            this.graytest.DataColumnName = "grytest";
-            this.graytest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.graytest.Location = new System.Drawing.Point(391, 74);
-            this.graytest.Name = "graytest";
-            this.graytest.SendHL7 = downtimeC.HL7Destination.DI;
-            this.graytest.Size = new System.Drawing.Size(275, 20);
-            this.graytest.SpecimenExtension = "19";
-            this.graytest.SpecimenExtensionHighland = "";
-            this.graytest.SpecimenType = "GYT";
-            this.graytest.SpecimenTypeHighland = "";
-            this.graytest.TabIndex = 15;
-            // 
             // Label15
             // 
             this.Label15.AutoSize = true;
@@ -494,20 +292,6 @@
             this.Label15.Size = new System.Drawing.Size(74, 13);
             this.Label15.TabIndex = 225;
             this.Label15.Text = "Gray Test (19)";
-            // 
-            // lavchemtest
-            // 
-            this.lavchemtest.DataColumnName = "lavchemtest";
-            this.lavchemtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.lavchemtest.Location = new System.Drawing.Point(391, 27);
-            this.lavchemtest.Name = "lavchemtest";
-            this.lavchemtest.SendHL7 = downtimeC.HL7Destination.DI;
-            this.lavchemtest.Size = new System.Drawing.Size(190, 20);
-            this.lavchemtest.SpecimenExtension = "79";
-            this.lavchemtest.SpecimenExtensionHighland = "";
-            this.lavchemtest.SpecimenType = "8LV";
-            this.lavchemtest.SpecimenTypeHighland = "";
-            this.lavchemtest.TabIndex = 14;
             // 
             // Label14
             // 
@@ -518,20 +302,6 @@
             this.Label14.TabIndex = 223;
             this.Label14.Text = "Lav Chem Test (79)";
             // 
-            // greentest
-            // 
-            this.greentest.DataColumnName = "greentest";
-            this.greentest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.greentest.Location = new System.Drawing.Point(42, 754);
-            this.greentest.Name = "greentest";
-            this.greentest.SendHL7 = downtimeC.HL7Destination.DI;
-            this.greentest.Size = new System.Drawing.Size(193, 20);
-            this.greentest.SpecimenExtension = "40";
-            this.greentest.SpecimenExtensionHighland = "";
-            this.greentest.SpecimenType = "GRN";
-            this.greentest.SpecimenTypeHighland = "";
-            this.greentest.TabIndex = 13;
-            // 
             // Label13
             // 
             this.Label13.AutoSize = true;
@@ -540,20 +310,6 @@
             this.Label13.Size = new System.Drawing.Size(81, 13);
             this.Label13.TabIndex = 221;
             this.Label13.Text = "Green Test (40)";
-            // 
-            // lavhemtest
-            // 
-            this.lavhemtest.DataColumnName = "lavhemtest";
-            this.lavhemtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.lavhemtest.Location = new System.Drawing.Point(42, 705);
-            this.lavhemtest.Name = "lavhemtest";
-            this.lavhemtest.SendHL7 = downtimeC.HL7Destination.None;
-            this.lavhemtest.Size = new System.Drawing.Size(226, 20);
-            this.lavhemtest.SpecimenExtension = "18";
-            this.lavhemtest.SpecimenExtensionHighland = "";
-            this.lavhemtest.SpecimenType = "LAV";
-            this.lavhemtest.SpecimenTypeHighland = "";
-            this.lavhemtest.TabIndex = 12;
             // 
             // Label12
             // 
@@ -564,20 +320,6 @@
             this.Label12.TabIndex = 219;
             this.Label12.Text = "Lav HEMATOLOGY test (18)";
             // 
-            // bluetest
-            // 
-            this.bluetest.DataColumnName = "bluetest";
-            this.bluetest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.bluetest.Location = new System.Drawing.Point(42, 656);
-            this.bluetest.Name = "bluetest";
-            this.bluetest.SendHL7 = downtimeC.HL7Destination.None;
-            this.bluetest.Size = new System.Drawing.Size(223, 20);
-            this.bluetest.SpecimenExtension = "23";
-            this.bluetest.SpecimenExtensionHighland = "";
-            this.bluetest.SpecimenType = "BLU";
-            this.bluetest.SpecimenTypeHighland = "";
-            this.bluetest.TabIndex = 11;
-            // 
             // Label11
             // 
             this.Label11.AutoSize = true;
@@ -586,20 +328,6 @@
             this.Label11.Size = new System.Drawing.Size(69, 13);
             this.Label11.TabIndex = 217;
             this.Label11.Text = "Blue test (23)";
-            // 
-            // redtest
-            // 
-            this.redtest.DataColumnName = "redtest";
-            this.redtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.redtest.Location = new System.Drawing.Point(42, 600);
-            this.redtest.Name = "redtest";
-            this.redtest.SendHL7 = downtimeC.HL7Destination.DI;
-            this.redtest.Size = new System.Drawing.Size(220, 20);
-            this.redtest.SpecimenExtension = "00";
-            this.redtest.SpecimenExtensionHighland = "";
-            this.redtest.SpecimenType = "SST";
-            this.redtest.SpecimenTypeHighland = "";
-            this.redtest.TabIndex = 10;
             // 
             // Label10
             // 
@@ -610,15 +338,6 @@
             this.Label10.TabIndex = 215;
             this.Label10.Text = "SST Test (00)";
             // 
-            // DOB
-            // 
-            this.DOB.DataColumnName = "dob";
-            this.DOB.Location = new System.Drawing.Point(42, 304);
-            this.DOB.MaxLength = 10;
-            this.DOB.Name = "DOB";
-            this.DOB.Size = new System.Drawing.Size(129, 20);
-            this.DOB.TabIndex = 4;
-            // 
             // Label9
             // 
             this.Label9.AutoSize = true;
@@ -627,14 +346,6 @@
             this.Label9.Size = new System.Drawing.Size(66, 13);
             this.Label9.TabIndex = 213;
             this.Label9.Text = "Date of Birth";
-            // 
-            // mrn
-            // 
-            this.mrn.DataColumnName = "mrn";
-            this.mrn.Location = new System.Drawing.Point(42, 346);
-            this.mrn.Name = "mrn";
-            this.mrn.Size = new System.Drawing.Size(223, 20);
-            this.mrn.TabIndex = 5;
             // 
             // Label8
             // 
@@ -663,14 +374,6 @@
             this.labelWard.TabIndex = 207;
             this.labelWard.Text = "Ward Location";
             // 
-            // receivetime
-            // 
-            this.receivetime.DataColumnName = "receivetime";
-            this.receivetime.Location = new System.Drawing.Point(42, 497);
-            this.receivetime.Name = "receivetime";
-            this.receivetime.Size = new System.Drawing.Size(226, 20);
-            this.receivetime.TabIndex = 8;
-            // 
             // Label5
             // 
             this.Label5.AutoSize = true;
@@ -679,20 +382,6 @@
             this.Label5.Size = new System.Drawing.Size(73, 13);
             this.Label5.TabIndex = 205;
             this.Label5.Text = "Receive Time";
-            // 
-            // collectiontime
-            // 
-            this.collectiontime.DataColumnName = "collectiontime";
-            this.collectiontime.LabelPrintMode = downtimeC.LabelPrintMode.Demographic;
-            this.collectiontime.Location = new System.Drawing.Point(42, 454);
-            this.collectiontime.Name = "collectiontime";
-            this.collectiontime.SendHL7 = downtimeC.HL7Destination.None;
-            this.collectiontime.Size = new System.Drawing.Size(223, 20);
-            this.collectiontime.SpecimenExtension = "";
-            this.collectiontime.SpecimenExtensionHighland = "";
-            this.collectiontime.SpecimenType = "";
-            this.collectiontime.SpecimenTypeHighland = "";
-            this.collectiontime.TabIndex = 7;
             // 
             // Label4
             // 
@@ -711,14 +400,6 @@
             this.Label3.Size = new System.Drawing.Size(58, 13);
             this.Label3.TabIndex = 202;
             this.Label3.Text = "Last Name";
-            // 
-            // lastname
-            // 
-            this.lastname.DataColumnName = "lastname";
-            this.lastname.Location = new System.Drawing.Point(42, 211);
-            this.lastname.Name = "lastname";
-            this.lastname.Size = new System.Drawing.Size(226, 20);
-            this.lastname.TabIndex = 2;
             // 
             // DebugButtonFill
             // 
@@ -752,23 +433,6 @@
             this.Label1.TabIndex = 199;
             this.Label1.Text = "Order #";
             // 
-            // firstname
-            // 
-            this.firstname.DataColumnName = "firstname";
-            this.firstname.Location = new System.Drawing.Point(42, 255);
-            this.firstname.Name = "firstname";
-            this.firstname.Size = new System.Drawing.Size(223, 20);
-            this.firstname.TabIndex = 3;
-            // 
-            // ordernumber
-            // 
-            this.ordernumber.DataColumnName = "ordernumber";
-            this.ordernumber.Location = new System.Drawing.Point(42, 108);
-            this.ordernumber.MaxLength = 8;
-            this.ordernumber.Name = "ordernumber";
-            this.ordernumber.Size = new System.Drawing.Size(115, 20);
-            this.ordernumber.TabIndex = 0;
-            // 
             // Label33
             // 
             this.Label33.AutoSize = true;
@@ -778,24 +442,6 @@
             this.Label33.TabIndex = 266;
             this.Label33.Text = "Billing Number";
             // 
-            // TextBoxbillingnumber
-            // 
-            this.TextBoxbillingnumber.DataColumnName = "BILLINGNUMBER";
-            this.TextBoxbillingnumber.Location = new System.Drawing.Point(42, 161);
-            this.TextBoxbillingnumber.MaxLength = 13;
-            this.TextBoxbillingnumber.Name = "TextBoxbillingnumber";
-            this.TextBoxbillingnumber.Size = new System.Drawing.Size(224, 20);
-            this.TextBoxbillingnumber.TabIndex = 1;
-            // 
-            // comboBoxWard
-            // 
-            this.comboBoxWard.DataColumnName = "location";
-            this.comboBoxWard.FormattingEnabled = true;
-            this.comboBoxWard.Location = new System.Drawing.Point(42, 541);
-            this.comboBoxWard.Name = "comboBoxWard";
-            this.comboBoxWard.Size = new System.Drawing.Size(223, 21);
-            this.comboBoxWard.TabIndex = 9;
-            // 
             // Label34
             // 
             this.Label34.AutoSize = true;
@@ -804,20 +450,6 @@
             this.Label34.Size = new System.Drawing.Size(110, 13);
             this.Label34.TabIndex = 269;
             this.Label34.Text = "Immunology Test (2R)";
-            // 
-            // TextBoxIMMUNO
-            // 
-            this.TextBoxIMMUNO.DataColumnName = "IMMUNOTEST";
-            this.TextBoxIMMUNO.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
-            this.TextBoxIMMUNO.Location = new System.Drawing.Point(391, 343);
-            this.TextBoxIMMUNO.Name = "TextBoxIMMUNO";
-            this.TextBoxIMMUNO.SendHL7 = downtimeC.HL7Destination.None;
-            this.TextBoxIMMUNO.Size = new System.Drawing.Size(275, 20);
-            this.TextBoxIMMUNO.SpecimenExtension = "2R";
-            this.TextBoxIMMUNO.SpecimenExtensionHighland = "";
-            this.TextBoxIMMUNO.SpecimenType = "STI";
-            this.TextBoxIMMUNO.SpecimenTypeHighland = "";
-            this.TextBoxIMMUNO.TabIndex = 21;
             // 
             // editorder
             // 
@@ -871,20 +503,6 @@
             this.labelCollectDate.Text = "Collect Date";
             this.labelCollectDate.Visible = false;
             // 
-            // ComboBoxPriority
-            // 
-            this.ComboBoxPriority.DataColumnName = "priority";
-            this.ComboBoxPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBoxPriority.FormattingEnabled = true;
-            this.ComboBoxPriority.Items.AddRange(new object[] {
-            "R",
-            "S",
-            "U"});
-            this.ComboBoxPriority.Location = new System.Drawing.Point(42, 399);
-            this.ComboBoxPriority.Name = "ComboBoxPriority";
-            this.ComboBoxPriority.Size = new System.Drawing.Size(121, 21);
-            this.ComboBoxPriority.TabIndex = 6;
-            // 
             // ButtonPrint
             // 
             this.ButtonPrint.Location = new System.Drawing.Point(770, 297);
@@ -916,6 +534,483 @@
             this.ComboboxPrintType.Size = new System.Drawing.Size(121, 21);
             this.ComboboxPrintType.TabIndex = 277;
             this.ComboboxPrintType.Visible = false;
+            // 
+            // ComboBoxPriority
+            // 
+            this.ComboBoxPriority.DataColumnName = "priority";
+            this.ComboBoxPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxPriority.FormattingEnabled = true;
+            this.ComboBoxPriority.Items.AddRange(new object[] {
+            "R",
+            "S",
+            "U"});
+            this.ComboBoxPriority.Location = new System.Drawing.Point(42, 399);
+            this.ComboBoxPriority.Name = "ComboBoxPriority";
+            this.ComboBoxPriority.Required = true;
+            this.ComboBoxPriority.Size = new System.Drawing.Size(121, 21);
+            this.ComboBoxPriority.TabIndex = 6;
+            this.ComboBoxPriority.ValidationPrompt = "Priority must be set";
+            // 
+            // TextBoxIMMUNO
+            // 
+            this.TextBoxIMMUNO.DataColumnName = "IMMUNOTEST";
+            this.TextBoxIMMUNO.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.TextBoxIMMUNO.Location = new System.Drawing.Point(391, 343);
+            this.TextBoxIMMUNO.Name = "TextBoxIMMUNO";
+            this.TextBoxIMMUNO.RegexValidation = "";
+            this.TextBoxIMMUNO.Required = false;
+            this.TextBoxIMMUNO.SendHL7 = downtimeC.HL7Destination.None;
+            this.TextBoxIMMUNO.Size = new System.Drawing.Size(275, 20);
+            this.TextBoxIMMUNO.SpecimenExtension = "2R";
+            this.TextBoxIMMUNO.SpecimenExtensionHighland = "";
+            this.TextBoxIMMUNO.SpecimenType = "STI";
+            this.TextBoxIMMUNO.SpecimenTypeHighland = "";
+            this.TextBoxIMMUNO.TabIndex = 21;
+            this.TextBoxIMMUNO.ValidationPrompt = "";
+            // 
+            // comboBoxWard
+            // 
+            this.comboBoxWard.DataColumnName = "location";
+            this.comboBoxWard.FormattingEnabled = true;
+            this.comboBoxWard.Location = new System.Drawing.Point(42, 541);
+            this.comboBoxWard.Name = "comboBoxWard";
+            this.comboBoxWard.Required = true;
+            this.comboBoxWard.Size = new System.Drawing.Size(223, 21);
+            this.comboBoxWard.TabIndex = 9;
+            this.comboBoxWard.ValidationPrompt = "Ward Location must be set";
+            // 
+            // TextBoxbillingnumber
+            // 
+            this.TextBoxbillingnumber.DataColumnName = "BILLINGNUMBER";
+            this.TextBoxbillingnumber.Location = new System.Drawing.Point(42, 161);
+            this.TextBoxbillingnumber.MaxLength = 13;
+            this.TextBoxbillingnumber.Name = "TextBoxbillingnumber";
+            this.TextBoxbillingnumber.RegexValidation = "S000\\d{9}|SXB\\d{6}";
+            this.TextBoxbillingnumber.Required = true;
+            this.TextBoxbillingnumber.Size = new System.Drawing.Size(224, 20);
+            this.TextBoxbillingnumber.TabIndex = 1;
+            this.TextBoxbillingnumber.ValidationPrompt = "MUST ENTER BILLING # LIKE \'S000#########\' OR \'SXB######\'";
+            // 
+            // ComboboxPrinter
+            // 
+            this.ComboboxPrinter.FormattingEnabled = true;
+            this.ComboboxPrinter.Location = new System.Drawing.Point(770, 203);
+            this.ComboboxPrinter.Name = "ComboboxPrinter";
+            this.ComboboxPrinter.Required = true;
+            this.ComboboxPrinter.Size = new System.Drawing.Size(121, 21);
+            this.ComboboxPrinter.TabIndex = 30;
+            this.ComboboxPrinter.ValidationPrompt = "Printer must be set";
+            this.ComboboxPrinter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ComboBoxprinter_KeyUp);
+            // 
+            // OTHERBOX
+            // 
+            this.OTHERBOX.DataColumnName = "OTHERTEST";
+            this.OTHERBOX.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.OTHERBOX.Location = new System.Drawing.Point(391, 601);
+            this.OTHERBOX.Name = "OTHERBOX";
+            this.OTHERBOX.RegexValidation = "";
+            this.OTHERBOX.Required = false;
+            this.OTHERBOX.SendHL7 = downtimeC.HL7Destination.None;
+            this.OTHERBOX.Size = new System.Drawing.Size(272, 20);
+            this.OTHERBOX.SpecimenExtension = "";
+            this.OTHERBOX.SpecimenExtensionHighland = "";
+            this.OTHERBOX.SpecimenType = "OTH";
+            this.OTHERBOX.SpecimenTypeHighland = "";
+            this.OTHERBOX.TabIndex = 26;
+            this.OTHERBOX.ValidationPrompt = "";
+            // 
+            // Viralloadbox
+            // 
+            this.Viralloadbox.DataColumnName = "VIRALLOADTEST";
+            this.Viralloadbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.Viralloadbox.Location = new System.Drawing.Point(391, 550);
+            this.Viralloadbox.Name = "Viralloadbox";
+            this.Viralloadbox.RegexValidation = "";
+            this.Viralloadbox.Required = false;
+            this.Viralloadbox.SendHL7 = downtimeC.HL7Destination.None;
+            this.Viralloadbox.Size = new System.Drawing.Size(275, 20);
+            this.Viralloadbox.SpecimenExtension = "74";
+            this.Viralloadbox.SpecimenExtensionHighland = "";
+            this.Viralloadbox.SpecimenType = "4LV";
+            this.Viralloadbox.SpecimenTypeHighland = "";
+            this.Viralloadbox.TabIndex = 25;
+            this.Viralloadbox.ValidationPrompt = "";
+            // 
+            // fluidbox
+            // 
+            this.fluidbox.DataColumnName = "FLUIDTEST";
+            this.fluidbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.fluidbox.Location = new System.Drawing.Point(391, 493);
+            this.fluidbox.Name = "fluidbox";
+            this.fluidbox.RegexValidation = "";
+            this.fluidbox.Required = false;
+            this.fluidbox.SendHL7 = downtimeC.HL7Destination.DI;
+            this.fluidbox.Size = new System.Drawing.Size(275, 20);
+            this.fluidbox.SpecimenExtension = "38";
+            this.fluidbox.SpecimenExtensionHighland = "";
+            this.fluidbox.SpecimenType = "FLD";
+            this.fluidbox.SpecimenTypeHighland = "";
+            this.fluidbox.TabIndex = 24;
+            this.fluidbox.ValidationPrompt = "";
+            // 
+            // csfbox
+            // 
+            this.csfbox.DataColumnName = "CSFTEST";
+            this.csfbox.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.csfbox.Location = new System.Drawing.Point(391, 440);
+            this.csfbox.Name = "csfbox";
+            this.csfbox.RegexValidation = "";
+            this.csfbox.Required = false;
+            this.csfbox.SendHL7 = downtimeC.HL7Destination.DI;
+            this.csfbox.Size = new System.Drawing.Size(275, 20);
+            this.csfbox.SpecimenExtension = "26";
+            this.csfbox.SpecimenExtensionHighland = "";
+            this.csfbox.SpecimenType = "CSF";
+            this.csfbox.SpecimenTypeHighland = "";
+            this.csfbox.TabIndex = 23;
+            this.csfbox.ValidationPrompt = "";
+            // 
+            // TextboxCollectDate
+            // 
+            this.TextboxCollectDate.DataColumnName = "collectdate";
+            this.TextboxCollectDate.Location = new System.Drawing.Point(770, 440);
+            this.TextboxCollectDate.Name = "TextboxCollectDate";
+            this.TextboxCollectDate.RegexValidation = "";
+            this.TextboxCollectDate.Required = false;
+            this.TextboxCollectDate.Size = new System.Drawing.Size(135, 20);
+            this.TextboxCollectDate.TabIndex = 255;
+            this.TextboxCollectDate.TabStop = false;
+            this.TextboxCollectDate.ValidationPrompt = "";
+            this.TextboxCollectDate.Visible = false;
+            // 
+            // sendout
+            // 
+            this.sendout.DataColumnName = "SENDOUT";
+            this.sendout.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.sendout.Location = new System.Drawing.Point(391, 385);
+            this.sendout.Name = "sendout";
+            this.sendout.RegexValidation = "";
+            this.sendout.Required = false;
+            this.sendout.SendHL7 = downtimeC.HL7Destination.DI;
+            this.sendout.Size = new System.Drawing.Size(275, 20);
+            this.sendout.SpecimenExtension = "05";
+            this.sendout.SpecimenExtensionHighland = "";
+            this.sendout.SpecimenType = "AST";
+            this.sendout.SpecimenTypeHighland = "";
+            this.sendout.TabIndex = 22;
+            this.sendout.ValidationPrompt = "";
+            // 
+            // ser
+            // 
+            this.ser.DataColumnName = "serology";
+            this.ser.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.ser.Location = new System.Drawing.Point(391, 298);
+            this.ser.Name = "ser";
+            this.ser.RegexValidation = "";
+            this.ser.Required = false;
+            this.ser.SendHL7 = downtimeC.HL7Destination.DI;
+            this.ser.Size = new System.Drawing.Size(275, 20);
+            this.ser.SpecimenExtension = "41";
+            this.ser.SpecimenExtensionHighland = "";
+            this.ser.SpecimenType = "SRL";
+            this.ser.SpecimenTypeHighland = "";
+            this.ser.TabIndex = 20;
+            this.ser.ValidationPrompt = "";
+            // 
+            // hepp
+            // 
+            this.hepp.DataColumnName = "heppetitas";
+            this.hepp.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.hepp.Location = new System.Drawing.Point(391, 254);
+            this.hepp.Name = "hepp";
+            this.hepp.RegexValidation = "";
+            this.hepp.Required = false;
+            this.hepp.SendHL7 = downtimeC.HL7Destination.DI;
+            this.hepp.Size = new System.Drawing.Size(275, 20);
+            this.hepp.SpecimenExtension = "42";
+            this.hepp.SpecimenExtensionHighland = "";
+            this.hepp.SpecimenType = "SHP";
+            this.hepp.SpecimenTypeHighland = "";
+            this.hepp.TabIndex = 19;
+            this.hepp.ValidationPrompt = "";
+            // 
+            // comment
+            // 
+            this.comment.DataColumnName = "ORDERCOMMENT";
+            this.comment.LabelPrintMode = downtimeC.LabelPrintMode.Comment;
+            this.comment.Location = new System.Drawing.Point(391, 746);
+            this.comment.Name = "comment";
+            this.comment.RegexValidation = "";
+            this.comment.Required = false;
+            this.comment.SendHL7 = downtimeC.HL7Destination.None;
+            this.comment.Size = new System.Drawing.Size(592, 20);
+            this.comment.SpecimenExtension = "";
+            this.comment.SpecimenExtensionHighland = "";
+            this.comment.SpecimenType = "CMT";
+            this.comment.SpecimenTypeHighland = "";
+            this.comment.TabIndex = 29;
+            this.comment.ValidationPrompt = "";
+            // 
+            // cal1
+            // 
+            this.cal1.DataColumnName = "calls";
+            this.cal1.Location = new System.Drawing.Point(391, 702);
+            this.cal1.Name = "cal1";
+            this.cal1.RegexValidation = "";
+            this.cal1.Required = false;
+            this.cal1.Size = new System.Drawing.Size(138, 20);
+            this.cal1.TabIndex = 28;
+            this.cal1.ValidationPrompt = "";
+            // 
+            // problem
+            // 
+            this.problem.DataColumnName = "problem";
+            this.problem.Location = new System.Drawing.Point(391, 655);
+            this.problem.Name = "problem";
+            this.problem.RegexValidation = "";
+            this.problem.Required = false;
+            this.problem.Size = new System.Drawing.Size(190, 20);
+            this.problem.TabIndex = 27;
+            this.problem.ValidationPrompt = "";
+            // 
+            // bloodgas
+            // 
+            this.bloodgas.DataColumnName = "bloodgas";
+            this.bloodgas.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.bloodgas.Location = new System.Drawing.Point(391, 210);
+            this.bloodgas.Name = "bloodgas";
+            this.bloodgas.RegexValidation = "";
+            this.bloodgas.Required = false;
+            this.bloodgas.SendHL7 = downtimeC.HL7Destination.DI;
+            this.bloodgas.Size = new System.Drawing.Size(275, 20);
+            this.bloodgas.SpecimenExtension = "20";
+            this.bloodgas.SpecimenExtensionHighland = "";
+            this.bloodgas.SpecimenType = "SYR";
+            this.bloodgas.SpecimenTypeHighland = "";
+            this.bloodgas.TabIndex = 18;
+            this.bloodgas.ValidationPrompt = "";
+            // 
+            // urinechem
+            // 
+            this.urinechem.DataColumnName = "urinechem";
+            this.urinechem.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.urinechem.Location = new System.Drawing.Point(391, 168);
+            this.urinechem.Name = "urinechem";
+            this.urinechem.RegexValidation = "";
+            this.urinechem.Required = false;
+            this.urinechem.SendHL7 = downtimeC.HL7Destination.DI;
+            this.urinechem.Size = new System.Drawing.Size(275, 20);
+            this.urinechem.SpecimenExtension = "27";
+            this.urinechem.SpecimenExtensionHighland = "";
+            this.urinechem.SpecimenType = "URC";
+            this.urinechem.SpecimenTypeHighland = "";
+            this.urinechem.TabIndex = 17;
+            this.urinechem.ValidationPrompt = "";
+            // 
+            // urinehem
+            // 
+            this.urinehem.DataColumnName = "urinehem";
+            this.urinehem.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.urinehem.Location = new System.Drawing.Point(391, 122);
+            this.urinehem.Name = "urinehem";
+            this.urinehem.RegexValidation = "";
+            this.urinehem.Required = false;
+            this.urinehem.SendHL7 = downtimeC.HL7Destination.None;
+            this.urinehem.Size = new System.Drawing.Size(275, 20);
+            this.urinehem.SpecimenExtension = "UA";
+            this.urinehem.SpecimenExtensionHighland = "";
+            this.urinehem.SpecimenType = "UAC";
+            this.urinehem.SpecimenTypeHighland = "";
+            this.urinehem.TabIndex = 16;
+            this.urinehem.ValidationPrompt = "";
+            // 
+            // graytest
+            // 
+            this.graytest.DataColumnName = "grytest";
+            this.graytest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.graytest.Location = new System.Drawing.Point(391, 74);
+            this.graytest.Name = "graytest";
+            this.graytest.RegexValidation = "";
+            this.graytest.Required = false;
+            this.graytest.SendHL7 = downtimeC.HL7Destination.DI;
+            this.graytest.Size = new System.Drawing.Size(275, 20);
+            this.graytest.SpecimenExtension = "19";
+            this.graytest.SpecimenExtensionHighland = "";
+            this.graytest.SpecimenType = "GYT";
+            this.graytest.SpecimenTypeHighland = "";
+            this.graytest.TabIndex = 15;
+            this.graytest.ValidationPrompt = "";
+            // 
+            // lavchemtest
+            // 
+            this.lavchemtest.DataColumnName = "lavchemtest";
+            this.lavchemtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.lavchemtest.Location = new System.Drawing.Point(391, 27);
+            this.lavchemtest.Name = "lavchemtest";
+            this.lavchemtest.RegexValidation = "";
+            this.lavchemtest.Required = false;
+            this.lavchemtest.SendHL7 = downtimeC.HL7Destination.DI;
+            this.lavchemtest.Size = new System.Drawing.Size(190, 20);
+            this.lavchemtest.SpecimenExtension = "79";
+            this.lavchemtest.SpecimenExtensionHighland = "";
+            this.lavchemtest.SpecimenType = "8LV";
+            this.lavchemtest.SpecimenTypeHighland = "";
+            this.lavchemtest.TabIndex = 14;
+            this.lavchemtest.ValidationPrompt = "";
+            // 
+            // greentest
+            // 
+            this.greentest.DataColumnName = "greentest";
+            this.greentest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.greentest.Location = new System.Drawing.Point(42, 754);
+            this.greentest.Name = "greentest";
+            this.greentest.RegexValidation = "";
+            this.greentest.Required = false;
+            this.greentest.SendHL7 = downtimeC.HL7Destination.DI;
+            this.greentest.Size = new System.Drawing.Size(193, 20);
+            this.greentest.SpecimenExtension = "40";
+            this.greentest.SpecimenExtensionHighland = "";
+            this.greentest.SpecimenType = "GRN";
+            this.greentest.SpecimenTypeHighland = "";
+            this.greentest.TabIndex = 13;
+            this.greentest.ValidationPrompt = "";
+            // 
+            // lavhemtest
+            // 
+            this.lavhemtest.DataColumnName = "lavhemtest";
+            this.lavhemtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.lavhemtest.Location = new System.Drawing.Point(42, 705);
+            this.lavhemtest.Name = "lavhemtest";
+            this.lavhemtest.RegexValidation = "";
+            this.lavhemtest.Required = false;
+            this.lavhemtest.SendHL7 = downtimeC.HL7Destination.None;
+            this.lavhemtest.Size = new System.Drawing.Size(226, 20);
+            this.lavhemtest.SpecimenExtension = "18";
+            this.lavhemtest.SpecimenExtensionHighland = "";
+            this.lavhemtest.SpecimenType = "LAV";
+            this.lavhemtest.SpecimenTypeHighland = "";
+            this.lavhemtest.TabIndex = 12;
+            this.lavhemtest.ValidationPrompt = "";
+            // 
+            // bluetest
+            // 
+            this.bluetest.DataColumnName = "bluetest";
+            this.bluetest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.bluetest.Location = new System.Drawing.Point(42, 656);
+            this.bluetest.Name = "bluetest";
+            this.bluetest.RegexValidation = "";
+            this.bluetest.Required = false;
+            this.bluetest.SendHL7 = downtimeC.HL7Destination.None;
+            this.bluetest.Size = new System.Drawing.Size(223, 20);
+            this.bluetest.SpecimenExtension = "23";
+            this.bluetest.SpecimenExtensionHighland = "";
+            this.bluetest.SpecimenType = "BLU";
+            this.bluetest.SpecimenTypeHighland = "";
+            this.bluetest.TabIndex = 11;
+            this.bluetest.ValidationPrompt = "";
+            // 
+            // redtest
+            // 
+            this.redtest.DataColumnName = "redtest";
+            this.redtest.LabelPrintMode = downtimeC.LabelPrintMode.Aliquot;
+            this.redtest.Location = new System.Drawing.Point(42, 600);
+            this.redtest.Name = "redtest";
+            this.redtest.RegexValidation = "";
+            this.redtest.Required = false;
+            this.redtest.SendHL7 = downtimeC.HL7Destination.DI;
+            this.redtest.Size = new System.Drawing.Size(220, 20);
+            this.redtest.SpecimenExtension = "00";
+            this.redtest.SpecimenExtensionHighland = "";
+            this.redtest.SpecimenType = "SST";
+            this.redtest.SpecimenTypeHighland = "";
+            this.redtest.TabIndex = 10;
+            this.redtest.ValidationPrompt = "";
+            // 
+            // DOB
+            // 
+            this.DOB.DataColumnName = "dob";
+            this.DOB.Location = new System.Drawing.Point(42, 304);
+            this.DOB.MaxLength = 10;
+            this.DOB.Name = "DOB";
+            this.DOB.RegexValidation = "\\d\\d/\\d\\d/\\d\\d";
+            this.DOB.Required = true;
+            this.DOB.Size = new System.Drawing.Size(129, 20);
+            this.DOB.TabIndex = 4;
+            this.DOB.ValidationPrompt = "Must enter date in proper format MM/DD/YY";
+            // 
+            // mrn
+            // 
+            this.mrn.DataColumnName = "mrn";
+            this.mrn.Location = new System.Drawing.Point(42, 346);
+            this.mrn.Name = "mrn";
+            this.mrn.RegexValidation = "\\d{12}|X\\d{6}";
+            this.mrn.Required = true;
+            this.mrn.Size = new System.Drawing.Size(223, 20);
+            this.mrn.TabIndex = 5;
+            this.mrn.ValidationPrompt = "Must enter MRN in proper format 12 digits, or X prefix and 6 digits";
+            // 
+            // receivetime
+            // 
+            this.receivetime.DataColumnName = "receivetime";
+            this.receivetime.Location = new System.Drawing.Point(42, 497);
+            this.receivetime.Name = "receivetime";
+            this.receivetime.RegexValidation = "([0-9]{2}):([0-9]{2})";
+            this.receivetime.Required = true;
+            this.receivetime.Size = new System.Drawing.Size(226, 20);
+            this.receivetime.TabIndex = 8;
+            this.receivetime.ValidationPrompt = "Receive Time must be in proper format(##:##)";
+            // 
+            // collectiontime
+            // 
+            this.collectiontime.DataColumnName = "collectiontime";
+            this.collectiontime.LabelPrintMode = downtimeC.LabelPrintMode.Demographic;
+            this.collectiontime.Location = new System.Drawing.Point(42, 454);
+            this.collectiontime.Name = "collectiontime";
+            this.collectiontime.RegexValidation = "([0-9]{2}):([0-9]{2})";
+            this.collectiontime.Required = true;
+            this.collectiontime.SendHL7 = downtimeC.HL7Destination.None;
+            this.collectiontime.Size = new System.Drawing.Size(223, 20);
+            this.collectiontime.SpecimenExtension = "";
+            this.collectiontime.SpecimenExtensionHighland = "";
+            this.collectiontime.SpecimenType = "";
+            this.collectiontime.SpecimenTypeHighland = "";
+            this.collectiontime.TabIndex = 7;
+            this.collectiontime.ValidationPrompt = "Collection Time must be in proper format(##:##)";
+            // 
+            // lastname
+            // 
+            this.lastname.DataColumnName = "lastname";
+            this.lastname.Location = new System.Drawing.Point(42, 211);
+            this.lastname.Name = "lastname";
+            this.lastname.RegexValidation = "";
+            this.lastname.Required = true;
+            this.lastname.Size = new System.Drawing.Size(226, 20);
+            this.lastname.TabIndex = 2;
+            this.lastname.ValidationPrompt = "";
+            // 
+            // firstname
+            // 
+            this.firstname.DataColumnName = "firstname";
+            this.firstname.Location = new System.Drawing.Point(42, 255);
+            this.firstname.Name = "firstname";
+            this.firstname.RegexValidation = "";
+            this.firstname.Required = true;
+            this.firstname.Size = new System.Drawing.Size(223, 20);
+            this.firstname.TabIndex = 3;
+            this.firstname.ValidationPrompt = "";
+            // 
+            // ordernumber
+            // 
+            this.ordernumber.DataColumnName = "ordernumber";
+            this.ordernumber.Location = new System.Drawing.Point(42, 108);
+            this.ordernumber.MaxLength = 8;
+            this.ordernumber.Name = "ordernumber";
+            this.ordernumber.RegexValidation = "[A-Z]\\d{3}[A-Z]\\d{3}";
+            this.ordernumber.Required = false;
+            this.ordernumber.Size = new System.Drawing.Size(115, 20);
+            this.ordernumber.TabIndex = 0;
+            this.ordernumber.ValidationPrompt = "Order number must be in proper format: 8 characters - upperCase letter, 3 digits," +
+                " upperCase letter, 3 digits";
             // 
             // OrderBaseForm
             // 
@@ -1085,6 +1180,6 @@
         public System.Windows.Forms.Label Label32;
         private System.Windows.Forms.Label Label25;
         private System.Windows.Forms.Button ButtonPrint;
-        public System.Windows.Forms.ComboBox ComboboxPrinter;
+        public OptionComboBox ComboboxPrinter;
     }
 }

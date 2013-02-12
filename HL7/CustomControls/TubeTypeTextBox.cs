@@ -36,7 +36,7 @@ namespace downtimeC
         MOLIS
     }
 
-    public partial class TubeTypeTextBox : TextBox, IStoredControl
+    public partial class TubeTypeTextBox : StoredTextBox, IStoredControl
     {
         public TubeTypeTextBox()
         {
@@ -102,19 +102,6 @@ namespace downtimeC
             set { this.labelPrintMode = value; }
         }
 
-        private string dataColumnName = "";
-
-        [Browsable(true)]
-        public string DataColumnName
-        {
-            get { return this.dataColumnName; }
-            set { this.dataColumnName = value; }
-        }
-
-        public void setValue(string value)
-        {
-            this.Text = value;
-        }
 
        public SpecimenType getSpecimenType(Hospital hospital, SetupTableData tableData) {
            
