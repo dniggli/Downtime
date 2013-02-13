@@ -579,12 +579,14 @@ namespace HL7
             // 
             this.textBoxAddTest.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAddTest.Location = new System.Drawing.Point(40, 942);
+            this.textBoxAddTest.MaxLength = 5;
             this.textBoxAddTest.Name = "textBoxAddTest";
-            this.textBoxAddTest.RegexValidation = "[A-Z0-9]{3,5}";
+            this.textBoxAddTest.RegexValidation = "[A-Z0-9]{2,5}";
             this.textBoxAddTest.Required = false;
             this.textBoxAddTest.Size = new System.Drawing.Size(221, 20);
             this.textBoxAddTest.TabIndex = 280;
             this.textBoxAddTest.ValidationPrompt = "Tests may only contain characters and numbers";
+            this.textBoxAddTest.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxAddTest_KeyUp);
             // 
             // ComboBoxPriority
             // 

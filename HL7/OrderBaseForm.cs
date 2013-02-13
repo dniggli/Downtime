@@ -48,7 +48,7 @@ namespace HL7
             comboBoxWard.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             //use SchemaFilledTable to load the table layout
-            testTable = getSqlServer.SchemaFilledTable("SELECT TOP 1 * FROM [dbo].[exportedtests]");
+            testTable = getSqlServer.SchemaFilledTable("SELECT TOP 1 Id,Name,Tube,Location FROM [dbo].[exportedtests]");
             this.dataGridTests.DataSource = testTable;
         }
 
@@ -237,9 +237,9 @@ namespace HL7
                 .Where(row => row["Id"].ToString() == test)
                 .headOption();
         }
-        private void buttonAddTest_Click(object sender, EventArgs e)
-        {
 
+        private void addTest()
+        {
             if (!textBoxAddTest.Validate()) return;
 
             textBoxAddTest.TextOption.forEach(text =>
@@ -250,11 +250,10 @@ namespace HL7
                     return;
                 }
                 buttonAddTest.Enabled = false;
-                
-                var location = (hospital == Hospital.Strong) ? "SMH" : "HH";
 
-                var rowOption = getSqlServer.FilledRowOption("SELECT * FROM [dbo].[exportedtests] where Id = @ID AND Location = @Location",
-                     new SqlParameter("@Location", location),
+                var orderableAt = (hospital == Hospital.Strong) ? "SmhOrderable" : "HhOrderable";
+
+                var rowOption = getSqlServer.FilledRowOption(string.Format("SELECT Id,Name,Tube,Location FROM [dbo].[exportedtests] where Id = @ID AND {0} = 1", orderableAt),
                      new SqlParameter("@ID", text));
 
                 if (rowOption.isDefined)
@@ -267,6 +266,13 @@ namespace HL7
                 }
                 buttonAddTest.Enabled = true;
             });
+            textBoxAddTest.Clear();
+        }
+
+        private void buttonAddTest_Click(object sender, EventArgs e)
+        {
+
+            addTest();
         }
 
       
@@ -280,6 +286,14 @@ namespace HL7
                 getOrderedTest(test).forEach(r => r.Delete());
             });
             
+        }
+
+        private void textBoxAddTest_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addTest();
+            }
         }
 
 
