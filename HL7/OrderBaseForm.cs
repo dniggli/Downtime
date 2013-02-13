@@ -48,7 +48,7 @@ namespace HL7
             comboBoxWard.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             //use SchemaFilledTable to load the table layout
-            testTable = getSqlServer.SchemaFilledTable("SELECT TOP 1 Id,Name,Tube,Location FROM [dbo].[exportedtests]");
+            testTable = getSqlServer.SchemaFilledTable("SELECT TOP 1 [Id], [Name], [Tube], [Location], [Extension], [DiTranslation] FROM [dbo].[TestsWithSpecimenExtension]");
             this.dataGridTests.DataSource = testTable;
         }
 
@@ -253,7 +253,7 @@ namespace HL7
 
                 var orderableAt = (hospital == Hospital.Strong) ? "SmhOrderable" : "HhOrderable";
 
-                var rowOption = getSqlServer.FilledRowOption(string.Format("SELECT Id,Name,Tube,Location FROM [dbo].[exportedtests] where Id = @ID AND {0} = 1", orderableAt),
+                var rowOption = getSqlServer.FilledRowOption(string.Format("SELECT [Id], [Name], [Tube], [Location], [Extension], [DiTranslation] FROM [dbo].[TestsWithSpecimenExtension] where Id = @ID AND {0} = 1", orderableAt),
                      new SqlParameter("@ID", text));
 
                 if (rowOption.isDefined)
