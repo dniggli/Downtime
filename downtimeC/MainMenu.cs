@@ -31,10 +31,10 @@ namespace downtimeC
             var setupTableData = new SetupTableData(getMySql, getSqlServer, hospital);
             
             //setup buttons handlers
-            new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(setupTableData,getMySql,hospital));
+            new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(getMySql, setupTableData, getSqlServer, hospital));
             new FormStart(ButtonSmsArchiveTracking, () => new TrackSmsForm());
-            new FormStart(ButtonAliquotReprint, () => new AliquotForm(getMySql,setupTableData));
-            new FormStart(ButtonPlaceAddon, () => new AddOnForm(getMySql, setupTableData));
+            new FormStart(ButtonAliquotReprint, () => new AliquotForm(getMySql,setupTableData,getSqlServer,hospital));
+            new FormStart(ButtonPlaceAddon, () => new AddOnForm(getMySql, setupTableData, getSqlServer, hospital));
             new FormStart(ButtonHemArchiveTracking, () => new TrackHemForm());
             new FormStart(ButtonUrineHemTracking, () => new TrackUrineHemForm());
             new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm());

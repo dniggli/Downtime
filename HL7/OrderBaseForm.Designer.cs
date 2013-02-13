@@ -74,6 +74,10 @@ namespace HL7
             this.ButtonPrint = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.ComboboxPrintType = new System.Windows.Forms.ComboBox();
+            this.dataGridTests = new System.Windows.Forms.DataGridView();
+            this.buttonAddTest = new System.Windows.Forms.Button();
+            this.buttonRemoveTest = new System.Windows.Forms.Button();
+            this.textBoxAddTest = new downtimeC.OptionTextBox();
             this.ComboBoxPriority = new downtimeC.PriorityComboBox();
             this.TextBoxIMMUNO = new downtimeC.TubeTypeTextBox();
             this.comboBoxWard = new downtimeC.StoredComboBox();
@@ -106,6 +110,7 @@ namespace HL7
             this.lastname = new downtimeC.StoredTextBox();
             this.firstname = new downtimeC.StoredTextBox();
             this.ordernumber = new downtimeC.StoredTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTests)).BeginInit();
             this.SuspendLayout();
             // 
             // Label31
@@ -534,6 +539,52 @@ namespace HL7
             this.ComboboxPrintType.Size = new System.Drawing.Size(121, 21);
             this.ComboboxPrintType.TabIndex = 277;
             this.ComboboxPrintType.Visible = false;
+            // 
+            // dataGridTests
+            // 
+            this.dataGridTests.AllowUserToAddRows = false;
+            this.dataGridTests.AllowUserToDeleteRows = false;
+            this.dataGridTests.AllowUserToResizeRows = false;
+            this.dataGridTests.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridTests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridTests.Location = new System.Drawing.Point(40, 788);
+            this.dataGridTests.MultiSelect = false;
+            this.dataGridTests.Name = "dataGridTests";
+            this.dataGridTests.ReadOnly = true;
+            this.dataGridTests.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridTests.Size = new System.Drawing.Size(591, 146);
+            this.dataGridTests.TabIndex = 279;
+            // 
+            // buttonAddTest
+            // 
+            this.buttonAddTest.Location = new System.Drawing.Point(267, 940);
+            this.buttonAddTest.Name = "buttonAddTest";
+            this.buttonAddTest.Size = new System.Drawing.Size(66, 23);
+            this.buttonAddTest.TabIndex = 281;
+            this.buttonAddTest.Text = "Add Test";
+            this.buttonAddTest.UseVisualStyleBackColor = true;
+            this.buttonAddTest.Click += new System.EventHandler(this.buttonAddTest_Click);
+            // 
+            // buttonRemoveTest
+            // 
+            this.buttonRemoveTest.Location = new System.Drawing.Point(340, 940);
+            this.buttonRemoveTest.Name = "buttonRemoveTest";
+            this.buttonRemoveTest.Size = new System.Drawing.Size(96, 23);
+            this.buttonRemoveTest.TabIndex = 282;
+            this.buttonRemoveTest.Text = "Remove Test";
+            this.buttonRemoveTest.UseVisualStyleBackColor = true;
+            this.buttonRemoveTest.Click += new System.EventHandler(this.buttonRemoveTest_Click);
+            // 
+            // textBoxAddTest
+            // 
+            this.textBoxAddTest.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBoxAddTest.Location = new System.Drawing.Point(40, 942);
+            this.textBoxAddTest.Name = "textBoxAddTest";
+            this.textBoxAddTest.RegexValidation = "[A-Z0-9]{3,5}";
+            this.textBoxAddTest.Required = false;
+            this.textBoxAddTest.Size = new System.Drawing.Size(221, 20);
+            this.textBoxAddTest.TabIndex = 280;
+            this.textBoxAddTest.ValidationPrompt = "Tests may only contain characters and numbers";
             // 
             // ComboBoxPriority
             // 
@@ -1016,7 +1067,11 @@ namespace HL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1014, 788);
+            this.ClientSize = new System.Drawing.Size(1014, 1009);
+            this.Controls.Add(this.buttonRemoveTest);
+            this.Controls.Add(this.buttonAddTest);
+            this.Controls.Add(this.textBoxAddTest);
+            this.Controls.Add(this.dataGridTests);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ComboboxPrintType);
             this.Controls.Add(this.ButtonPrint);
@@ -1096,7 +1151,7 @@ namespace HL7
             this.Controls.Add(this.ordernumber);
             this.Name = "OrderBaseForm";
             this.Text = "OrderBaseForm";
-            this.Load += new System.EventHandler(this.OrderBaseForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTests)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1181,5 +1236,9 @@ namespace HL7
         private System.Windows.Forms.Label Label25;
         private System.Windows.Forms.Button ButtonPrint;
         public OptionComboBox ComboboxPrinter;
+        public System.Windows.Forms.DataGridView dataGridTests;
+        public OptionTextBox textBoxAddTest;
+        public System.Windows.Forms.Button buttonAddTest;
+        private System.Windows.Forms.Button buttonRemoveTest;
     }
 }

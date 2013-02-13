@@ -27,20 +27,12 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL mySql;
 
-        readonly SetupTableData setupTableData;
-        readonly Hospital hospital;
-   
-        public OrderEntryForm2(SetupTableData setupTableData, GetMySQL getMySql, Hospital hospital)
-            : base(setupTableData, getMySql)
+        public OrderEntryForm2(GetMySQL getMySql, SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
+            : base(setupTableData, getMySql,getSqlServer, hospital)
         {
             Load += orderentry_Load;
             InitializeComponent();
-            this.mySql = getMySql;
-            this.setupTableData = setupTableData;
-            this.hospital = hospital;
-
         }
 
 
@@ -77,7 +69,7 @@ namespace downtimeC
             }
 
             var p = new MySqlParameter("?CollectionTime", collectiontime.Text);
-            mySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + ComboBoxPriority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + TextboxCollectDate.Text + "',TECHID = '" + TextBoxTechId.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
+            getMySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + ComboBoxPriority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + TextboxCollectDate.Text + "',TECHID = '" + TextBoxTechId.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
 
 
             this.DisableAll<TextBox>();
@@ -131,12 +123,12 @@ namespace downtimeC
         {
             if (!(System.DateTime.Now.Day == GlobalMutableState.StartupDate.Day))
             {
-                var dtable = mySql.FilledTable("select * from dtdb1.ordernumber");
+                var dtable = getMySql.FilledTable("select * from dtdb1.ordernumber");
 
                 if (!(dtable.Rows.Count == 1))
                 {
-                    mySql.ExecuteNonQuery("truncate TABLE dtdb1.ordernumber");
-                    mySql.ExecuteNonQuery("insert into dtdb1.ordernumber (OrderLast,Ordernumber)values ('1', '7500');");
+                    getMySql.ExecuteNonQuery("truncate TABLE dtdb1.ordernumber");
+                    getMySql.ExecuteNonQuery("insert into dtdb1.ordernumber (OrderLast,Ordernumber)values ('1', '7500');");
                 }
                 GlobalMutableState.StartupDate = System.DateTime.Now;
             }
@@ -150,7 +142,7 @@ namespace downtimeC
         /// <remarks></remarks>
         public string getOrderNumber()
         {
-            DataRow q = mySql.FilledRowOption("insert into dtdb1.ordernumber (OrderLast,Ordernumber) select OrderLast+1, ordernumber+1 from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1; select OrderLast, Ordernumber from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1;").get;
+            DataRow q = getMySql.FilledRowOption("insert into dtdb1.ordernumber (OrderLast,Ordernumber) select OrderLast+1, ordernumber+1 from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1; select OrderLast, Ordernumber from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1;").get;
 
             string neworernumber = q["Ordernumber"].ToString();
 
@@ -166,25 +158,25 @@ namespace downtimeC
 
             }
             string alphanum = date2ordernumber(System.DateTime.Now) + neworernumber;
-            mySql.ExecuteNonQuery("insert into dtdb1.Table1(ordernumber)value('" + alphanum + "');");
+            getMySql.ExecuteNonQuery("insert into dtdb1.Table1(ordernumber)value('" + alphanum + "');");
 
             return alphanum;
         }
 
 
 
-        bool validateControlIsFilled(string message, string fieldValue, Control control)
-        {
-            if (fieldValue == string.Empty)
-            {
-                if (Interaction.MsgBox(message, MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    control.Focus();
-                    return false;
-                }
-            }
-            return true;
-        }
+        //bool validateControlIsFilled(string message, string fieldValue, Control control)
+        //{
+        //    if (fieldValue == string.Empty)
+        //    {
+        //        if (Interaction.MsgBox(message, MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
+        //        {
+        //            control.Focus();
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
 
         private void validateAndPrint()
         {
@@ -202,7 +194,7 @@ namespace downtimeC
 
                 Dictionary<string, string> drs = new Dictionary<string, string>();
 
-                var dt = mySql.FilledTable("select * from dtdb1.DITests;");
+                var dt = getMySql.FilledTable("select * from dtdb1.DITests;");
 
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -236,36 +228,11 @@ namespace downtimeC
 
 
 
-            if (this.ordernumber.Enabled == true)
-                this.ordernumber.Enabled = false;
-            try
-            {
-                var locat = string.Empty;
-                locat = comboBoxWard.Text;
-                string locat1 = Strings.Left(locat, 1);
+            if (this.ordernumber.Enabled == true) this.ordernumber.Enabled = false;
+          
 
-                if (!(locat1 == "S" || locat1 == "A"))
-                {
-                    if (Interaction.MsgBox("Location must start with 'S' for inpatient or 'A' for outpatient", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                    {
-                        comboBoxWard.Text = "";
-                    }
-                    comboBoxWard.Focus();
-                    // User chose Yes.
-                    // Perform some action.
 
-                }
-            }
-            catch (Exception msgbox)
-            {
-            }
 
-            if (!validateControlIsFilled("No Location Entered", comboBoxWard.Text, comboBoxWard)) return;
-
-            if (!(Strings.Left(mrn.Text, 1) == "X"))
-            {
-                if (!validateControlIsFilled("Must enter MRN", mrn.Text, mrn)) return;
-            }
 
             if (this.ordernumber.Text == string.Empty)
             {
@@ -395,8 +362,8 @@ namespace downtimeC
         public void FINDDEMOGRAPHIC()
         {
             if (!TextBoxbillingnumber.Validate()) return;
-          
-            var t = mySql.FilledTable("select * from dtdb1.Table1 where billingnumber like '" + this.TextBoxbillingnumber.Text + "' ORDER BY ID DESC LIMIT 1");
+
+            var t = getMySql.FilledTable("select * from dtdb1.Table1 where billingnumber like '" + this.TextBoxbillingnumber.Text + "' ORDER BY ID DESC LIMIT 1");
 
 
             try

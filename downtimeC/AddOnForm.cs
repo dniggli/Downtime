@@ -24,13 +24,11 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        readonly SetupTableData setupTableData;
-        public AddOnForm(GetMySQL getMySql, SetupTableData setupTableData)  : base(setupTableData,getMySql)
+
+        public AddOnForm(GetMySQL getMySql, SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
+            : base(setupTableData, getMySql, getSqlServer,hospital)
         {
             InitializeComponent();
-            this.setupTableData = setupTableData;
-            this.getMySql = getMySql;
         }
 
     //    public void printDowntimeLables(Priority priority)

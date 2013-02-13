@@ -10,6 +10,7 @@ using downtimeC;
 using downtimeC.LabelPrinting;
 using FunctionalCSharp;
 using Microsoft.VisualBasic;
+using System.Data.SqlClient;
 namespace HL7
 {
     public partial class OrderBaseForm : Form
@@ -18,14 +19,19 @@ namespace HL7
         {
             InitializeComponent();
         }
-        readonly SetupTableData setupTableData;
-        readonly GetMySQL getMySql;
-        public OrderBaseForm(SetupTableData setupTableData, GetMySQL getMySql)
+        protected readonly SetupTableData setupTableData;
+        protected readonly GetMySQL getMySql;
+        protected readonly GetSqlServer getSqlServer;
+        private readonly DataTable testTable;
+        protected readonly Hospital hospital;
+        public OrderBaseForm(SetupTableData setupTableData, GetMySQL getMySql, GetSqlServer getSqlServer, Hospital hospital)
             : base()
         {
             InitializeComponent();
             this.setupTableData = setupTableData;
             this.getMySql = getMySql;
+            this.getSqlServer = getSqlServer;
+            this.hospital = hospital;
         #if DEBUG
             this.DebugButtonFill.Visible = true;
             this.DebugButtonRead.Visible = true;
@@ -41,31 +47,9 @@ namespace HL7
             comboBoxWard.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxWard.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-        }
-
-
-        private void OrderBaseForm_Load(object sender, EventArgs e)
-        {
-
-
-        }
-
-        /// <summary>
-        /// true if printer is valid, other prompt and return false
-        /// </summary>
-        /// <returns></returns>
-        protected bool validateAndPromptPrinter()
-        {
-            if (ComboboxPrinter.Text == string.Empty)
-            {
-                if (Interaction.MsgBox("INVALID PRINTER", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    ComboboxPrinter.Focus();
-                    return false;
-                }
-
-            }
-            return true;
+            //use SchemaFilledTable to load the table layout
+            testTable = getSqlServer.SchemaFilledTable("SELECT TOP 1 * FROM [dbo].[exportedtests]");
+            this.dataGridTests.DataSource = testTable;
         }
 
         private void DebugButtonRead_click(System.Object sender, System.EventArgs e)
@@ -111,6 +95,29 @@ namespace HL7
             foreach (var oc in optionControls) {
                 if (!oc.Validate()) return false;
             }
+
+        //var wardValidOption = comboBoxWard.TextOption.map(text => {
+          
+        //   string locat1 = Strings.Left(comboBoxWard.Text, 1);
+
+        //   if (!(locat1 == "S" || locat1 == "A"))
+        //   {
+        //       if (Interaction.MsgBox("Location must start with 'S' for inpatient or 'A' for outpatient", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
+        //       {
+        //           comboBoxWard.Text = "";
+        //       }
+        //       comboBoxWard.Focus();
+        //       return false;
+        //   }
+        //   else
+        //   {
+        //       return true;
+        //   }
+          
+        //  });
+
+     
+
             return true;   
         }
 
@@ -166,22 +173,6 @@ namespace HL7
         }
         }
 
-        ///// <summary>
-        ///// true if comboBoxWard is not empty, if empty prompts user to enter ward,then focuses on ward and returns false.
-        ///// </summary>
-        ///// <returns></returns>
-        //public bool validateAndPromptForComboboxWard()
-        //{
-        //    if (this.comboBoxWard.Text == string.Empty)
-        //    {
-        //        var response = Interaction.MsgBox("No Location Entered", MsgBoxStyle.DefaultButton1, "MsgBox");
-        //        if (response == MsgBoxResult.Ok)
-        //            comboBoxWard.Text = "";
-        //        comboBoxWard.Focus();
-        //    }
-        //    return this.comboBoxWard.Text != string.Empty;
-        //}
-
         /// <summary>
         /// Print collection, comment, and (collection or aliquot) labels
         /// </summary>
@@ -199,17 +190,6 @@ namespace HL7
 
                 labelData.doPrint(this.ComboboxPrinter.Text, setupTableData);
         }
-
-
-        //protected bool priorityValidate()
-        //{
-        //    if (ComboBoxPriority.getPriorityOption.isEmpty)
-        //    {
-        //        MessageBox.Show("Priority needs to be set", "Priority needs to be set", MessageBoxButtons.OK);
-        //        ComboBoxPriority.Focus();
-        //    }
-        //    return ComboBoxPriority.getPriorityOption.isDefined;
-        //}
 
         public void readDowntimeTable(DataRow order)
         {
@@ -232,6 +212,74 @@ namespace HL7
         private void TextBoxTechId_TextChanged(object sender, EventArgs e)
         {
             GlobalMutableState.userName = this.TextBoxTechId.Text;
+        }
+
+        /// <summary>
+        /// get the list of all ordered tests
+        /// </summary>
+        protected IEnumerable<DataRow> orderedTests
+        {
+            get
+            {
+                return testTable.Rows.Cast<DataRow>()
+                    .Where(row => row.RowState != DataRowState.Deleted);
+            }
+        }
+
+        /// <summary>
+        /// get a specific orderedTest
+        /// </summary>
+        /// <param name="test"></param>
+        /// <returns></returns>
+        protected Option<DataRow> getOrderedTest(string test)
+        {
+            return orderedTests
+                .Where(row => row["Id"].ToString() == test)
+                .headOption();
+        }
+        private void buttonAddTest_Click(object sender, EventArgs e)
+        {
+
+            if (!textBoxAddTest.Validate()) return;
+
+            textBoxAddTest.TextOption.forEach(text =>
+            {
+                if (getOrderedTest(text).isDefined)
+                {
+                    MessageBox.Show("Test already ordered.");
+                    return;
+                }
+                buttonAddTest.Enabled = false;
+                
+                var location = (hospital == Hospital.Strong) ? "SMH" : "HH";
+
+                var rowOption = getSqlServer.FilledRowOption("SELECT * FROM [dbo].[exportedtests] where Id = @ID AND Location = @Location",
+                     new SqlParameter("@Location", location),
+                     new SqlParameter("@ID", text));
+
+                if (rowOption.isDefined)
+                {
+                    testTable.ImportRow(rowOption.get);
+                }
+                else
+                {
+                    MessageBox.Show("Test lookup failed, test ID not found in database");
+                }
+                buttonAddTest.Enabled = true;
+            });
+        }
+
+      
+
+        private void buttonRemoveTest_Click(object sender, EventArgs e)
+        {
+            if (!textBoxAddTest.Validate()) return;
+
+            textBoxAddTest.TextOption.forEach(test =>
+            {
+                getOrderedTest(test).forEach(r => r.Delete());
+            });
+            
         }
 
 

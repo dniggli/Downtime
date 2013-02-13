@@ -24,13 +24,12 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        readonly SetupTableData setupTableData;
-        public AliquotForm(GetMySQL getMySql, SetupTableData setupTableData) : base(setupTableData,getMySql)
+
+        public AliquotForm(GetMySQL getMySql, SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
+            : base(setupTableData, getMySql, getSqlServer, hospital)
         {
             InitializeComponent();
-            this.setupTableData = setupTableData;
-            this.getMySql = getMySql;
+
         }
 
         private void aliquotform_Load(System.Object sender, System.EventArgs e)
@@ -97,7 +96,8 @@ namespace downtimeC
                 {
                     if (orderExists())
                     {
-                        if (validateAndPromptPrinter())
+
+                        if (validateInputControls())
                         {
                            // printdemographiclabels();
                             printLabels();
