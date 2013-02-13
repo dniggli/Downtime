@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7", "HL7\HL7.csproj", "{C60166B5-E748-4606-BD6A-DA84F4CA516C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSendHL7", "TestSendHL7\TestSendHL7.csproj", "{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A8A619B7-5941-4E09-9F5D-87807F24029B}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -36,16 +34,6 @@ Global
 		{C60166B5-E748-4606-BD6A-DA84F4CA516C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C60166B5-E748-4606-BD6A-DA84F4CA516C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C60166B5-E748-4606-BD6A-DA84F4CA516C}.Release|x86.ActiveCfg = Release|Any CPU
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Debug|x86.ActiveCfg = Debug|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Debug|x86.Build.0 = Debug|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Release|Any CPU.ActiveCfg = Release|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Release|Mixed Platforms.Build.0 = Release|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Release|x86.ActiveCfg = Release|x86
-		{5A64E47B-79D8-4DB2-98EA-7EB000DA561E}.Release|x86.Build.0 = Release|x86
 		{B4155D0B-A5BA-43D7-A165-8E955B106DE3}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{B4155D0B-A5BA-43D7-A165-8E955B106DE3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{B4155D0B-A5BA-43D7-A165-8E955B106DE3}.Debug|Mixed Platforms.Build.0 = Debug|x86

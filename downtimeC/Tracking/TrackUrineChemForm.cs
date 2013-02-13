@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
+using HL7;
 
 namespace downtimeC
 {
     public partial class TrackUrineChemForm : TrackingBase
     {
-        public TrackUrineChemForm()
-            : base()
+        public TrackUrineChemForm(GetSqlServer getSqlServer)
+            : base(getSqlServer)
         {
             InitializeComponent();
         }

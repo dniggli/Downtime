@@ -20,16 +20,15 @@ namespace HL7
             InitializeComponent();
         }
         protected readonly SetupTableData setupTableData;
-        protected readonly GetMySQL getMySql;
+        
         protected readonly GetSqlServer getSqlServer;
         private readonly DataTable testTable;
         protected readonly Hospital hospital;
-        public OrderBaseForm(SetupTableData setupTableData, GetMySQL getMySql, GetSqlServer getSqlServer, Hospital hospital)
+        public OrderBaseForm(SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
             : base()
         {
             InitializeComponent();
             this.setupTableData = setupTableData;
-            this.getMySql = getMySql;
             this.getSqlServer = getSqlServer;
             this.hospital = hospital;
         #if DEBUG
@@ -206,7 +205,7 @@ namespace HL7
 
         public Option<DataRow> orderLookup(string orderNumber)
         {
-            return getMySql.FilledRowOption("select * from dtdb1.Table1 where ordernumber like '" + orderNumber + "' ORDER BY ID DESC LIMIT 1");
+            return getSqlServer.FilledRowOption("select TOP 1 * from dtdb1.Table1 where ordernumber like '" + orderNumber + "' ORDER BY ID DESC");
         }
 
         private void TextBoxTechId_TextChanged(object sender, EventArgs e)

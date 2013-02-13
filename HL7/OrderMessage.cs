@@ -71,10 +71,11 @@ namespace HL7
             
         }
 
-       
 
-        public string toHl7() {
-         var individualTestCodes = this.testCodes.SelectMany(code => GroupTestToIndividualTest.getIndividualTests(code));
+
+        public string toHl7(GroupTestToIndividualTest groupTestToIndividualTest)
+        {
+            var individualTestCodes = this.testCodes.SelectMany(code => groupTestToIndividualTest.getIndividualTests(code));
             var index = 0;
             var testList = new List<String>();
             foreach (string code in individualTestCodes) {

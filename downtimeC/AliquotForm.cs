@@ -11,7 +11,7 @@ using System;
 using System.Collections;
 using FunctionalCSharp;
 using System.Diagnostics;
-using MySql.Data.MySqlClient;
+
 using HL7;
 using downtimeC;
 using downtimeC.LabelPrinting;
@@ -25,8 +25,8 @@ namespace downtimeC
         }
 
 
-        public AliquotForm(GetMySQL getMySql, SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
-            : base(setupTableData, getMySql, getSqlServer, hospital)
+        public AliquotForm(SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
+            : base(setupTableData, getSqlServer, hospital)
         {
             InitializeComponent();
 

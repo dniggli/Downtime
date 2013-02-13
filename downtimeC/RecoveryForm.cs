@@ -12,13 +12,12 @@ using System.Diagnostics;
 using NUnit.Framework;
 using AutoItHelper;
 using System.Text.RegularExpressions;
-using MySql.Data.MySqlClient;
+
 using HL7;
 
 namespace downtimeC
 {
     
-[TestFixture()]
     public partial class RecoveryForm : Form
     {
        protected RecoveryForm()
@@ -26,17 +25,17 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        public RecoveryForm(GetMySQL getMySql)
+        readonly GetSqlServer getSqlServer;
+        public RecoveryForm(GetSqlServer getSqlServer)
         {
             InitializeComponent();
-            this.getMySql = getMySql;
+            this.getSqlServer = getSqlServer;
         }
 
     public static string fixTEST = "";
 
     public static string tests = "";
-    [Test()]
+
     public void Button1_Click(System.Object sender, System.EventArgs e)
     {
 
@@ -93,7 +92,7 @@ namespace downtimeC
     public void automatedrecovery(string startnumber)
     {
 
-        var t = getMySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" + startnumber + "' ORDER BY ID DESC LIMIT 1");
+        var t = getSqlServer.FilledTable("select TOP 1 * from dtdb1.Table1 where ordernumber like '" + startnumber + "' ORDER BY ID DESC");
  
 
         try {

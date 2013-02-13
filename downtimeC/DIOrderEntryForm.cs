@@ -17,7 +17,7 @@ using NUnit.Framework;
 using AutoItHelper;
 using System.Threading;
 using System.Text.RegularExpressions;
-using MySql.Data.MySqlClient;
+
 using HL7;
 
 namespace downtimeC
@@ -30,11 +30,11 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        public DIOrderEntryForm(GetMySQL getMySql)
+        readonly GetSqlServer getSqlServer;
+        public DIOrderEntryForm(GetSqlServer getSqlServer)
         {
             InitializeComponent();
-            this.getMySql = getMySql;
+            this.getSqlServer = getSqlServer;
         }
 
         public static void DIRecover()
@@ -52,7 +52,7 @@ namespace downtimeC
        
         private void Button1_Click(System.Object sender, System.EventArgs e)
         {
-            DataTable dt = getMySql.FilledTable("select * from dtdb1.DITests;");
+            DataTable dt = getSqlServer.FilledTable("select * from dtdb1.DITests;");
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -61,7 +61,7 @@ namespace downtimeC
                 string sequence = newseq.Groups[0].Value;
                 Console.WriteLine(sequence);
 
-                getMySql.ExecuteNonQuery("INSERT INTO dtdb1.DITests1 (TestCode, CodeSequence)Values('" + ditest + "', '" + sequence + "')");
+                getSqlServer.ExecuteNonQuery("INSERT INTO dtdb1.DITests1 (TestCode, CodeSequence)Values('" + ditest + "', '" + sequence + "')");
             }
         }
 }

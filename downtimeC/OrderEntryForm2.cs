@@ -9,13 +9,14 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Diagnostics;
-using MySql.Data.MySqlClient;
+
 using System.Text.RegularExpressions;
 using System.IO;
 using HL7;
 using FunctionalCSharp;
 using Microsoft.VisualBasic.CompilerServices;
 using downtimeC.LabelPrinting;
+using System.Data.SqlClient;
 
 namespace downtimeC
 {
@@ -27,12 +28,13 @@ namespace downtimeC
             InitializeComponent();
         }
 
-
-        public OrderEntryForm2(GetMySQL getMySql, SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
-            : base(setupTableData, getMySql,getSqlServer, hospital)
+        readonly GroupTestToIndividualTest groupTestToIndividualTest;
+        public OrderEntryForm2(SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
+            : base(setupTableData, getSqlServer, hospital)
         {
             Load += orderentry_Load;
             InitializeComponent();
+            groupTestToIndividualTest = new GroupTestToIndividualTest(getSqlServer);
         }
 
 
@@ -68,8 +70,8 @@ namespace downtimeC
                 }
             }
 
-            var p = new MySqlParameter("?CollectionTime", collectiontime.Text);
-            getMySql.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + ComboBoxPriority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + TextboxCollectDate.Text + "',TECHID = '" + TextBoxTechId.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
+            var p = new SqlParameter("@CollectionTime", collectiontime.Text);
+            getSqlServer.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = @CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + ComboBoxPriority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + TextboxCollectDate.Text + "',TECHID = '" + TextBoxTechId.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
 
 
             this.DisableAll<TextBox>();
@@ -123,12 +125,12 @@ namespace downtimeC
         {
             if (!(System.DateTime.Now.Day == GlobalMutableState.StartupDate.Day))
             {
-                var dtable = getMySql.FilledTable("select * from dtdb1.ordernumber");
+                var dtable = getSqlServer.FilledTable("select * from dtdb1.ordernumber");
 
                 if (!(dtable.Rows.Count == 1))
                 {
-                    getMySql.ExecuteNonQuery("truncate TABLE dtdb1.ordernumber");
-                    getMySql.ExecuteNonQuery("insert into dtdb1.ordernumber (OrderLast,Ordernumber)values ('1', '7500');");
+                    getSqlServer.ExecuteNonQuery("truncate TABLE dtdb1.ordernumber");
+                    getSqlServer.ExecuteNonQuery("insert into dtdb1.ordernumber (OrderLast,Ordernumber)values ('1', '7500');");
                 }
                 GlobalMutableState.StartupDate = System.DateTime.Now;
             }
@@ -142,7 +144,7 @@ namespace downtimeC
         /// <remarks></remarks>
         public string getOrderNumber()
         {
-            DataRow q = getMySql.FilledRowOption("insert into dtdb1.ordernumber (OrderLast,Ordernumber) select OrderLast+1, ordernumber+1 from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1; select OrderLast, Ordernumber from dtdb1.ordernumber ORDER BY OrderLast DESC LIMIT 1;").get;
+            DataRow q = getSqlServer.FilledRowOption("insert into dtdb1.ordernumber (OrderLast,Ordernumber) select TOP 1 OrderLast+1, ordernumber+1 from dtdb1.ordernumber ORDER BY OrderLast DESC; select TOP 1 OrderLast, Ordernumber from dtdb1.ordernumber ORDER BY OrderLast DESC;").get;
 
             string neworernumber = q["Ordernumber"].ToString();
 
@@ -158,7 +160,7 @@ namespace downtimeC
 
             }
             string alphanum = date2ordernumber(System.DateTime.Now) + neworernumber;
-            getMySql.ExecuteNonQuery("insert into dtdb1.Table1(ordernumber)value('" + alphanum + "');");
+            getSqlServer.ExecuteNonQuery("insert into dtdb1.Table1(ordernumber)value('" + alphanum + "');");
 
             return alphanum;
         }
@@ -194,7 +196,7 @@ namespace downtimeC
 
                 Dictionary<string, string> drs = new Dictionary<string, string>();
 
-                var dt = getMySql.FilledTable("select * from dtdb1.DITests;");
+                var dt = getSqlServer.FilledTable("select * from dtdb1.DITests;");
 
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -252,7 +254,7 @@ namespace downtimeC
                     var diSpecimenType = box.getSpecimenType(hospital, setupTableData);
                     foreach (string code in codes)
                     {
-                        var indiCodes = GroupTestToIndividualTest.getIndividualTests(code);
+                        var indiCodes = groupTestToIndividualTest.getIndividualTests(code);
                         sendHL7(this.mrn.Text, this.firstname.Text, this.lastname.Text, this.ordernumber.Text, this.comboBoxWard.Text, indiCodes, diSpecimenType);
                     }
                 }
@@ -283,7 +285,7 @@ namespace downtimeC
 
             //create the HL7 message
             var co = new OrderMessage(mrn, firstName, lastName, ordernumber, "", ward, Sex.U, codes, specimenType);
-            var hl = co.toHl7();
+            var hl = co.toHl7(groupTestToIndividualTest);
 
             if (DialogResult.Yes == MessageBox.Show("Send Order Message to DI?", "Send Order Message to DI?", MessageBoxButtons.YesNo))
             {
@@ -363,7 +365,7 @@ namespace downtimeC
         {
             if (!TextBoxbillingnumber.Validate()) return;
 
-            var t = getMySql.FilledTable("select * from dtdb1.Table1 where billingnumber like '" + this.TextBoxbillingnumber.Text + "' ORDER BY ID DESC LIMIT 1");
+            var t = getSqlServer.FilledTable("select TOP 1 * from [Table1] where billingnumber like '" + this.TextBoxbillingnumber.Text + "' ORDER BY ID DESC");
 
 
             try

@@ -11,10 +11,11 @@ using System;
 using System.Collections;
 using FunctionalCSharp;
 using System.Diagnostics;
-using MySql.Data.MySqlClient;
+
 using HL7;
 using downtimeC;
 using downtimeC.LabelPrinting;
+using System.Data.SqlClient;
 namespace downtimeC
 {
     public partial class AddOnForm : OrderBaseForm
@@ -25,8 +26,8 @@ namespace downtimeC
         }
 
 
-        public AddOnForm(GetMySQL getMySql, SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
-            : base(setupTableData, getMySql, getSqlServer,hospital)
+        public AddOnForm(SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
+            : base(setupTableData, getSqlServer,hospital)
         {
             InitializeComponent();
         }
@@ -50,7 +51,7 @@ namespace downtimeC
 
         public void writeDowntimeTable()
         {
-            getMySql.Async(this).ExecuteNonQuery(() => {},"update dtdb1.Table1 set COLLECTIONTIME = ?CollectionTime, BILLINGNUMBER = '"
+            getSqlServer.Async(this).ExecuteNonQuery(() => {},"update dtdb1.Table1 set COLLECTIONTIME = @CollectionTime, BILLINGNUMBER = '"
                 + TextBoxbillingnumber.Text + "', RECEIVETIME = '" + receivetime.Text + ":00" + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + comboBoxWard.Text +
                 "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + 
                 "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text +
@@ -58,7 +59,7 @@ namespace downtimeC
                 "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text +
                 "',COLLECTDATE = '" + DateTimePicker1.Text + "' ,CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + 
                 "',VIRALLOADTEST = '" + Viralloadbox.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'",
-                new MySqlParameter("?CollectionTime",collectiontime.Text));
+                new SqlParameter("@CollectionTime",collectiontime.Text));
 
 
         }

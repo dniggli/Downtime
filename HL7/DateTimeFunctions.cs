@@ -6,8 +6,7 @@
     using System.Diagnostics;
     using System.Text.RegularExpressions;
     using CodeBase2.Databases;
-    using MySql.Data.MySqlClient;
-using CodeBase2;
+    using CodeBase2;
 
     public static class DateTimeFunctions
     {

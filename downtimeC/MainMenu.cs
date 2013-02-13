@@ -21,27 +21,26 @@ namespace downtimeC
         readonly Dictionary<string, string> queries = new Dictionary<string, string>();
 
         //mysql database connection
-        readonly GetMySQL getMySql = new GetMySQL();
         readonly GetSqlServer getSqlServer = new GetSqlServer();
         readonly Hospital hospital;
         public MainMenu(Hospital hospital): base()
         {
             InitializeComponent();
             this.hospital = hospital;
-            var setupTableData = new SetupTableData(getMySql, getSqlServer, hospital);
+            var setupTableData = new SetupTableData(getSqlServer, hospital);
             
             //setup buttons handlers
-            new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(getMySql, setupTableData, getSqlServer, hospital));
-            new FormStart(ButtonSmsArchiveTracking, () => new TrackSmsForm());
-            new FormStart(ButtonAliquotReprint, () => new AliquotForm(getMySql,setupTableData,getSqlServer,hospital));
-            new FormStart(ButtonPlaceAddon, () => new AddOnForm(getMySql, setupTableData, getSqlServer, hospital));
-            new FormStart(ButtonHemArchiveTracking, () => new TrackHemForm());
-            new FormStart(ButtonUrineHemTracking, () => new TrackUrineHemForm());
-            new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm());
-            new FormStart(ButtonCoagArchiveTracking, () => new TrackCoagForm());
-            new FormStart(ButtonDowntimeRecovery, () => new RecoveryForm(getMySql));
-            new FormStart(ButtonDIEntry, () => new DIOrderEntryForm(getMySql));
-            new FormStart(ButtonMolisEntry, () => new MolisEntry(getMySql));
+            new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(setupTableData, getSqlServer, hospital));
+            new FormStart(ButtonSmsArchiveTracking, () => new TrackSmsForm(getSqlServer));
+            new FormStart(ButtonAliquotReprint, () => new AliquotForm(setupTableData,getSqlServer,hospital));
+            new FormStart(ButtonPlaceAddon, () => new AddOnForm(setupTableData, getSqlServer, hospital));
+            new FormStart(ButtonHemArchiveTracking, () => new TrackHemForm(getSqlServer));
+            new FormStart(ButtonUrineHemTracking, () => new TrackUrineHemForm(getSqlServer));
+            new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm(getSqlServer));
+            new FormStart(ButtonCoagArchiveTracking, () => new TrackCoagForm(getSqlServer));
+            new FormStart(ButtonDowntimeRecovery, () => new RecoveryForm(getSqlServer));
+            new FormStart(ButtonDIEntry, () => new DIOrderEntryForm(getSqlServer));
+            new FormStart(ButtonMolisEntry, () => new MolisEntry(getSqlServer));
             
 
             queries.Add("STAT Query", "SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.OTHERTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS FROM dtdb1.Table1 GROUP BY Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS HAVING(((Table1.PRIORITY) Like \"S\")) ORDER BY Table1.ordernumber;");
@@ -88,7 +87,7 @@ namespace downtimeC
                 //return the readiedQuery
                 .Return<string>();
 
-            var queryForm =  new StatOrderQueryForm(readiedQuery, this.ComboBoxSelectQuery.Text, getMySql);
+            var queryForm =  new StatOrderQueryForm(readiedQuery, this.ComboBoxSelectQuery.Text, getSqlServer);
             queryForm.Show();
         }
 
@@ -102,7 +101,7 @@ namespace downtimeC
 
             if (Login.valid)
             {
-                 new RestartWheel(getMySql).ShowDialog();
+                 new RestartWheel(getSqlServer).ShowDialog();
             }
         }
 

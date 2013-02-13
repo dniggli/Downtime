@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Diagnostics;
-using MySql.Data.MySqlClient;
+
 using System.Text.RegularExpressions;
 using HL7;
 
@@ -22,11 +22,11 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        public RestartWheel(GetMySQL getMySql)
+        readonly GetSqlServer getSqlServer;
+        public RestartWheel(GetSqlServer getSqlServer)
         {
             InitializeComponent();
-            this.getMySql = getMySql;
+            this.getSqlServer = getSqlServer;
         }
 
         string ordernumber = "";
@@ -36,7 +36,7 @@ namespace downtimeC
 
     public void submitneworder()
     {
-        getMySql.ExecuteNonQuery("truncate table dtdb1.Table1");
+        getSqlServer.ExecuteNonQuery("truncate table dtdb1.Table1");
 
 
         TDate = DateTimeFunctions.datetomysql(System.DateTime.Now.ToString());
@@ -44,7 +44,7 @@ namespace downtimeC
         //..........//////use to reinstate alpha-numeric(also un-comment line items 540-547 in orderentry)\\\\\\\\.........
 
 
-        getMySql.ExecuteNonQuery("insert into dtdb1.ordernumber (Ordernumber, Date) VALUES ('" + ordernumber + "', '" + TDate + "');");
+        getSqlServer.ExecuteNonQuery("insert into dtdb1.ordernumber (Ordernumber, Date) VALUES ('" + ordernumber + "', '" + TDate + "');");
     }
 
 
@@ -57,7 +57,7 @@ namespace downtimeC
 
        var response = Interaction.MsgBox("Are you Sure you Want to Clear ALL DATA????", MsgBoxStyle.YesNo, "MsgBox");
         if (response == MsgBoxResult.Yes) {
-            getMySql.ExecuteNonQuery("truncate table dtdb1.ordernumber");
+            getSqlServer.ExecuteNonQuery("truncate table dtdb1.ordernumber");
             submitneworder();
             Interaction.MsgBox("Old Data Has Been Cleard and Ordernumber Has Been Reset.", MsgBoxStyle.OkOnly, "MsgBox");
         }
@@ -67,7 +67,7 @@ namespace downtimeC
     {
        var response = Interaction.MsgBox("Are you Sure you Want to reset tracking?", MsgBoxStyle.YesNo, "MsgBox");
         if (response == MsgBoxResult.Yes) {
-            getMySql.ExecuteNonQuery("truncate table dtdb1.dttracking");
+            getSqlServer.ExecuteNonQuery("truncate table dtdb1.dttracking");
         }
     }
 
@@ -105,7 +105,7 @@ namespace downtimeC
 
     private void restartwheel_Load(System.Object sender, System.EventArgs e)
     {
-            var dr = getMySql.FilledRow("select * from dtdb1.NumberWheel;");
+            var dr = getSqlServer.FilledRow("select * from dtdb1.NumberWheel;");
      
             string datanumber = dr["OrderNumberAlpha"].ToString();
             string lownumber = dr["OrderNumberNumer"].ToString();
@@ -150,8 +150,8 @@ namespace downtimeC
             }
 
         }
-     
-        DataRow q = getMySql.FilledRow("SELECT Date FROM dtdb1.ordernumber order BY Date DESC lIMIT 1;");
+
+        DataRow q = getSqlServer.FilledRow("SELECT lIMIT 1 Date FROM dtdb1.ordernumber order BY Date DESC;");
         System.DateTime datestring = q.Field<DateTime>("Date");
 
         System.DateTime checkdate = System.DateTime.Now.Date;
@@ -160,7 +160,7 @@ namespace downtimeC
 
         if (!(checkdate == datestring)) {
 
-            getMySql.ExecuteNonQuery("truncate table dtdb1.ordernumber");
+            getSqlServer.ExecuteNonQuery("truncate table dtdb1.ordernumber");
         
 
             submitneworder();
@@ -173,7 +173,7 @@ namespace downtimeC
                 , MsgBoxStyle.YesNo, "MsgBox");
 
            if (response == MsgBoxResult.Yes) {
-                getMySql.ExecuteNonQuery("truncate table dtdb1.ordernumber");
+                getSqlServer.ExecuteNonQuery("truncate table dtdb1.ordernumber");
 
                 submitneworder();
 

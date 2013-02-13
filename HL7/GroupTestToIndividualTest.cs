@@ -7,9 +7,14 @@ using CodeBase2;
 
 namespace HL7
 {
-   public static class GroupTestToIndividualTest
+   public class GroupTestToIndividualTest
     {
-       static DataTable groupTestsTable = new GetMySQL().FilledTable("SELECT * FROM grouptest");
+       readonly DataTable groupTestsTable;
+
+        public GroupTestToIndividualTest(GetSqlServer getSqlServer)
+        {
+            groupTestsTable = getSqlServer.FilledTable("SELECT * FROM grouptest"); ;
+        }
 
         /// <summary>
         /// Break down all groups into individual tests.
@@ -19,7 +24,7 @@ namespace HL7
         /// </summary>
         /// <param name="testCode"></param>
         /// <returns></returns>
-        public static IEnumerable<String> getIndividualTests(String testCode)
+        public IEnumerable<String> getIndividualTests(String testCode)
         {
             var rows = groupTestsTable.Select("GROUP_TEST_ID =" + quotequote(testCode));
 

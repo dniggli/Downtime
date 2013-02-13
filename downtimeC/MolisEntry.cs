@@ -13,7 +13,7 @@ using NUnit.Framework;
 using AutoItHelper;
 using System.Threading;
 using System.Text.RegularExpressions;
-using MySql.Data.MySqlClient;
+
 using HL7;
 
 namespace downtimeC
@@ -25,11 +25,11 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        public MolisEntry(GetMySQL getMySql)
+     readonly GetSqlServer getSqlServer;
+        public MolisEntry(GetSqlServer getSqlServer)
         {
             InitializeComponent();
-            this.getMySql = getMySql;
+            this.getSqlServer = getSqlServer;
         }
 
     static MolisEntry myOrder;
@@ -60,7 +60,7 @@ namespace downtimeC
     {
         string ordernumbers = Strings.Left(TextBoxOrderNumber.Text, 8);
 
-        DataTable t = getMySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" + ordernumbers + "' ORDER BY ID DESC LIMIT 1");
+        DataTable t = getSqlServer.FilledTable("select TOP 1 * from dtdb1.Table1 where ordernumber like '" + ordernumbers + "' ORDER BY ID DESC");
 
         try {
             DataRow r = t.Rows[0];
