@@ -91,6 +91,84 @@ namespace downtimeC
             }
         }
 
+        public static object date2ordernumber(DateTime dates)
+        {
+            string ordend = dates.ToString();
+
+            System.Text.RegularExpressions.Match dateend = Regex.Match(ordend, "([0-9]+)/([0-9]+)/([0-9]+)");
+            string endmonth = dateend.Groups[1].Value;
+            string endday = dateend.Groups[2].Value;
+            string endyear = dateend.Groups[3].Value;
+            while (endday.Length < 2)
+            {
+                endday = "0" + endday;
+            }
+
+
+
+            int endmnth = int.Parse(endyear) + -2004;
+            endmnth = endmnth * 12;
+
+
+            string monthend = Convert.ToString(Convert.ToInt32(endmonth) + Convert.ToInt32(endmnth));
+
+            if (int.Parse(monthend) > 99)
+            {
+                int newmonthstart = int.Parse(Strings.Left(monthend, 2));
+                string newmonthend = Strings.Right(monthend, 1);
+                newmonthstart = newmonthstart + 55;
+                monthend = Strings.Chr(newmonthstart) + newmonthend;
+            }
+
+            return monthend + endday;
+
+        }
+
+
+        /// <summary>
+        /// use the DB to generate a the next orderNumber
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public static string getNewOrderNumber(GetSqlServer getSqlServer)
+        {
+            TruncateOrderNumbersOnDateChange(getSqlServer);
+
+            DataRow q = getSqlServer.FilledRowOption("insert into ordernumber (OrderLast,Ordernumber) select TOP 1 OrderLast+1, ordernumber+1 FROM ordernumber ORDER BY OrderLast DESC; select TOP 1 OrderLast, Ordernumber FROM ordernumber ORDER BY OrderLast DESC;").get;
+
+            string neworernumber = q["Ordernumber"].ToString();
+
+            if (neworernumber.Length > 4)
+            {
+                string letters = Strings.Left(neworernumber, 2);
+                string ordernums = Strings.Right(neworernumber, 3);
+                neworernumber = Strings.Chr(int.Parse(letters)) + ordernums;
+            }
+
+            return date2ordernumber(System.DateTime.Now) + neworernumber.PadLeft(4, '0');
+        }
+
+        /// <summary>
+        /// If the Date changes, wipe out the table of orderNumbers and restart ordering
+        /// </summary>
+        /// <remarks></remarks>
+
+        public static void TruncateOrderNumbersOnDateChange(GetSqlServer getSqlServer)
+        {
+            if (DateTime.Now.Day != GlobalMutableState.StartupDate.Day)
+            {
+                var dtable = getSqlServer.FilledTable("select * FROM ordernumber");
+
+                if (dtable.Rows.Count != 1)
+                {
+                    getSqlServer.ExecuteNonQuery("truncate TABLE ordernumber");
+                    getSqlServer.ExecuteNonQuery("insert into ordernumber (OrderLast,Ordernumber) VALUES (1, 7500);");
+                }
+                GlobalMutableState.StartupDate = System.DateTime.Now;
+            }
+
+        }
+
         public string date2ordernumber(string dates)
         {
             string ordend = dates;

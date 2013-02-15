@@ -119,8 +119,8 @@
             // 
             // ComboBoxoldorder
             // 
-            this.ComboBoxoldorder.Visible = true;
-            this.ComboBoxoldorder.SelectedIndexChanged += new System.EventHandler(this.ComboBoxoldorder_SelectedIndexChanged);
+            this.ComboBoxRecentOrder.Visible = true;
+            this.ComboBoxRecentOrder.SelectedIndexChanged += new System.EventHandler(this.ComboBoxRecentOrder_SelectedIndexChanged);
             // 
             // ComboBoxPriority
             // 
@@ -177,7 +177,7 @@
             this.Controls.SetChildIndex(this.comboBoxWard, 0);
             this.Controls.SetChildIndex(this.ButtonEditorder, 0);
             this.Controls.SetChildIndex(this.Buttoneditprevious, 0);
-            this.Controls.SetChildIndex(this.ComboBoxoldorder, 0);
+            this.Controls.SetChildIndex(this.ComboBoxRecentOrder, 0);
             this.Controls.SetChildIndex(this.Label32, 0);
             this.Controls.SetChildIndex(this.ComboBoxPriority, 0);
             this.Controls.SetChildIndex(this.ComboboxPrintType, 0);

@@ -53,57 +53,18 @@ namespace downtimeC
 
         }
 
-
-
-
-
-
-        public static object date2ordernumber(DateTime dates)
-        {
-            string ordend = dates.ToString();
-
-            System.Text.RegularExpressions.Match dateend = Regex.Match(ordend, "([0-9]+)/([0-9]+)/([0-9]+)");
-            string endmonth = dateend.Groups[1].Value;
-            string endday = dateend.Groups[2].Value;
-            string endyear = dateend.Groups[3].Value;
-            while (endday.Length < 2)
-            {
-                endday = "0" + endday;
-            }
-
-
-
-            int endmnth = int.Parse(endyear) + -2004;
-            endmnth = endmnth * 12;
-
-
-            string monthend = Convert.ToString(Convert.ToInt32(endmonth) + Convert.ToInt32(endmnth));
-
-            if (int.Parse(monthend) > 99)
-            {
-                int newmonthstart = int.Parse(Strings.Left(monthend, 2));
-                string newmonthend = Strings.Right(monthend, 1);
-                newmonthstart = newmonthstart + 55;
-                monthend = Strings.Chr(newmonthstart) + newmonthend;
-            }
-
-            return monthend + endday;
-
-        }
-
         /// <summary>
         /// printLabels, insert the order to the database and then sendHL7
         /// </summary>
         /// <param name="orderData"></param>
         protected void printInsertAndSendHL7(ImmutableOrderData orderData)
         {
-            printLabels(orderData, this.ComboboxPrinter.Text,setupTableData,orderedTests,TestPrintMode());
-            orderData.updateOrder(getSqlServer); //update data about the order in the DB
+            printLabels(orderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
 
-
+            var testsToSend = orderData.getDiTests().getUnsentTests().tests.Select(x => x.Key);
 
             //send the HL7
-            foreach (DataRow row in orderedTests.Where(dr => dr.getOptionString("DiTranslation").isDefined))
+            foreach (DataRow row in testsToSend)
             {
                 var specType = new SpecimenType { extension = row["Extension"].ToString(), diSpecimenType = row["DiTranslation"].ToString() };
 
@@ -112,34 +73,42 @@ namespace downtimeC
                     orderData.lastName, orderData.orderNumber, orderData.ward,
                     indiCodes, specType);
             }
+
+            orderData.setTestsToSent(testsToSend.Select(dr=>dr["Id"].ToString())).InsertOrder(getSqlServer); //update data about the order in the DB
+
         }
         protected override void OnPrintClick()
         {
-            this.ComboBoxoldorder.SelectedIndexChanged -= ComboBoxoldorder_SelectedIndexChanged;
+            this.ComboBoxRecentOrder.SelectedIndexChanged -= ComboBoxRecentOrder_SelectedIndexChanged;
             this.ordernumber.Enabled = false;
             TextboxCollectDate.Text = DateTime.Now.ToString();
 
             //get orderNumber from TextBox or create a new one
-            var orderNum = this.ordernumber.TextOption.getOrElse(() => getNewOrderNumber(getSqlServer));
+            var orderNum = this.ordernumber.TextOption.getOrElse(() => RestartWheel.getNewOrderNumber(getSqlServer));
             printInsertAndSendHL7(cloneOrderData(orderNum));           
 
             this.DisableAll<TextBox>();
             this.DisableAll<ComboBox>();
 
             ComboboxPrinter.Enabled = true;
-            ComboBoxoldorder.Enabled = true;
+            ComboBoxRecentOrder.Enabled = true;
             TextBoxbillingnumber.Enabled = true;
 
             ButtonEditorder.Enabled = true;
             Buttoneditprevious.Enabled = true;
 
-            ComboBoxoldorder.Items.Add(orderNum + "   " + lastname.Text + "," + firstname.Text);
-            ComboBoxoldorder.SelectedIndex = ComboBoxoldorder.Items.Count - 1;
+            //remove old copies of this order from the RecentOrderList
+            ComboBoxRecentOrder.Items.Cast<string>()
+                .Where(s => s.Contains(orderNum)).ToList().forEach(ComboBoxRecentOrder.Items.Remove);
 
-            this.ClearAllInputControls(this.ComboboxPrinter, this.TextBoxTechId, ComboBoxoldorder);
+            //add this order
+            ComboBoxRecentOrder.Items.Add(orderNum + "   " + lastname.Text + "," + firstname.Text);
+            ComboBoxRecentOrder.SelectedIndex = ComboBoxRecentOrder.Items.Count - 1;
+
+            this.ClearAllInputControls(this.ComboboxPrinter, this.TextBoxTechId, ComboBoxRecentOrder);
             testTable.Clear();
             this.TextBoxbillingnumber.Focus();
-            this.ComboBoxoldorder.SelectedIndexChanged += ComboBoxoldorder_SelectedIndexChanged;
+            this.ComboBoxRecentOrder.SelectedIndexChanged += ComboBoxRecentOrder_SelectedIndexChanged;
         }
         public static void sendHL7(GroupTestToIndividualTest groupTestToIndividualTest, string mrn, string firstName, string lastName, string ordernumber, string ward, IEnumerable<string> codes, SpecimenType specimenType)
         {
@@ -277,15 +246,15 @@ namespace downtimeC
 
         private void editOldOrder()
         {
-            if (ComboBoxoldorder.Text.Length > 8)
+            if (ComboBoxRecentOrder.Text.Length > 8)
             {
-                ordernumber.Text = Strings.Left(ComboBoxoldorder.Text, 8);
+                ordernumber.Text = Strings.Left(ComboBoxRecentOrder.Text, 8);
                 ButtonEditorder.Enabled = false;
                 ordernumber.Enabled = false;
             }
         }
 
-        private void ComboBoxoldorder_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+        private void ComboBoxRecentOrder_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             editOldOrder();
         }
@@ -303,49 +272,9 @@ namespace downtimeC
             }
         }
 
-        /// <summary>
-        /// If the Date changes, wipe out the table of orderNumbers and restart ordering
-        /// </summary>
-        /// <remarks></remarks>
+       
 
-        public static void TruncateOrderNumbersOnDateChange(GetSqlServer getSqlServer)
-        {
-            if (DateTime.Now.Day != GlobalMutableState.StartupDate.Day)
-            {
-                var dtable = getSqlServer.FilledTable("select * FROM ordernumber");
 
-                if (dtable.Rows.Count != 1)
-                {
-                    getSqlServer.ExecuteNonQuery("truncate TABLE ordernumber");
-                    getSqlServer.ExecuteNonQuery("insert into ordernumber (OrderLast,Ordernumber) VALUES (1, 7500);");
-                }
-                GlobalMutableState.StartupDate = System.DateTime.Now;
-            }
-
-        }
-
-        /// <summary>
-        /// use the DB to generate a new orderNumber
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public static string getNewOrderNumber(GetSqlServer getSqlServer)
-        {
-            TruncateOrderNumbersOnDateChange(getSqlServer);
-
-            DataRow q = getSqlServer.FilledRowOption("insert into ordernumber (OrderLast,Ordernumber) select TOP 1 OrderLast+1, ordernumber+1 FROM ordernumber ORDER BY OrderLast DESC; select TOP 1 OrderLast, Ordernumber FROM ordernumber ORDER BY OrderLast DESC;").get;
-
-            string neworernumber = q["Ordernumber"].ToString();
-
-            if (neworernumber.Length > 4)
-            {
-                string letters = Strings.Left(neworernumber, 2);
-                string ordernums = Strings.Right(neworernumber, 3);
-                neworernumber = Strings.Chr(int.Parse(letters)) + ordernums;
-            }
-
-            return date2ordernumber(System.DateTime.Now) + neworernumber.PadLeft(4,'0');
-        }
 
 
         private void orderNumberTextBox_Leave(object sender, EventArgs e)
@@ -363,7 +292,7 @@ namespace downtimeC
         {
             this.ClearAllInputControls();
             this.DisableAll<TextBox>();
-            this.DisableAll<ComboBox>(this.ComboboxPrinter,this.ComboBoxoldorder);
+            this.DisableAll<ComboBox>(this.ComboboxPrinter,this.ComboBoxRecentOrder);
             this.ButtonEditorder.Enabled = true;
             this.TextBoxbillingnumber.Enabled = true;
         }

@@ -94,27 +94,12 @@ namespace HL7
                 if (!oc.Validate()) return false;
             }
 
-        //var wardValidOption = comboBoxWard.TextOption.map(text => {
-          
-        //   string locat1 = Strings.Left(comboBoxWard.Text, 1);
-
-        //   if (!(locat1 == "S" || locat1 == "A"))
-        //   {
-        //       if (Interaction.MsgBox("Location must start with 'S' for inpatient or 'A' for outpatient", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-        //       {
-        //           comboBoxWard.Text = "";
-        //       }
-        //       comboBoxWard.Focus();
-        //       return false;
-        //   }
-        //   else
-        //   {
-        //       return true;
-        //   }
-          
-        //  });
-
-     
+            if (this.testTable.Rows.Count == 0)
+            {
+                MessageBox.Show("You must have a Test before you can create an order.");
+                this.textBoxAddTest.Focus();
+                return false;
+            }
 
             return true;   
         }
@@ -136,30 +121,11 @@ namespace HL7
                     receivetime.Text = "20:55";
                     firstname.Text = RandomString.get(8);
                     lastname.Text = RandomString.get(8);
+                    addTestToGrid("CMP");
+                    addTestToGrid("BMP");
+                    addTestToGrid("TROP");
 
         }
-
-
-        ///// <summary>
-        ///// Return all TubeTypeTextBoxes that match the given LabelPrintMode
-        ///// </summary>
-        //public IEnumerable<TubeTypeTextBox> getTubeTypeTextBoxesMatching(params LabelPrintMode[] printMode)
-        //{           
-        //         return this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>().Where(x =>printMode.Contains(x.LabelPrintMode)).OrderBy(x =>x.SpecimenExtension);
-            
-        //}
-
-        ///// <summary>
-        ///// Return all TubeTypeTextBoxes that match the given LabelPrintMode
-        ///// </summary>
-        //public IEnumerable<TubeTypeTextBox> getTestLabelTextBoxes
-        //{
-        //    get {
-        //    return getTubeTypeTextBoxesMatching(LabelPrintMode.Aliquot, LabelPrintMode.Collection);
-        //}
-       // }
-
-
 
         /// <summary>
         /// Print collection, comment, and (collection or aliquot) labels
@@ -184,7 +150,7 @@ namespace HL7
                     dr["Tube"].ToString(), dr["Extension"].ToString()));
 
 
-                labelData.doPrint(printer, setupTableData);
+              //  labelData.doPrint(printer, setupTableData);
         }
 
         protected virtual LabelPrintMode TestPrintMode() {
@@ -197,7 +163,9 @@ namespace HL7
             this.Controls.Cast<Control>().Where(c => c is IStoredControl).Cast<IStoredControl>().forEach(storedControl =>
                 storedControl.setValue(order[storedControl.DataColumnName].ToString())
             );
-
+            getSqlServer.FilledColumn(string.Format("SELECT [test] FROM [downtime].[dbo].[testOnOrder] WHERE [ordernumberId] = {0}", order["ID"]))
+                .forEach(addTestToGrid);
+            
             Application.DoEvents();
             //Display the changes immediately (redraw the label text)
             System.Threading.Thread.Sleep(500);
@@ -238,23 +206,28 @@ namespace HL7
                 .headOption();
         }
 
-        private void addTestToGrid()
+        private void addTextBoxAddTestToGrid()
         {
             if (!textBoxAddTest.Validate()) return;
+            buttonAddTest.Enabled = false;
+            textBoxAddTest.TextOption.forEach(addTestToGrid);
+            
+            textBoxAddTest.Clear();
+            buttonAddTest.Enabled = true;
+        }
 
-            textBoxAddTest.TextOption.forEach(text =>
-            {
-                if (getOrderedTest(text).isDefined)
+        private void addTestToGrid(string test)
+        {
+            if (getOrderedTest(test).isDefined)
                 {
                     MessageBox.Show("Test already ordered.");
                     return;
                 }
-                buttonAddTest.Enabled = false;
-
+               
                 var orderableAt = (hospital == Hospital.Strong) ? "SmhOrderable" : "HhOrderable";
 
                 var rowOption = getSqlServer.FilledRowOption(string.Format("SELECT [Id], [Name], [Tube], [Location], [Extension], [DiTranslation] FROM [dbo].[TestsWithSpecimenExtension] where Id = @ID AND {0} = 1", orderableAt),
-                     new SqlParameter("@ID", text));
+                     new SqlParameter("@ID", test));
 
                 if (rowOption.isDefined)
                 {
@@ -264,15 +237,14 @@ namespace HL7
                 {
                     MessageBox.Show("Test lookup failed, test ID not found in database");
                 }
-                buttonAddTest.Enabled = true;
-            });
-            textBoxAddTest.Clear();
+                
+
         }
 
         private void buttonAddTest_Click(object sender, EventArgs e)
         {
 
-            addTestToGrid();
+            addTextBoxAddTestToGrid();
         }
 
       
@@ -292,7 +264,7 @@ namespace HL7
         {
             if (e.KeyCode == Keys.Enter)
             {
-                addTestToGrid();
+                addTextBoxAddTestToGrid();
             }
         }
 
@@ -303,8 +275,8 @@ namespace HL7
         public ImmutableOrderData cloneOrderData(string orderNum)
         {
             
-            var testsToOrder = new Dictionary<string, bool>();
-            this.orderedTests.forEach(x => testsToOrder.Add(x["Id"].ToString(), false));
+            var testsToOrder = new Dictionary<DataRow, bool>();
+            this.orderedTests.forEach(x => testsToOrder.Add(x, false));
 
             return new ImmutableOrderData(orderNum, collectiontime.Text, receivetime.Text,
                  comboBoxWard.Text, ComboBoxPriority.Text, mrn.Text, DOB.Text,
@@ -313,12 +285,9 @@ namespace HL7
                  testsToOrder.ToReadOnly());
         }
 
-        private void orderNumberTextBox_Leave(object sender, EventArgs e)
+        private void testGridSelectionChange(object sender, EventArgs e)
         {
-
+            this.textBoxAddTest.Text = this.testTable.Rows[this.dataGridTests.SelectedRows[0].Index]["Id"].ToString();
         }
-
-
-
     }
 }

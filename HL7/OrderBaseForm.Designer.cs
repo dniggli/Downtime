@@ -29,22 +29,22 @@ namespace HL7
         /// </summary>
         private void InitializeComponent()
         {
-            FunctionalCSharp.None<string> none_117 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_118 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_119 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_120 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_121 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_122 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_123 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_124 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_125 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_126 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_127 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_128 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_129 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_130 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_131 = new FunctionalCSharp.None<string>();
-            FunctionalCSharp.None<string> none_132 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_11 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_12 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_13 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_14 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_15 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_16 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_17 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_18 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_19 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_110 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_111 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_112 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_113 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_114 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_115 = new FunctionalCSharp.None<string>();
+            FunctionalCSharp.None<string> none_116 = new FunctionalCSharp.None<string>();
             this.TextBoxTechId = new System.Windows.Forms.TextBox();
             this.Label27 = new System.Windows.Forms.Label();
             this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -68,7 +68,7 @@ namespace HL7
             this.ButtonEditorder = new System.Windows.Forms.Button();
             this.Buttoneditprevious = new System.Windows.Forms.Button();
             this.Label32 = new System.Windows.Forms.Label();
-            this.ComboBoxoldorder = new System.Windows.Forms.ComboBox();
+            this.ComboBoxRecentOrder = new System.Windows.Forms.ComboBox();
             this.labelCollectDate = new System.Windows.Forms.Label();
             this.ButtonPrint = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -317,15 +317,15 @@ namespace HL7
             this.Label32.Text = "Recent Orders";
             this.Label32.Visible = false;
             // 
-            // ComboBoxoldorder
+            // ComboBoxRecentOrder
             // 
-            this.ComboBoxoldorder.FormattingEnabled = true;
-            this.ComboBoxoldorder.Location = new System.Drawing.Point(42, 26);
-            this.ComboBoxoldorder.Name = "ComboBoxoldorder";
-            this.ComboBoxoldorder.Size = new System.Drawing.Size(556, 21);
-            this.ComboBoxoldorder.TabIndex = 272;
-            this.ComboBoxoldorder.TabStop = false;
-            this.ComboBoxoldorder.Visible = false;
+            this.ComboBoxRecentOrder.FormattingEnabled = true;
+            this.ComboBoxRecentOrder.Location = new System.Drawing.Point(42, 26);
+            this.ComboBoxRecentOrder.Name = "ComboBoxRecentOrder";
+            this.ComboBoxRecentOrder.Size = new System.Drawing.Size(556, 21);
+            this.ComboBoxRecentOrder.TabIndex = 272;
+            this.ComboBoxRecentOrder.TabStop = false;
+            this.ComboBoxRecentOrder.Visible = false;
             // 
             // labelCollectDate
             // 
@@ -383,6 +383,7 @@ namespace HL7
             this.dataGridTests.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridTests.Size = new System.Drawing.Size(722, 146);
             this.dataGridTests.TabIndex = 279;
+            this.dataGridTests.SelectionChanged += new System.EventHandler(this.testGridSelectionChange);
             // 
             // buttonAddTest
             // 
@@ -414,7 +415,7 @@ namespace HL7
             this.textBoxAddTest.Required = false;
             this.textBoxAddTest.Size = new System.Drawing.Size(221, 20);
             this.textBoxAddTest.TabIndex = 280;
-            this.textBoxAddTest.TextOption = none_117;
+            this.textBoxAddTest.TextOption = none_11;
             this.textBoxAddTest.ValidationPrompt = "Tests may only contain characters and numbers";
             this.textBoxAddTest.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxAddTest_KeyUp);
             // 
@@ -432,7 +433,7 @@ namespace HL7
             this.ComboBoxPriority.Required = true;
             this.ComboBoxPriority.Size = new System.Drawing.Size(121, 21);
             this.ComboBoxPriority.TabIndex = 6;
-            this.ComboBoxPriority.TextOption = none_118;
+            this.ComboBoxPriority.TextOption = none_12;
             this.ComboBoxPriority.ValidationPrompt = "Priority must be set";
             // 
             // comboBoxWard
@@ -444,7 +445,7 @@ namespace HL7
             this.comboBoxWard.Required = true;
             this.comboBoxWard.Size = new System.Drawing.Size(223, 21);
             this.comboBoxWard.TabIndex = 9;
-            this.comboBoxWard.TextOption = none_119;
+            this.comboBoxWard.TextOption = none_13;
             this.comboBoxWard.ValidationPrompt = "Ward Location must be set";
             // 
             // TextBoxbillingnumber
@@ -457,7 +458,7 @@ namespace HL7
             this.TextBoxbillingnumber.Required = true;
             this.TextBoxbillingnumber.Size = new System.Drawing.Size(224, 20);
             this.TextBoxbillingnumber.TabIndex = 1;
-            this.TextBoxbillingnumber.TextOption = none_120;
+            this.TextBoxbillingnumber.TextOption = none_14;
             this.TextBoxbillingnumber.ValidationPrompt = "MUST ENTER BILLING # LIKE \'S000#########\' OR \'SXB######\'";
             // 
             // ComboboxPrinter
@@ -468,7 +469,7 @@ namespace HL7
             this.ComboboxPrinter.Required = true;
             this.ComboboxPrinter.Size = new System.Drawing.Size(121, 21);
             this.ComboboxPrinter.TabIndex = 30;
-            this.ComboboxPrinter.TextOption = none_121;
+            this.ComboboxPrinter.TextOption = none_15;
             this.ComboboxPrinter.ValidationPrompt = "Printer must be set";
             this.ComboboxPrinter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ComboBoxprinter_KeyUp);
             // 
@@ -482,7 +483,7 @@ namespace HL7
             this.TextboxCollectDate.Size = new System.Drawing.Size(135, 20);
             this.TextboxCollectDate.TabIndex = 255;
             this.TextboxCollectDate.TabStop = false;
-            this.TextboxCollectDate.TextOption = none_122;
+            this.TextboxCollectDate.TextOption = none_16;
             this.TextboxCollectDate.ValidationPrompt = "";
             this.TextboxCollectDate.Visible = false;
             // 
@@ -495,7 +496,7 @@ namespace HL7
             this.comment.Required = false;
             this.comment.Size = new System.Drawing.Size(722, 20);
             this.comment.TabIndex = 29;
-            this.comment.TextOption = none_123;
+            this.comment.TextOption = none_17;
             this.comment.ValidationPrompt = "";
             // 
             // cal1
@@ -507,7 +508,7 @@ namespace HL7
             this.cal1.Required = false;
             this.cal1.Size = new System.Drawing.Size(138, 20);
             this.cal1.TabIndex = 28;
-            this.cal1.TextOption = none_124;
+            this.cal1.TextOption = none_18;
             this.cal1.ValidationPrompt = "";
             // 
             // problem
@@ -519,7 +520,7 @@ namespace HL7
             this.problem.Required = false;
             this.problem.Size = new System.Drawing.Size(190, 20);
             this.problem.TabIndex = 27;
-            this.problem.TextOption = none_125;
+            this.problem.TextOption = none_19;
             this.problem.ValidationPrompt = "";
             // 
             // DOB
@@ -532,7 +533,7 @@ namespace HL7
             this.DOB.Required = true;
             this.DOB.Size = new System.Drawing.Size(129, 20);
             this.DOB.TabIndex = 4;
-            this.DOB.TextOption = none_126;
+            this.DOB.TextOption = none_110;
             this.DOB.ValidationPrompt = "Must enter date in proper format MM/DD/YY";
             // 
             // mrn
@@ -544,7 +545,7 @@ namespace HL7
             this.mrn.Required = true;
             this.mrn.Size = new System.Drawing.Size(223, 20);
             this.mrn.TabIndex = 5;
-            this.mrn.TextOption = none_127;
+            this.mrn.TextOption = none_111;
             this.mrn.ValidationPrompt = "Must enter MRN in proper format 12 digits, or X prefix and 6 digits";
             // 
             // receivetime
@@ -556,7 +557,7 @@ namespace HL7
             this.receivetime.Required = true;
             this.receivetime.Size = new System.Drawing.Size(226, 20);
             this.receivetime.TabIndex = 8;
-            this.receivetime.TextOption = none_128;
+            this.receivetime.TextOption = none_112;
             this.receivetime.ValidationPrompt = "Receive Time must be in proper format(##:##)";
             // 
             // collectiontime
@@ -568,7 +569,7 @@ namespace HL7
             this.collectiontime.Required = true;
             this.collectiontime.Size = new System.Drawing.Size(223, 20);
             this.collectiontime.TabIndex = 7;
-            this.collectiontime.TextOption = none_129;
+            this.collectiontime.TextOption = none_113;
             this.collectiontime.ValidationPrompt = "Collection Time must be in proper format(##:##)";
             // 
             // lastname
@@ -580,7 +581,7 @@ namespace HL7
             this.lastname.Required = true;
             this.lastname.Size = new System.Drawing.Size(226, 20);
             this.lastname.TabIndex = 2;
-            this.lastname.TextOption = none_130;
+            this.lastname.TextOption = none_114;
             this.lastname.ValidationPrompt = "";
             // 
             // firstname
@@ -592,7 +593,7 @@ namespace HL7
             this.firstname.Required = true;
             this.firstname.Size = new System.Drawing.Size(223, 20);
             this.firstname.TabIndex = 3;
-            this.firstname.TextOption = none_131;
+            this.firstname.TextOption = none_115;
             this.firstname.ValidationPrompt = "";
             // 
             // ordernumber
@@ -605,7 +606,7 @@ namespace HL7
             this.ordernumber.Required = false;
             this.ordernumber.Size = new System.Drawing.Size(115, 20);
             this.ordernumber.TabIndex = 0;
-            this.ordernumber.TextOption = none_132;
+            this.ordernumber.TextOption = none_116;
             this.ordernumber.ValidationPrompt = "Order number must be in proper format: 8 characters - upperCase letter, 3 digits," +
                 " upperCase letter, 3 digits";
             // 
@@ -624,7 +625,7 @@ namespace HL7
             this.Controls.Add(this.ComboBoxPriority);
             this.Controls.Add(this.labelCollectDate);
             this.Controls.Add(this.Label32);
-            this.Controls.Add(this.ComboBoxoldorder);
+            this.Controls.Add(this.ComboBoxRecentOrder);
             this.Controls.Add(this.Buttoneditprevious);
             this.Controls.Add(this.ButtonEditorder);
             this.Controls.Add(this.comboBoxWard);
@@ -706,7 +707,7 @@ namespace HL7
         public downtimeC.StoredTextBox firstname;
         public System.Windows.Forms.Button ButtonEditorder;
         public System.Windows.Forms.Button Buttoneditprevious;
-        public System.Windows.Forms.ComboBox ComboBoxoldorder;
+        public System.Windows.Forms.ComboBox ComboBoxRecentOrder;
         public downtimeC.PriorityComboBox ComboBoxPriority;
         public System.Windows.Forms.Label label6;
         public System.Windows.Forms.ComboBox ComboboxPrintType;
