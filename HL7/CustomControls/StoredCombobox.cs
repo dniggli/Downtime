@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using FunctionalCSharp;
 using CodeBase2.Database;
-using downtimeC.LabelPrinting;
 
 namespace downtimeC
 {

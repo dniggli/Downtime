@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using downtimeC;
-using downtimeC.LabelPrinting;
 using FunctionalCSharp;
 using Microsoft.VisualBasic;
 using System.Data.SqlClient;
@@ -22,7 +21,7 @@ namespace HL7
         protected readonly SetupTableData setupTableData;
         
         protected readonly GetSqlServer getSqlServer;
-        private readonly DataTable testTable;
+        protected readonly DataTable testTable;
         protected readonly Hospital hospital;
         public OrderBaseForm(SetupTableData setupTableData, GetSqlServer getSqlServer, Hospital hospital)
             : base()
@@ -53,7 +52,7 @@ namespace HL7
 
         private void DebugButtonRead_click(System.Object sender, System.EventArgs e)
         {
-            readDowntimeTable(this.orderLookup(this.ordernumber.Text).get);
+            readDowntimeTable(orderLookup(this.ordernumber.Text,getSqlServer).get);
         }
 
         /// <summary>
@@ -120,74 +119,76 @@ namespace HL7
             return true;   
         }
 
+
+         
+
         private void DebugButtonFill_Click(System.Object sender, System.EventArgs e)
         {
-            //Buttonpopulate.Visible = false;
-            foreach (Control C in this.Controls)
-            {
-                if (C is TextBox)
-                {
-                    TextBox TB = (TextBox)C;
-                    //string running = "high";
-                    string runs = "45654125";
-
-                    string ranstring = "";
-                    for (int x = 0; x <= 8; x++)
-                    {
-                        ranstring += RandomLetter.get;
-                    }
-
-                    TB.AppendText(ranstring);
-                    ordernumber.Text = runs;
-                    mrn.Text = runs;
-                    ComboboxPrinter.Text = "s56";
+                    //ordernumber.Text = RandomString.get(8);
+                    mrn.Text = RandomString.numeric(12);
+                    ComboboxPrinter.SelectedIndex = 0;
+                    ComboBoxPriority.SelectedIndex = 1;
                     DOB.Text = "08/28/2003";
-                    comboBoxWard.Text = "S";
-                    DOB.Text = "10";
+                    comboBoxWard.SelectedIndex = 1;
+                    DOB.Text = "10/10/10";
                     cal1.Text = "585-987-7848";
                     collectiontime.Text = "20:50";
                     receivetime.Text = "20:55";
-               }
-            }
+                    firstname.Text = RandomString.get(8);
+                    lastname.Text = RandomString.get(8);
 
         }
 
 
-        /// <summary>
-        /// Return all TubeTypeTextBoxes that match the given LabelPrintMode
-        /// </summary>
-        public IEnumerable<TubeTypeTextBox> getTubeTypeTextBoxesMatching(params LabelPrintMode[] printMode)
-        {           
-                 return this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>().Where(x =>printMode.Contains(x.LabelPrintMode)).OrderBy(x =>x.SpecimenExtension);
+        ///// <summary>
+        ///// Return all TubeTypeTextBoxes that match the given LabelPrintMode
+        ///// </summary>
+        //public IEnumerable<TubeTypeTextBox> getTubeTypeTextBoxesMatching(params LabelPrintMode[] printMode)
+        //{           
+        //         return this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>().Where(x =>printMode.Contains(x.LabelPrintMode)).OrderBy(x =>x.SpecimenExtension);
             
-        }
+        //}
 
-        /// <summary>
-        /// Return all TubeTypeTextBoxes that match the given LabelPrintMode
-        /// </summary>
-        public IEnumerable<TubeTypeTextBox> getTestLabelTextBoxes
-        {
-            get {
-            return getTubeTypeTextBoxesMatching(LabelPrintMode.Aliquot, LabelPrintMode.Collection);
-        }
-        }
+        ///// <summary>
+        ///// Return all TubeTypeTextBoxes that match the given LabelPrintMode
+        ///// </summary>
+        //public IEnumerable<TubeTypeTextBox> getTestLabelTextBoxes
+        //{
+        //    get {
+        //    return getTubeTypeTextBoxesMatching(LabelPrintMode.Aliquot, LabelPrintMode.Collection);
+        //}
+       // }
+
+
 
         /// <summary>
         /// Print collection, comment, and (collection or aliquot) labels
         /// </summary>
-        protected void printLabels()
+        protected static void printLabels(ImmutableOrderData immutableOrderData, string printer, 
+            SetupTableData setupTableData, IEnumerable<DataRow> orderedTests, LabelPrintMode testPrintMode )
         {
                 //PrintDowntimeLabels
-                var labelData = new LabelData(this.ordernumber.Text, this.ComboBoxPriority.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
-        this.DateTimePicker1.Text);
+            var labelData = new LabelData(immutableOrderData.orderNumber, immutableOrderData.priority,
+                immutableOrderData.mrn, immutableOrderData.lastName, immutableOrderData.firstName, immutableOrderData.ward,
+        DateTime.Now.ToString());
+
+                //print collection label
+            labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
+            labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
+                //print comment label
+            labelData.LabelAppendComment(immutableOrderData.comment, "CMT", "");
+
+               orderedTests.forEach(dr =>
+                    labelData.AppendTestLabel(immutableOrderData.getPriority,
+                    testPrintMode, dr["Id"].ToString(),
+                    dr["Tube"].ToString(), dr["Extension"].ToString()));
 
 
-                collectiontime.LabelAppend(labelData, ComboBoxPriority.getPriorityOption.get);
-                comment.LabelAppend(labelData, ComboBoxPriority.getPriorityOption.get);
-                getTestLabelTextBoxes.forEach(tb => tb.LabelAppend(labelData, ComboBoxPriority.getPriorityOption.get));
+                labelData.doPrint(printer, setupTableData);
+        }
 
-
-                labelData.doPrint(this.ComboboxPrinter.Text, setupTableData);
+        protected virtual LabelPrintMode TestPrintMode() {
+            return LabelPrintMode.Collection;
         }
 
         public void readDowntimeTable(DataRow order)
@@ -203,9 +204,9 @@ namespace HL7
             //do it slow enough so we can actually read the text before it changes, pause half a second
         }
 
-        public Option<DataRow> orderLookup(string orderNumber)
+        public static Option<DataRow> orderLookup(string orderNumber, GetSqlServer getSqlServer)
         {
-            return getSqlServer.FilledRowOption("select TOP 1 * from dtdb1.Table1 where ordernumber like '" + orderNumber + "' ORDER BY ID DESC");
+            return getSqlServer.FilledRowOption("select TOP 1 * FROM [ordered] where ordernumber like '" + orderNumber + "' ORDER BY ID DESC");
         }
 
         private void TextBoxTechId_TextChanged(object sender, EventArgs e)
@@ -237,7 +238,7 @@ namespace HL7
                 .headOption();
         }
 
-        private void addTest()
+        private void addTestToGrid()
         {
             if (!textBoxAddTest.Validate()) return;
 
@@ -271,7 +272,7 @@ namespace HL7
         private void buttonAddTest_Click(object sender, EventArgs e)
         {
 
-            addTest();
+            addTestToGrid();
         }
 
       
@@ -291,9 +292,32 @@ namespace HL7
         {
             if (e.KeyCode == Keys.Enter)
             {
-                addTest();
+                addTestToGrid();
             }
         }
+
+        /// <summary>
+        /// Capture all of the current Order Data
+        /// </summary>
+        /// <returns></returns>
+        public ImmutableOrderData cloneOrderData(string orderNum)
+        {
+            
+            var testsToOrder = new Dictionary<string, bool>();
+            this.orderedTests.forEach(x => testsToOrder.Add(x["Id"].ToString(), false));
+
+            return new ImmutableOrderData(orderNum, collectiontime.Text, receivetime.Text,
+                 comboBoxWard.Text, ComboBoxPriority.Text, mrn.Text, DOB.Text,
+                 firstname.Text, problem.Text, cal1.Text, comment.Text,
+                 lastname.Text, TextBoxTechId.Text, TextBoxbillingnumber.Text,
+                 testsToOrder.ToReadOnly());
+        }
+
+        private void orderNumberTextBox_Leave(object sender, EventArgs e)
+        {
+
+        }
+
 
 
     }

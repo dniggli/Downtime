@@ -92,7 +92,7 @@ namespace downtimeC
     public void automatedrecovery(string startnumber)
     {
 
-        var t = getSqlServer.FilledTable("select TOP 1 * from dtdb1.Table1 where ordernumber like '" + startnumber + "' ORDER BY ID DESC");
+        var t = getSqlServer.FilledTable("select TOP 1 * FROM [ordered] where ordernumber like '" + startnumber + "' ORDER BY ID DESC");
  
 
         try {
@@ -105,7 +105,7 @@ namespace downtimeC
             string collectiontime = r["collectiontime"].ToString();
             string receivetime = r["receivetime"].ToString();
             string priority = r["priority"].ToString();
-            string ComboBoxWard = r["location"].ToString();
+            string ComboBoxWard = r["ward"].ToString();
             string bluetest = r["bluetest"].ToString();
             string redtest = r["redtest"].ToString();
             string greentest = r["greentest"].ToString();

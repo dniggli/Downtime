@@ -14,27 +14,7 @@ using HL7;
 namespace downtimeC
 {
 
-    public enum Hospital
-    {
-        Strong,
-        Highland
-        
-    }
-
-    public enum LabelPrintMode
-    {
-        Collection,
-        Demographic,
-        Comment,
-        Aliquot
-    }
-
-    public enum HL7Destination
-    {
-        None,
-        DI,
-        MOLIS
-    }
+  
 
     public partial class TubeTypeTextBox : StoredTextBox, IStoredControl
     {

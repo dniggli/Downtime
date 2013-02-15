@@ -38,21 +38,21 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeBase2, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.0.0.0.13\lib\net35\CodeBase2.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.0.0.0.15\lib\net35\CodeBase2.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.Database, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2.Database, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.Database.0.0.0.13\lib\net35\CodeBase2.Database.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.Database.0.0.0.15\lib\net35\CodeBase2.Database.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.MySql, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2.MySql, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.MySql.0.0.0.13\lib\net35\CodeBase2.MySql.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.MySql.0.0.0.15\lib\net35\CodeBase2.MySql.dll</HintPath>
     </Reference>
-    <Reference Include="FunctionalCSharp, Version=0.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FunctionalCSharp, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FunctionalCSharp.0.0.0.13\lib\net35\FunctionalCSharp.dll</HintPath>
+      <HintPath>..\packages\FunctionalCSharp.0.0.0.15\lib\net35\FunctionalCSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Access, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -92,12 +92,6 @@
     </Compile>
     <Compile Include="OrderEntryForm2.Designer.cs">
       <DependentUpon>OrderEntryForm2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DIOrderEntryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DIOrderEntryForm.Designer.cs">
-      <DependentUpon>DIOrderEntryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InputBoxForm.cs">
       <SubType>Form</SubType>
@@ -181,9 +175,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OrderEntryForm2.resx">
       <DependentUpon>OrderEntryForm2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DIOrderEntryForm.resx">
-      <DependentUpon>DIOrderEntryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InputBoxForm.resx">
       <DependentUpon>InputBoxForm.cs</DependentUpon>

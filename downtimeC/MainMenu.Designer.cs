@@ -42,7 +42,6 @@
             this.ButtonSmsArchiveTracking = new System.Windows.Forms.Button();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.ButtonMolisEntry = new System.Windows.Forms.Button();
-            this.ButtonDIEntry = new System.Windows.Forms.Button();
             this.ButtonDowntimeRecovery = new System.Windows.Forms.Button();
             this.Label2 = new System.Windows.Forms.Label();
             this.ButtonRestartOrderNumber = new System.Windows.Forms.Button();
@@ -188,7 +187,6 @@
             // 
             this.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Panel1.Controls.Add(this.ButtonMolisEntry);
-            this.Panel1.Controls.Add(this.ButtonDIEntry);
             this.Panel1.Controls.Add(this.ButtonDowntimeRecovery);
             this.Panel1.Controls.Add(this.Label2);
             this.Panel1.Controls.Add(this.ButtonRestartOrderNumber);
@@ -206,15 +204,6 @@
             this.ButtonMolisEntry.TabIndex = 11;
             this.ButtonMolisEntry.Text = "Molis Entry";
             this.ButtonMolisEntry.UseVisualStyleBackColor = true;
-            // 
-            // ButtonDIEntry
-            // 
-            this.ButtonDIEntry.Location = new System.Drawing.Point(165, 12);
-            this.ButtonDIEntry.Name = "ButtonDIEntry";
-            this.ButtonDIEntry.Size = new System.Drawing.Size(108, 36);
-            this.ButtonDIEntry.TabIndex = 9;
-            this.ButtonDIEntry.Text = "DI Entry";
-            this.ButtonDIEntry.UseVisualStyleBackColor = true;
             // 
             // ButtonDowntimeRecovery
             // 
@@ -302,7 +291,6 @@
         internal System.Windows.Forms.Button ButtonSmsArchiveTracking;
         internal System.Windows.Forms.Panel Panel1;
         internal System.Windows.Forms.Button ButtonMolisEntry;
-        internal System.Windows.Forms.Button ButtonDIEntry;
         internal System.Windows.Forms.Button ButtonDowntimeRecovery;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Button ButtonRestartOrderNumber;

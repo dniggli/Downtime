@@ -39,31 +39,30 @@ namespace downtimeC
             new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm(getSqlServer));
             new FormStart(ButtonCoagArchiveTracking, () => new TrackCoagForm(getSqlServer));
             new FormStart(ButtonDowntimeRecovery, () => new RecoveryForm(getSqlServer));
-            new FormStart(ButtonDIEntry, () => new DIOrderEntryForm(getSqlServer));
             new FormStart(ButtonMolisEntry, () => new MolisEntry(getSqlServer));
             
 
-            queries.Add("STAT Query", "SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.OTHERTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS FROM dtdb1.Table1 GROUP BY Table1.COLLECTIONTIME, Table1.RECEIVETIME, Table1.LOCATION, Table1.PRIORITY, Table1.LASTNAME, Table1.BLUETEST, Table1.REDTEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.LAVCHEMTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.CALLS HAVING(((Table1.PRIORITY) Like \"S\")) ORDER BY Table1.ordernumber;");
+            queries.Add("STAT Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.RECEIVETIME, order.LOCATION, order.PRIORITY, order.LASTNAME, order.BLUETEST, order.REDTEST, order.LAVHEMTEST, order.GREENTEST, order.OTHERTEST, order.LAVCHEMTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.TECHID, order.CALLS FROM [ordered] GROUP BY order.COLLECTIONTIME, order.RECEIVETIME, order.LOCATION, order.PRIORITY, order.LASTNAME, order.BLUETEST, order.REDTEST, order.LAVHEMTEST, order.GREENTEST, order.LAVCHEMTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.TECHID, order.CALLS HAVING(((order.PRIORITY) Like \"S\")) ORDER BY order.ordernumber;");
 
             interactions.Add("Last Name Query", () => Interaction.InputBox("LastName", "EnterLastName"));
-            queries.Add("Last Name Query", "SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.LOCATION, Table1.PRIORITY, Table1.FIRSTNAME, Table1.LASTNAME, Table1.CALLS, Table1.REDTEST, Table1.LAVCHEMTEST, Table1.BLUETEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.TECHID, Table1.ORDERCOMMENT FROM(Table1) WHERE Table1.LASTNAME='{0}' ORDER BY ID;");
+            queries.Add("Last Name Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.FIRSTNAME, order.LASTNAME, order.CALLS, order.REDTEST, order.LAVCHEMTEST, order.BLUETEST, order.LAVHEMTEST, order.GREENTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.TECHID, order.ORDERCOMMENT FROM(Table1) WHERE order.LASTNAME='{0}' ORDER BY ID;");
 
             interactions.Add("Tracking Query", () => Interaction.InputBox("ordernumber", "enterordernumber"));
             queries.Add("Tracking Query", "SELECT dttracking.ordernumber, dttracking.TRACKING, dttracking.TRACKINGCOMMENT, dttracking.tracklocation, dttracking.TIMESTAMP, dttracking.tracktechid FROM (dttracking) where dttracking.ordernumber = '{0}';");
-            queries.Add("Tracking Query*", "SELECT * FROM dtdb1.dttracking where tracklocation = 'OT->STOR';");
+            queries.Add("Tracking Query*", "SELECT * FROM dttracking where tracklocation = 'OT->STOR';");
 
             interactions.Add("Med Req Query", () => Interaction.InputBox("Med Req Number (Must Enter All 12 Digits - ############)", "EnterMedReqNumber"));
-            queries.Add("Med Req Query", "SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.LOCATION, Table1.PRIORITY, Table1.MRN, Table1.FIRSTNAME, Table1.LASTNAME,Table1.CALLS, Table1.REDTEST, Table1.LAVCHEMTEST, Table1.BLUETEST, Table1.LAVHEMTEST, Table1.GREENTEST, Table1.GRYTEST, Table1.URINEHEM, Table1.URINECHEM, Table1.BLOODGAS, Table1.OTHERTEST, Table1.TECHID, Table1.ORDERCOMMENT FROM dtdb1.Table1 where Table1.MRN = '{0}';");
+            queries.Add("Med Req Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.MRN, order.FIRSTNAME, order.LASTNAME,order.CALLS, order.REDTEST, order.LAVCHEMTEST, order.BLUETEST, order.LAVHEMTEST, order.GREENTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.OTHERTEST, order.TECHID, order.ORDERCOMMENT FROM Table1 where order.MRN = '{0}';");
 
-            queries.Add("Coag Query", "SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.LOCATION, Table1.PRIORITY, Table1.FIRSTNAME, Table1.LASTNAME, Table1.CALLS, Table1.BLUETEST, Table1.OTHERTEST, Table1.ORDERCOMMENT FROM dtdb1.Table1 where BLUETEST <> '' ;");
+            queries.Add("Coag Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.FIRSTNAME, order.LASTNAME, order.CALLS, order.BLUETEST, order.OTHERTEST, order.ORDERCOMMENT FROM Table1 where BLUETEST <> '' ;");
 
-            queries.Add("Chemistry Query", "SELECT Table1.ordernumber, Table1.COLLECTIONTIME, Table1.LOCATION, Table1.PRIORITY, Table1.FIRSTNAME, Table1.LASTNAME, Table1.CALLS, Table1.REDTEST, Table1.LAVCHEMTEST, Table1.GREENTEST, Table1.GRYTEST, Table1.OTHERTEST, Table1.TECHID, Table1.ORDERCOMMENT FROM dtdb1.Table1 where REDTEST <> '' or LAVCHEMTEST <> '' OR GREENTEST <> '' or GRYTEST <> '' ;");
+            queries.Add("Chemistry Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.FIRSTNAME, order.LASTNAME, order.CALLS, order.REDTEST, order.LAVCHEMTEST, order.GREENTEST, order.GRYTEST, order.OTHERTEST, order.TECHID, order.ORDERCOMMENT FROM Table1 where REDTEST <> '' or LAVCHEMTEST <> '' OR GREENTEST <> '' or GRYTEST <> '' ;");
 
-            queries.Add("Bloodgas Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.BLOODGAS, T.OTHERTEST, T.TECHID, T.ORDERCOMMENT FROM dtdb1.Table1 T where BLOODGAS <> '';");
+            queries.Add("Bloodgas Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.BLOODGAS, T.OTHERTEST, T.TECHID, T.ORDERCOMMENT FROM Table1 T where BLOODGAS <> '';");
 
-            queries.Add("Hematology Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.LAVHEMTEST, T.OTHERTEST, T.TECHID, T.ORDERCOMMENT FROM dtdb1.Table1 T where LAVHEMTEST <> '';");
+            queries.Add("Hematology Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.LAVHEMTEST, T.OTHERTEST, T.TECHID, T.ORDERCOMMENT FROM Table1 T where LAVHEMTEST <> '';");
 
-            queries.Add("Urinalisys Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.URINEHEM, T.FLUIDTEST, T.CSFTEST, T.OTHERTEST, T.TECHID FROM dtdb1.Table1 T where URINEHEM <> '' OR FLUIDTEST <> '' OR CSFTEST <> '';");
+            queries.Add("Urinalisys Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.URINEHEM, T.FLUIDTEST, T.CSFTEST, T.OTHERTEST, T.TECHID FROM Table1 T where URINEHEM <> '' OR FLUIDTEST <> '' OR CSFTEST <> '';");
 
         }
 

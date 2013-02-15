@@ -15,14 +15,13 @@ using System.IO;
 using HL7;
 using FunctionalCSharp;
 using Microsoft.VisualBasic.CompilerServices;
-using downtimeC.LabelPrinting;
 using System.Data.SqlClient;
 
 namespace downtimeC
 {
     public partial class OrderEntryForm2 : OrderBaseForm
     {
-
+        //downtimeC.LabelPrintMode.Collection;
         protected OrderEntryForm2()
         {
             InitializeComponent();
@@ -37,50 +36,26 @@ namespace downtimeC
             groupTestToIndividualTest = new GroupTestToIndividualTest(getSqlServer);
         }
 
-
-
-
         private void orderentry_Load(System.Object sender, System.EventArgs e)
         {
             this.DisableAll<TextBox>();
             this.DisableAll<ComboBox>();
-     
+
             TextBoxbillingnumber.Enabled = true;
         }
 
         //http://www.vbmysql.com/articles/vbnet-mysql-tutorial/the-vbnet-mysql-tutorial-part-4
 
-        public bool NotAn_X_Mrn
+        public static bool NotAn_X_Mrn(string mrn)
         {
-            get
-            {
-                return !Operators.LikeString(mrn.Text, "X*", CompareMethod.Text);
-            }
+
+            return !Operators.LikeString(mrn, "X*", CompareMethod.Text);
+
         }
 
-        public void writeDowntimeTable()
-        {
-            TextboxCollectDate.Text = DateTimePicker1.Text;
-
-            if (NotAn_X_Mrn)
-            {
-                while (mrn.Text.Length < 12)
-                {
-                    mrn.Text = "0" + mrn.Text;
-                }
-            }
-
-            var p = new SqlParameter("@CollectionTime", collectiontime.Text);
-            getSqlServer.ExecuteNonQuery("update dtdb1.Table1 set COLLECTIONTIME = @CollectionTime, RECEIVETIME = '" + receivetime.Text + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + ComboBoxPriority.Text + "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text + "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text + "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text + "',COLLECTDATE = '" + TextboxCollectDate.Text + "',TECHID = '" + TextBoxTechId.Text + "',CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + "',VIRALLOADTEST = '" + Viralloadbox.Text + "',OTHERTEST = '" + OTHERBOX.Text + "', BILLINGNUMBER = '" + TextBoxbillingnumber.Text + "', IMMUNOTEST = '" + TextBoxIMMUNO.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'", p);
 
 
-            this.DisableAll<TextBox>();
-            this.DisableAll<ComboBox>();
-          
-            ComboboxPrinter.Enabled = true;
-            ComboBoxoldorder.Enabled = true;
-            TextBoxbillingnumber.Enabled = true;
-        }
+
 
 
         public static object date2ordernumber(DateTime dates)
@@ -112,173 +87,61 @@ namespace downtimeC
                 monthend = Strings.Chr(newmonthstart) + newmonthend;
             }
 
-            return  monthend + endday;
+            return monthend + endday;
 
         }
 
         /// <summary>
-        /// If the Date changes, wipe out the table of orderNumbers and restart ordering
+        /// printLabels, insert the order to the database and then sendHL7
         /// </summary>
-        /// <remarks></remarks>
-
-        public void TruncateOrderNumbersOnDateChange()
+        /// <param name="orderData"></param>
+        protected void printInsertAndSendHL7(ImmutableOrderData orderData)
         {
-            if (!(System.DateTime.Now.Day == GlobalMutableState.StartupDate.Day))
+            printLabels(orderData, this.ComboboxPrinter.Text,setupTableData,orderedTests,TestPrintMode());
+            orderData.updateOrder(getSqlServer); //update data about the order in the DB
+
+
+
+            //send the HL7
+            foreach (DataRow row in orderedTests.Where(dr => dr.getOptionString("DiTranslation").isDefined))
             {
-                var dtable = getSqlServer.FilledTable("select * from dtdb1.ordernumber");
+                var specType = new SpecimenType { extension = row["Extension"].ToString(), diSpecimenType = row["DiTranslation"].ToString() };
 
-                if (!(dtable.Rows.Count == 1))
-                {
-                    getSqlServer.ExecuteNonQuery("truncate TABLE dtdb1.ordernumber");
-                    getSqlServer.ExecuteNonQuery("insert into dtdb1.ordernumber (OrderLast,Ordernumber)values ('1', '7500');");
-                }
-                GlobalMutableState.StartupDate = System.DateTime.Now;
+                var indiCodes = groupTestToIndividualTest.getIndividualTests(row["Id"].ToString());
+                sendHL7(groupTestToIndividualTest, orderData.mrn, orderData.firstName,
+                    orderData.lastName, orderData.orderNumber, orderData.ward,
+                    indiCodes, specType);
             }
-
         }
-
-        /// <summary>
-        /// use the DB to generate a new orderNumber 
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public string getOrderNumber()
+        protected override void OnPrintClick()
         {
-            DataRow q = getSqlServer.FilledRowOption("insert into dtdb1.ordernumber (OrderLast,Ordernumber) select TOP 1 OrderLast+1, ordernumber+1 from dtdb1.ordernumber ORDER BY OrderLast DESC; select TOP 1 OrderLast, Ordernumber from dtdb1.ordernumber ORDER BY OrderLast DESC;").get;
+            this.ComboBoxoldorder.SelectedIndexChanged -= ComboBoxoldorder_SelectedIndexChanged;
+            this.ordernumber.Enabled = false;
+            TextboxCollectDate.Text = DateTime.Now.ToString();
 
-            string neworernumber = q["Ordernumber"].ToString();
+            //get orderNumber from TextBox or create a new one
+            var orderNum = this.ordernumber.TextOption.getOrElse(() => getNewOrderNumber(getSqlServer));
+            printInsertAndSendHL7(cloneOrderData(orderNum));           
 
-            //........//////  un-comment to use alpha-numeric ordernumbers (also un-comment line items 47-50 in Restartwheel) \\\\\\......
+            this.DisableAll<TextBox>();
+            this.DisableAll<ComboBox>();
 
-            if (neworernumber.Length > 4)
-            {
-                string letters = Strings.Left(neworernumber, 2);
-                string ordernums = Strings.Right(neworernumber, 3);
-                neworernumber = Strings.Chr(int.Parse(letters)) + ordernums;
+            ComboboxPrinter.Enabled = true;
+            ComboBoxoldorder.Enabled = true;
+            TextBoxbillingnumber.Enabled = true;
 
-                //Dim alphanum As String = date2ordernumber(Date.Now) + h
-
-            }
-            string alphanum = date2ordernumber(System.DateTime.Now) + neworernumber;
-            getSqlServer.ExecuteNonQuery("insert into dtdb1.Table1(ordernumber)value('" + alphanum + "');");
-
-            return alphanum;
-        }
-
-
-
-        //bool validateControlIsFilled(string message, string fieldValue, Control control)
-        //{
-        //    if (fieldValue == string.Empty)
-        //    {
-        //        if (Interaction.MsgBox(message, MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-        //        {
-        //            control.Focus();
-        //            return false;
-        //        }
-        //    }
-        //    return true;
-        //}
-
-        private void validateAndPrint()
-        {
-            if (!string.IsNullOrEmpty(redtest.Text))
-            {
-                var eAS = redtest.Text.Split(new char[] { ',' }).Select(x => x.Trim(' '));
-
-                Dictionary<string, string> dict = new Dictionary<string, string>();
-                foreach (string newtest in eAS)
-                {
-                    dict.Add(newtest, "Redtest");
-                }
-
-
-
-                Dictionary<string, string> drs = new Dictionary<string, string>();
-
-                var dt = getSqlServer.FilledTable("select * from dtdb1.DITests;");
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    var ditest = dr["TestCode"].ToString();
-                    var sequence = dr["CodeSequence"].ToString();
-                    drs.Add(ditest, sequence);
-                    Console.WriteLine(ditest);
-                }
-                foreach (string testtype in dict.Keys)
-                {
-                    testtype.Replace(" ", "");
-                    try
-                    {
-                        string checkstest = drs[testtype];
-                    }
-                    catch
-                    {
-                        if (Interaction.MsgBox("Please Enter Correct SST Test For: '" + testtype + "' " + Constants.vbNewLine + "Tests must be seperated with a comma!", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                        {
-                            redtest.Focus();
-                        }
-
-
-                        return;
-                    }
-
-
-                }
-
-            }
-
-
-
-            if (this.ordernumber.Enabled == true) this.ordernumber.Enabled = false;
-          
-
-
-
-
-            if (this.ordernumber.Text == string.Empty)
-            {
-                TruncateOrderNumbersOnDateChange();
-
-                ordernumber.Text = getOrderNumber();
-            }
-
-
-            foreach (TubeTypeTextBox box in getTestLabelTextBoxes.Where(x => x.SendHL7 == HL7Destination.DI))
-            {
-                var tests = box.Text;
-                if ((!string.IsNullOrEmpty(tests)))
-                {
-                    var codes = tests.Split(',').Select(x => x.Trim());
-                    //TODO: choose type of Highland or SMH
-                    var diSpecimenType = box.getSpecimenType(hospital, setupTableData);
-                    foreach (string code in codes)
-                    {
-                        var indiCodes = groupTestToIndividualTest.getIndividualTests(code);
-                        sendHL7(this.mrn.Text, this.firstname.Text, this.lastname.Text, this.ordernumber.Text, this.comboBoxWard.Text, indiCodes, diSpecimenType);
-                    }
-                }
-            }
-
-            printLabels();
-            writeDowntimeTable(); //update data about the order in the DB
-
-            editorder.Enabled = true;
+            ButtonEditorder.Enabled = true;
             Buttoneditprevious.Enabled = true;
-            if (!string.IsNullOrEmpty(ordernumber.Text))
-            {
-                ComboBoxoldorder.Items.Add(ordernumber.Text + "   " + lastname.Text + "," + firstname.Text);
-            }
-            this.ClearAllInputControls(this.ComboboxPrinter, this.TextBoxTechId);
-            ordernumber.Focus();
+
+            ComboBoxoldorder.Items.Add(orderNum + "   " + lastname.Text + "," + firstname.Text);
+            ComboBoxoldorder.SelectedIndex = ComboBoxoldorder.Items.Count - 1;
+
+            this.ClearAllInputControls(this.ComboboxPrinter, this.TextBoxTechId, ComboBoxoldorder);
+            testTable.Clear();
+            this.TextBoxbillingnumber.Focus();
+            this.ComboBoxoldorder.SelectedIndexChanged += ComboBoxoldorder_SelectedIndexChanged;
         }
-        protected override void OnPrintClick() {
-            this.ordernumber.TextChanged -= ordernumber_TextChanged;
-            validateAndPrint();
-            this.ordernumber.TextChanged += ordernumber_TextChanged;
-           
-        }
-        public void sendHL7(string mrn, string firstName, string lastName, string ordernumber, string ward, IEnumerable<string> codes, SpecimenType specimenType)
+        public static void sendHL7(GroupTestToIndividualTest groupTestToIndividualTest, string mrn, string firstName, string lastName, string ordernumber, string ward, IEnumerable<string> codes, SpecimenType specimenType)
         {
             //set the IP and port to send to
             var sendhl = new SendHl7("172.18.140.209", 10013);
@@ -311,110 +174,51 @@ namespace downtimeC
 
         }
 
-
-       
-
-        public void checklocation()
-        {
-            try
-            {
-                var locat = comboBoxWard.Text;
-                string locat1 = Strings.Left(locat, 1);
-
-                if (!(locat1 == "S") || (locat1 == "A"))
-                {
-                    if (Interaction.MsgBox("Location must start with 'S' for inpatient or 'A' for outpatient", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                       this.comboBoxWard.Text = "";
-                    comboBoxWard.Focus();
-                    // User chose Yes.
-                    // Perform some action.
-
-                }
-            }
-            catch (Exception msgbox)
-            {
-            }
-            if (this.comboBoxWard.Text == string.Empty)
-            {
-                if (Interaction.MsgBox("No Location Enterd", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                {
-                    comboBoxWard.Focus();
-                    return;
-                }
-            }
-
-        }
-
-        public void checkmrn()
-        {
-            if (this.mrn.Text.Length < 12)
-            {
-                if (Interaction.MsgBox("Must have 12 digits for MRN", MsgBoxStyle.DefaultButton1, "MsgBox") == MsgBoxResult.Ok)
-                    mrn.Focus();
-                // User chose Yes.
-                // Perform some action.
-
-            }
-        }
-
-     
-
-
-
         public void FINDDEMOGRAPHIC()
         {
             if (!TextBoxbillingnumber.Validate()) return;
 
-            var t = getSqlServer.FilledTable("select TOP 1 * from [Table1] where billingnumber like '" + this.TextBoxbillingnumber.Text + "' ORDER BY ID DESC");
+            var t = getSqlServer.FilledTable("select TOP 1 * FROM [ordered] where billingnumber like '" + this.TextBoxbillingnumber.Text + "' ORDER BY ID DESC");
 
 
             try
             {
                 DataRow r = t.Rows[0];
 
-
-                var fristname1 = r["firstname"].ToString();
-                var lastname1 = r["lastname"].ToString();
-                var mrn1 = r["mrn"].ToString();
-
-                MsgBoxResult response = Interaction.MsgBox("ADD VISIT TO " + Constants.vbNewLine + " " + Constants.vbNewLine + " " + lastname1 + ", " + fristname1 + "  " + Constants.vbNewLine + " MRN: " + mrn1 + "", MsgBoxStyle.YesNo, "MsgBox");
+                MsgBoxResult response = Interaction.MsgBox("ADD VISIT TO " + Constants.vbNewLine + " " + Constants.vbNewLine + " " + r["lastname"].ToString() + ", " + r["firstname"].ToString() + "  " + Constants.vbNewLine + " MRN: " + r["mrn"].ToString() + "", MsgBoxStyle.YesNo, "MsgBox");
 
                 if (response == MsgBoxResult.Yes)
                 {
                     firstname.Text = r["firstname"].ToString();
                     lastname.Text = r["lastname"].ToString();
                     mrn.Text = r["mrn"].ToString();
-                    comboBoxWard.Text = r["location"].ToString();
+                    comboBoxWard.Text = r["ward"].ToString();
                     DOB.Text = r["dob"].ToString();
 
-
-                    this.EnableAll<TextBox>();
+                    this.EnableAll<TextBox>(ordernumber);
                     this.EnableAll<ComboBox>();
 
                     ComboBoxPriority.Focus();
 
                     return;
-                }
-                if (response == MsgBoxResult.No)
-                {
+                } else {
                     var response1 = Interaction.MsgBox("WOULD YOU LIKE TO ADD A NEW PATIENT?", MsgBoxStyle.YesNo, "MsgBox");
                     if (response1 == MsgBoxResult.Yes)
                     {
-                        this.EnableAll<TextBox>();
+                        this.EnableAll<TextBox>(ordernumber);
                         this.EnableAll<ComboBox>();
 
                         lastname.Focus();
-
-                    } else {
+                    }
+                    else
+                    {
                         TextBoxbillingnumber.Focus();
                     }
                 }
-
-
             }
             catch
             {
-                this.EnableAll<TextBox>();
+                this.EnableAll<TextBox>(ordernumber);
                 this.EnableAll<ComboBox>();
                 lastname.Focus();
             }
@@ -430,7 +234,7 @@ namespace downtimeC
                 ordernumber.Enabled = false;
                 TextBoxTechId.Text = GlobalMutableState.userName;
 
-                Option<DataRow> order = orderLookup(this.ordernumber.Text);
+                Option<DataRow> order = orderLookup(this.ordernumber.Text, getSqlServer);
 
                 if (order.isDefined)
                 {
@@ -452,152 +256,117 @@ namespace downtimeC
                     Interaction.MsgBox("Order Does Not exist.", MsgBoxStyle.OkOnly, "MsgBox");
 
                     ordernumber.Clear();
-                    editorder.Enabled = true;
+                    ButtonEditorder.Enabled = true;
                     Buttoneditprevious.Enabled = true;
                 }
-                this.EnableAll<TextBox>();
+                this.EnableAll<TextBox>(ordernumber);
                 this.EnableAll<ComboBox>();
             }
 
         }
-        
-
-
-
 
         private void editorder_Click(System.Object sender, System.EventArgs e)
         {
             Buttoneditprevious.Enabled = false;
             ordernumber.Enabled = true;
             DebugButtonRead.Enabled = true;
-            editorder.Enabled = false;
+            ButtonEditorder.Enabled = false;
             ordernumber.Focus();
 
         }
 
-
-
-        private void cal1_TextChanged(System.Object sender, System.EventArgs e)
+        private void editOldOrder()
         {
-            if (this.cal1.Text == "1111999")
+            if (ComboBoxoldorder.Text.Length > 8)
             {
-                this.ordernumber.Enabled = true;
+                ordernumber.Text = Strings.Left(ComboBoxoldorder.Text, 8);
+                ButtonEditorder.Enabled = false;
+                ordernumber.Enabled = false;
             }
         }
 
         private void ComboBoxoldorder_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
-            if (ComboBoxoldorder.Text.Length > 8)
-            {
-                var ordnum = ComboBoxoldorder.Text;
-                string ordnum1 = Strings.Left(ordnum, 8);
-                ordernumber.Text = ordnum1;
-                editorder.Enabled = false;
-                ordernumber.Enabled = false;
-
-            }
-
+            editOldOrder();
         }
 
         protected override bool ProcessTabKey(bool forward)
         {
-
-            if (TextBoxbillingnumber.Focused)
-            {
-                return false;
-
-            }
-            else
-            {
-
-                return base.ProcessTabKey(forward);
-            }
-
+             return (TextBoxbillingnumber.Focused) ? false : base.ProcessTabKey(forward);
         }
 
         private void TextBoxbillingnumber_KeyPress(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                FINDDEMOGRAPHIC();       
+                FINDDEMOGRAPHIC();
             }
         }
 
-        //private void buttonRead_Click_1(System.Object sender, System.EventArgs e)
-        //{
-        //    int n = 98106501;
-        //    int nend = 98107000;
-        //    while ((n < nend))
-        //    {
-        //        AddOrders(n.ToString());
-        //        n = n + 1;
-        //    }
+        /// <summary>
+        /// If the Date changes, wipe out the table of orderNumbers and restart ordering
+        /// </summary>
+        /// <remarks></remarks>
 
-        //}
+        public static void TruncateOrderNumbersOnDateChange(GetSqlServer getSqlServer)
+        {
+            if (DateTime.Now.Day != GlobalMutableState.StartupDate.Day)
+            {
+                var dtable = getSqlServer.FilledTable("select * FROM ordernumber");
 
+                if (dtable.Rows.Count != 1)
+                {
+                    getSqlServer.ExecuteNonQuery("truncate TABLE ordernumber");
+                    getSqlServer.ExecuteNonQuery("insert into ordernumber (OrderLast,Ordernumber) VALUES (1, 7500);");
+                }
+                GlobalMutableState.StartupDate = System.DateTime.Now;
+            }
 
-        //public void AddOrders(string ordernumber)
-        //{
+        }
 
-        //    var alphabet = "abcdefghijklmnopqrstuvwxyz";
-        //    Random ran = new Random();
-        //    int length = ran.Next(0, 20);
-        //    // get a random length
+        /// <summary>
+        /// use the DB to generate a new orderNumber
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public static string getNewOrderNumber(GetSqlServer getSqlServer)
+        {
+            TruncateOrderNumbersOnDateChange(getSqlServer);
 
-        //    var ranletter = alphabet.Substring(ran.Next(0, 25), 1);
+            DataRow q = getSqlServer.FilledRowOption("insert into ordernumber (OrderLast,Ordernumber) select TOP 1 OrderLast+1, ordernumber+1 FROM ordernumber ORDER BY OrderLast DESC; select TOP 1 OrderLast, Ordernumber FROM ordernumber ORDER BY OrderLast DESC;").get;
 
+            string neworernumber = q["Ordernumber"].ToString();
 
+            if (neworernumber.Length > 4)
+            {
+                string letters = Strings.Left(neworernumber, 2);
+                string ordernums = Strings.Right(neworernumber, 3);
+                neworernumber = Strings.Chr(int.Parse(letters)) + ordernums;
+            }
 
-
-        //    var lastname1 = lastname.Text;
-        //    var collectiontime1 = collectiontime.Text;
-        //    var receivetime1 = receivetime.Text;
-        //    var location1 = comboBoxWard.Text;
-        //    var dob1 = DOB.Text;
-
-        //    var bt = bluetest.Text;
-        //    var lht = lavhemtest.Text;
-        //    var gt = greentest.Text;
-        //    var lct = lavchemtest.Text;
-        //    var grt = graytest.Text;
-        //    var uh = urinehem.Text;
-        //    var uc = urinechem.Text;
-        //    var bg = bloodgas.Text;
-        //    var prob = problem.Text;
-        //    var ordcmt = comment.Text;
-        //    var cal = cal1.Text;
-        //    var hep = hepp.Text;
-        //    var serr = ser.Text;
-        //    var senot = sendout.Text;
-
-        //    var techids = TextBoxTechId.Text;
-        //    var csf = csfbox.Text;
-        //    var fluid = fluidbox.Text;
-        //    var viral = Viralloadbox.Text;
-        //    var other = OTHERBOX.Text;
-        //    var BILLING = TextBoxbillingnumber.Text;
-        //    var IMMUNO = TextBoxIMMUNO.Text;
-
-        //    TextboxCollectDate.Text = DateTimePicker1.Text;
-
-        //    if (NotAn_X_Mrn)
-        //    {
-        //        while (mrn.Text.Length < 12)
-        //        {
-        //            mrn.Text = "0" + mrn.Text;
-        //        }
-        //    }
+            return date2ordernumber(System.DateTime.Now) + neworernumber.PadLeft(4,'0');
+        }
 
 
+        private void orderNumberTextBox_Leave(object sender, EventArgs e)
+        {
+            this.ordernumber.Enabled = false;
+            this.ButtonEditorder.Enabled = true;
+        }
 
-        //    mySql.ExecuteNonQuery("insert into dtdb1.Table1 (ordernumber,COLLECTIONTIME,RECEIVETIME,LOCATION,PRIORITY,MRN,DOB,FIRSTNAME,REDTEST,BLUETEST,LAVHEMTEST,GREENTEST,LAVCHEMTEST,GRYTEST,URINEHEM,URINECHEM,BLOODGAS,PROBLEM,CALLS,ORDERCOMMENT,LASTNAME,SENDOUT,SEROLOGY,HEPPETITAS,COLLECTDATE,TECHID,CSFTEST,FLUIDTEST,VIRALLOADTEST, BILLINGNUMBER)VALUES('" + ordernumber + "', '" + collectiontime1 + "','" + receivetime1 + "','" + location1 + "', '" + ComboBoxPriority.Text + "', '" + mrn.Text + "','" + dob1 + "','" + firstname.Text + "', '" + redtest.Text + "', '" + bt + "', '" + lht + "','" + gt + "', '" + lct + "', '" + grt + "','" + uh + "','" + uc + "','" + bg + "', '" + prob + "','" + cal + "','" + ordcmt + "','" + lastname1 + "','" + senot + "','" + serr + "', '" + hep + "','" + TextboxCollectDate.Text + "','" + techids + "','" + csf + "','" + fluid + "','" + viral + "', '" + BILLING + "')");
-        //}
+        private void Buttoneditprevious_Click(object sender, EventArgs e)
+        {
+            editOldOrder();
+        }
 
-     
-
-    
-
- 
+        private void ButtonReset_Click(object sender, EventArgs e)
+        {
+            this.ClearAllInputControls();
+            this.DisableAll<TextBox>();
+            this.DisableAll<ComboBox>(this.ComboboxPrinter,this.ComboBoxoldorder);
+            this.ButtonEditorder.Enabled = true;
+            this.TextBoxbillingnumber.Enabled = true;
+        }
     }
 }
 

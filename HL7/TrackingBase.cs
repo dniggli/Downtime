@@ -43,7 +43,7 @@ namespace downtimeC
 
 
 
-            getSqlServer.ExecuteNonQuery("insert into dtdb1.dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" + ordernumber1 + "','" + tracktag + "','" + trackcomnt + "','" + trakloct + "','" + trcktech + "')");
+            getSqlServer.ExecuteNonQuery("insert into dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" + ordernumber1 + "','" + tracktag + "','" + trackcomnt + "','" + trakloct + "','" + trcktech + "')");
 
         }
 
@@ -67,7 +67,7 @@ namespace downtimeC
             trcktech = Techidbox.Text;
 
 
-            getSqlServer.ExecuteNonQuery("update dtdb1.dttracking set ordernumber = @ordernumber,TRACKING= '" + tracktag + "',TRACKINGCOMMENT='" + trackcomnt + "',tracklocation = '" + trakloct + "', tracktechid = '" + trcktech + "'  WHERE ordernumber = '" + ordernumber1 + "' and tracklocation = '" + trakloct + "'",
+            getSqlServer.ExecuteNonQuery("update dttracking set ordernumber = @ordernumber,TRACKING= '" + tracktag + "',TRACKINGCOMMENT='" + trackcomnt + "',tracklocation = '" + trakloct + "', tracktechid = '" + trcktech + "'  WHERE ordernumber = '" + ordernumber1 + "' and tracklocation = '" + trakloct + "'",
                 new SqlParameter("@ordernumber", ordernumber1));
 
             ORDERNUMBER.Focus();
@@ -78,7 +78,7 @@ namespace downtimeC
         {
             SUBMITTRACK.Focus();
 
-            Option<DataRow> rowOption = getSqlServer.FilledRowOption("select TOP 1 * from dtdb1.dttracking where ordernumber like '" + this.ORDERNUMBER.Text + "' and tracklocation like '" + this.trklocatn.Text + "' ORDER BY ID DESC");
+            Option<DataRow> rowOption = getSqlServer.FilledRowOption("select TOP 1 * from dttracking where ordernumber like '" + this.ORDERNUMBER.Text + "' and tracklocation like '" + this.trklocatn.Text + "' ORDER BY ID DESC");
 
             rowOption.forEach(r =>
             {

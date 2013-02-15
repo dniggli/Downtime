@@ -82,9 +82,9 @@ namespace HL7
                 index = index + 1;
                 var tco = new TestCodeForOrder(index.ToString(), code, orderNumberWithSpecExtension, ward, specimenType);
 
-                tco.toHl7().forEach<string>( hl7 =>
-                    testList.Add(hl7)
-                );
+
+                testList.Add(tco.toHl7());
+
 
                 
             }
@@ -160,19 +160,17 @@ TCD|^^^ALK^ALK PHOS||||||Y<cr>
 
  
 
-        private Option<string> OBR() {
-            return specimenType.diSpecimenType.map(diName =>
-
-               "OBR|" + testIndex + "|" + orderNumberWithSpecExtension + "||^^^" + testCode + "^" + testName +
-                  "|||" + DateTime.Now.ToString("yyyyMMdd") + "000000||||A||||" + diName + "|||" + ward + "\r");
+        private string OBR() {
+            return "OBR|" + testIndex + "|" + orderNumberWithSpecExtension + "||^^^" + testCode + "^" + testName +
+                  "|||" + DateTime.Now.ToString("yyyyMMdd") + "000000||||A||||" + specimenType.diSpecimenType + "|||" + ward + "\r";
         }
 
         private string TCD() {
            return "TCD|^^^" + testCode + "^" + testName + "||||||Y";
         }
 
-        public Option<string> toHl7() {
-            return OBR().map(obr => obr + TCD());
+        public string toHl7() {
+            return OBR() + TCD();
         }
     }
 

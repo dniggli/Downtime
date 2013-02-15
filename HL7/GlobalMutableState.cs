@@ -18,15 +18,43 @@ namespace downtimeC
     static Random ran = new Random();
         public static string get {
             get
+            {              
+                return "abcdefghijklmnopqrstuvwxyz".Substring(ran.Next(0, 25), 1);
+            }
+        }
+
+        public static string numeric
+        {
+            get
             {
-                string alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-                int length = ran.Next(0, 20);
-                // get a random length
-
-                return alphabet.Substring(ran.Next(0, 25), 1);
+                return "0123456789".Substring(ran.Next(0, 10), 1);
             }
         }
     }
+
+    public static class RandomString {
+        public static string get(int length) {
+        
+                string ranstring = "";
+                for (int x = 0; x <= length; x++)
+                {
+                    ranstring += RandomLetter.get;
+                }
+                return ranstring;
+        }
+
+        public static string numeric(int length)
+        {
+
+            string ranstring = "";
+            for (int x = 0; x <= length; x++)
+            {
+                ranstring += RandomLetter.numeric;
+            }
+            return ranstring;
+        }
+    }
+
+           
 
 }

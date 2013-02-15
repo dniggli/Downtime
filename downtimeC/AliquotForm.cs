@@ -14,11 +14,11 @@ using System.Diagnostics;
 
 using HL7;
 using downtimeC;
-using downtimeC.LabelPrinting;
 namespace downtimeC
 {
     public partial class AliquotForm : OrderBaseForm
     {
+        //downtimeC.LabelPrintMode.Aliquot
         protected AliquotForm()
         {
             InitializeComponent();
@@ -99,8 +99,8 @@ namespace downtimeC
 
                         if (validateInputControls())
                         {
-                           // printdemographiclabels();
-                            printLabels();
+                            var orderData = cloneOrderData(this.ordernumber.Text);
+                            printLabels(orderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
                         }
 
                         this.ClearAllTextBoxes();
@@ -112,7 +112,7 @@ namespace downtimeC
 
         public bool orderExists()
         {
-            Option<DataRow> order = orderLookup(this.ordernumber.Text);
+            Option<DataRow> order = orderLookup(this.ordernumber.Text, getSqlServer);
 
             if (order.isDefined)
             {
@@ -164,7 +164,13 @@ namespace downtimeC
         }
 
         protected override void OnPrintClick() {
-                printLabels();
+            var immutableOrderData = cloneOrderData(this.ordernumber.Text);
+            printLabels(immutableOrderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
+        }
+
+        protected override LabelPrintMode TestPrintMode()
+        {
+            return LabelPrintMode.Aliquot;
         }
     }
 }

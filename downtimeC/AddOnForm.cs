@@ -14,12 +14,13 @@ using System.Diagnostics;
 
 using HL7;
 using downtimeC;
-using downtimeC.LabelPrinting;
 using System.Data.SqlClient;
 namespace downtimeC
 {
     public partial class AddOnForm : OrderBaseForm
     {
+         //downtimeC.LabelPrintMode.Collection
+
         protected AddOnForm()
         {
             InitializeComponent();
@@ -49,26 +50,24 @@ namespace downtimeC
 
         //http://www.vbmysql.com/articles/vbnet-mysql-tutorial/the-vbnet-mysql-tutorial-part-4
 
-        public void writeDowntimeTable()
+        /// <summary>
+        /// update the order with the ordered tests and patient info
+        /// </summary>
+        public void updateOrder()
         {
-            getSqlServer.Async(this).ExecuteNonQuery(() => {},"update dtdb1.Table1 set COLLECTIONTIME = @CollectionTime, BILLINGNUMBER = '"
-                + TextBoxbillingnumber.Text + "', RECEIVETIME = '" + receivetime.Text + ":00" + "',LOCATION = '" + comboBoxWard.Text + "',PRIORITY = '" + comboBoxWard.Text +
-                "',MRN = '" + mrn.Text + "',DOB = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text + "',REDTEST = '" + redtest.Text + "',BLUETEST = '" + bluetest.Text + 
-                "',LAVHEMTEST = '" + lavhemtest.Text + "',GREENTEST = '" + greentest.Text + "',LAVCHEMTEST = '" + lavchemtest.Text + "',GRYTEST = '" + graytest.Text + "',URINEHEM = '" + urinehem.Text +
-                "',URINECHEM = '" + urinechem.Text + "',BLOODGAS = '" + bloodgas.Text + "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text +
-                "',LASTNAME = '" + lastname.Text + "',SENDOUT = '" + sendout.Text + "',SEROLOGY = '" + ser.Text + "' ,HEPPETITAS = '" + hepp.Text +
-                "',COLLECTDATE = '" + DateTimePicker1.Text + "' ,CSFTEST = '" + csfbox.Text + "' ,FLUIDTEST = '" + fluidbox.Text + 
-                "',VIRALLOADTEST = '" + Viralloadbox.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'",
-                new SqlParameter("@CollectionTime",collectiontime.Text));
-
-
+            getSqlServer.Async(this).ExecuteNonQuery(() => { }, 
+                "update order set collectiontime = '" + collectiontime.Text + "', BILLINGNUMBER = '"
+                + TextBoxbillingnumber.Text + "', receivetime = '" + receivetime.Text + ":00" + "',ward = '" + comboBoxWard.Text + "',priority = '" + comboBoxWard.Text +
+                "',mrn = '" + mrn.Text + "',dob = '" + DOB.Text + "',FIRSTNAME = '" + firstname.Text +
+                "',PROBLEM = '" + problem.Text + "',CALLS = '" + cal1.Text + "',ORDERCOMMENT = '" + comment.Text +
+                "',LASTNAME = '" + lastname.Text + "',COLLECTDATE = '" + DateTimePicker1.Text + "' WHERE ordernumber = '" + ordernumber.Text + "'");
         }
 
         private void ordernumber_TextChanged(System.Object sender, System.EventArgs e)
         {
             if (ordernumber.Text.Length == 8)
             {
-                readDowntimeTable(this.orderLookup(this.ordernumber.Text).get);
+                readDowntimeTable(orderLookup(this.ordernumber.Text, getSqlServer).get);
             }
         }
 
@@ -76,8 +75,9 @@ namespace downtimeC
 
          protected override void OnPrintClick() 
         {
-                printLabels();
-                writeDowntimeTable();
+            var immutableOrderData = cloneOrderData(this.ordernumber.Text);
+            printLabels(immutableOrderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
+                updateOrder();
         }
 
     }

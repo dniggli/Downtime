@@ -33,78 +33,12 @@
             // ordernumber
             // 
             this.ordernumber.TextChanged += new System.EventHandler(this.ordernumber_TextChanged);
-            // 
-            // OTHERBOX
-            // 
-            this.OTHERBOX.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // Viralloadbox
-            // 
-            this.Viralloadbox.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // fluidbox
-            // 
-            this.fluidbox.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // csfbox
-            // 
-            this.csfbox.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // sendout
-            // 
-            this.sendout.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // ser
-            // 
-            this.ser.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // hepp
-            // 
-            this.hepp.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // bloodgas
-            // 
-            this.bloodgas.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // urinechem
-            // 
-            this.urinechem.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // urinehem
-            // 
-            this.urinehem.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // graytest
-            // 
-            this.graytest.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // lavchemtest
-            // 
-            this.lavchemtest.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // greentest
-            // 
-            this.greentest.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // lavhemtest
-            // 
-            this.lavhemtest.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // bluetest
-            // 
-            this.bluetest.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
-            // 
-            // redtest
-            // 
-            this.redtest.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
+           
             // 
             // DebugButtonFill
             // 
             this.DebugButtonFill.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
-            // 
-            // TextBoxIMMUNO
-            // 
-            this.TextBoxIMMUNO.LabelPrintMode = downtimeC.LabelPrintMode.Collection;
+
             // 
             // AddOnForm
             // 

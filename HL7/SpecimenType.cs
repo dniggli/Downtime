@@ -8,7 +8,7 @@ namespace HL7
     public struct SpecimenType
     {
        public String extension;
-       public Option<String> diSpecimenType;
+       public String diSpecimenType;
     }
 
   //public class SpecimenType {

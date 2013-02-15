@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>FunctionalCSharp</id>
-    <version>0.0.0.13</version>
-    <title>FunctionalCSharp</title>
+    <id>CodeBase2</id>
+    <version>0.0.0.15</version>
+    <title>CodeBase2</title>
     <authors>Chris Van Vranken</authors>
     <owners>Chris Van Vranken</owners>
     <projectUrl>https://github.com/urmc-pathology/codebase</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Functional Programming Tools, a modification of http://functionalcsharp.codeplex.com/</description>
+    <description>Commonly used tools and functions</description>
     <releaseNotes>Initial CodeBase2 release for NuGet</releaseNotes>
-    <tags>functional codebase</tags>
+    <tags>codebase</tags>
     <references>
-      <reference file="FunctionalCSharp.dll" />
+      <reference file="CodeBase2.dll" />
     </references>
   </metadata>
 </package>
