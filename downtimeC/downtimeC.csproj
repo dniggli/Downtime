@@ -75,12 +75,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddOnForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AddOnForm.Designer.cs">
-      <DependentUpon>AddOnForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="AliquotForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,9 +161,6 @@
     <Compile Include="Tracking\TrackUrineHemForm.Designer.cs">
       <DependentUpon>TrackUrineHemForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AddOnForm.resx">
-      <DependentUpon>AddOnForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AliquotForm.resx">
       <DependentUpon>AliquotForm.cs</DependentUpon>
     </EmbeddedResource>

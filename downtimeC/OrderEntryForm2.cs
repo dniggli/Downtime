@@ -295,6 +295,7 @@ namespace downtimeC
             this.DisableAll<ComboBox>(this.ComboboxPrinter,this.ComboBoxRecentOrder);
             this.ButtonEditorder.Enabled = true;
             this.TextBoxbillingnumber.Enabled = true;
+            testTable.Clear();
         }
     }
 }

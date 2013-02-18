@@ -478,6 +478,7 @@ namespace HL7
             this.TextboxCollectDate.DataColumnName = "collectdate";
             this.TextboxCollectDate.Location = new System.Drawing.Point(770, 440);
             this.TextboxCollectDate.Name = "TextboxCollectDate";
+            this.TextboxCollectDate.ReadOnly = true;
             this.TextboxCollectDate.RegexValidation = "";
             this.TextboxCollectDate.Required = false;
             this.TextboxCollectDate.Size = new System.Drawing.Size(135, 20);
@@ -485,7 +486,6 @@ namespace HL7
             this.TextboxCollectDate.TabStop = false;
             this.TextboxCollectDate.TextOption = none_16;
             this.TextboxCollectDate.ValidationPrompt = "";
-            this.TextboxCollectDate.Visible = false;
             // 
             // comment
             // 
@@ -713,11 +713,11 @@ namespace HL7
         public System.Windows.Forms.ComboBox ComboboxPrintType;
         public System.Windows.Forms.Label Label32;
         private System.Windows.Forms.Label Label25;
-        private System.Windows.Forms.Button ButtonPrint;
         public OptionComboBox ComboboxPrinter;
         public System.Windows.Forms.DataGridView dataGridTests;
         public OptionTextBox textBoxAddTest;
         public System.Windows.Forms.Button buttonAddTest;
         private System.Windows.Forms.Button buttonRemoveTest;
+        public System.Windows.Forms.Button ButtonPrint;
     }
 }

@@ -31,7 +31,6 @@
             this.Label1 = new System.Windows.Forms.Label();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.Label3 = new System.Windows.Forms.Label();
-            this.ButtonPlaceAddon = new System.Windows.Forms.Button();
             this.ButtonAliquotReprint = new System.Windows.Forms.Button();
             this.ButtonOrderEntry = new System.Windows.Forms.Button();
             this.Label4 = new System.Windows.Forms.Label();
@@ -56,7 +55,7 @@
             // 
             this.Label1.AutoSize = true;
             this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(257, 43);
+            this.Label1.Location = new System.Drawing.Point(264, 43);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(155, 31);
             this.Label1.TabIndex = 16;
@@ -72,7 +71,6 @@
             // SplitContainer1.Panel1
             // 
             this.SplitContainer1.Panel1.Controls.Add(this.Label3);
-            this.SplitContainer1.Panel1.Controls.Add(this.ButtonPlaceAddon);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonAliquotReprint);
             this.SplitContainer1.Panel1.Controls.Add(this.ButtonOrderEntry);
             this.SplitContainer1.Panel1.Margin = new System.Windows.Forms.Padding(3);
@@ -95,24 +93,15 @@
             // 
             this.Label3.AutoSize = true;
             this.Label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label3.Location = new System.Drawing.Point(162, 12);
+            this.Label3.Location = new System.Drawing.Point(175, 12);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(209, 17);
             this.Label3.TabIndex = 9;
             this.Label3.Text = "Order Entry / Label Printing";
             // 
-            // ButtonPlaceAddon
-            // 
-            this.ButtonPlaceAddon.Location = new System.Drawing.Point(282, 43);
-            this.ButtonPlaceAddon.Name = "ButtonPlaceAddon";
-            this.ButtonPlaceAddon.Size = new System.Drawing.Size(149, 37);
-            this.ButtonPlaceAddon.TabIndex = 1;
-            this.ButtonPlaceAddon.Text = "Place Addon";
-            this.ButtonPlaceAddon.UseVisualStyleBackColor = true;
-            // 
             // ButtonAliquotReprint
             // 
-            this.ButtonAliquotReprint.Location = new System.Drawing.Point(202, 103);
+            this.ButtonAliquotReprint.Location = new System.Drawing.Point(279, 68);
             this.ButtonAliquotReprint.Name = "ButtonAliquotReprint";
             this.ButtonAliquotReprint.Size = new System.Drawing.Size(149, 37);
             this.ButtonAliquotReprint.TabIndex = 2;
@@ -121,7 +110,7 @@
             // 
             // ButtonOrderEntry
             // 
-            this.ButtonOrderEntry.Location = new System.Drawing.Point(98, 43);
+            this.ButtonOrderEntry.Location = new System.Drawing.Point(124, 68);
             this.ButtonOrderEntry.Name = "ButtonOrderEntry";
             this.ButtonOrderEntry.Size = new System.Drawing.Size(149, 37);
             this.ButtonOrderEntry.TabIndex = 0;
@@ -132,7 +121,7 @@
             // 
             this.Label4.AutoSize = true;
             this.Label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(238, 17);
+            this.Label4.Location = new System.Drawing.Point(242, 17);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(75, 17);
             this.Label4.TabIndex = 14;
@@ -140,7 +129,7 @@
             // 
             // ButtonUrineHemTracking
             // 
-            this.ButtonUrineHemTracking.Location = new System.Drawing.Point(381, 50);
+            this.ButtonUrineHemTracking.Location = new System.Drawing.Point(384, 50);
             this.ButtonUrineHemTracking.Name = "ButtonUrineHemTracking";
             this.ButtonUrineHemTracking.Size = new System.Drawing.Size(149, 37);
             this.ButtonUrineHemTracking.TabIndex = 5;
@@ -149,7 +138,7 @@
             // 
             // ButtonCoagArchiveTracking
             // 
-            this.ButtonCoagArchiveTracking.Location = new System.Drawing.Point(282, 93);
+            this.ButtonCoagArchiveTracking.Location = new System.Drawing.Point(285, 93);
             this.ButtonCoagArchiveTracking.Name = "ButtonCoagArchiveTracking";
             this.ButtonCoagArchiveTracking.Size = new System.Drawing.Size(149, 37);
             this.ButtonCoagArchiveTracking.TabIndex = 7;
@@ -158,7 +147,7 @@
             // 
             // ButtonHemArchiveTracking
             // 
-            this.ButtonHemArchiveTracking.Location = new System.Drawing.Point(202, 50);
+            this.ButtonHemArchiveTracking.Location = new System.Drawing.Point(205, 50);
             this.ButtonHemArchiveTracking.Name = "ButtonHemArchiveTracking";
             this.ButtonHemArchiveTracking.Size = new System.Drawing.Size(149, 37);
             this.ButtonHemArchiveTracking.TabIndex = 4;
@@ -167,7 +156,7 @@
             // 
             // ButtonUrineChemTracking
             // 
-            this.ButtonUrineChemTracking.Location = new System.Drawing.Point(109, 93);
+            this.ButtonUrineChemTracking.Location = new System.Drawing.Point(112, 93);
             this.ButtonUrineChemTracking.Name = "ButtonUrineChemTracking";
             this.ButtonUrineChemTracking.Size = new System.Drawing.Size(149, 37);
             this.ButtonUrineChemTracking.TabIndex = 6;
@@ -176,7 +165,7 @@
             // 
             // ButtonSmsArchiveTracking
             // 
-            this.ButtonSmsArchiveTracking.Location = new System.Drawing.Point(22, 50);
+            this.ButtonSmsArchiveTracking.Location = new System.Drawing.Point(25, 50);
             this.ButtonSmsArchiveTracking.Name = "ButtonSmsArchiveTracking";
             this.ButtonSmsArchiveTracking.Size = new System.Drawing.Size(151, 37);
             this.ButtonSmsArchiveTracking.TabIndex = 3;
@@ -280,7 +269,6 @@
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.SplitContainer SplitContainer1;
         internal System.Windows.Forms.Label Label3;
-        internal System.Windows.Forms.Button ButtonPlaceAddon;
         internal System.Windows.Forms.Button ButtonAliquotReprint;
         internal System.Windows.Forms.Button ButtonOrderEntry;
         internal System.Windows.Forms.Label Label4;

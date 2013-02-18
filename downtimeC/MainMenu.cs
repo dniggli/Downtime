@@ -33,40 +33,69 @@ namespace downtimeC
             new FormStart(ButtonOrderEntry, () => new OrderEntryForm2(setupTableData, getSqlServer, hospital));
             new FormStart(ButtonSmsArchiveTracking, () => new TrackSmsForm(getSqlServer));
             new FormStart(ButtonAliquotReprint, () => new AliquotForm(setupTableData,getSqlServer,hospital));
-            new FormStart(ButtonPlaceAddon, () => new AddOnForm(setupTableData, getSqlServer, hospital));
+       //     new FormStart(ButtonPlaceAddon, () => new AddOnForm(setupTableData, getSqlServer, hospital));
             new FormStart(ButtonHemArchiveTracking, () => new TrackHemForm(getSqlServer));
             new FormStart(ButtonUrineHemTracking, () => new TrackUrineHemForm(getSqlServer));
             new FormStart(ButtonUrineChemTracking, () => new TrackUrineChemForm(getSqlServer));
             new FormStart(ButtonCoagArchiveTracking, () => new TrackCoagForm(getSqlServer));
             new FormStart(ButtonDowntimeRecovery, () => new RecoveryForm(getSqlServer));
             new FormStart(ButtonMolisEntry, () => new MolisEntry(getSqlServer));
-            
 
-            queries.Add("STAT Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.RECEIVETIME, order.LOCATION, order.PRIORITY, order.LASTNAME, order.BLUETEST, order.REDTEST, order.LAVHEMTEST, order.GREENTEST, order.OTHERTEST, order.LAVCHEMTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.TECHID, order.CALLS FROM [ordered] GROUP BY order.COLLECTIONTIME, order.RECEIVETIME, order.LOCATION, order.PRIORITY, order.LASTNAME, order.BLUETEST, order.REDTEST, order.LAVHEMTEST, order.GREENTEST, order.LAVCHEMTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.TECHID, order.CALLS HAVING(((order.PRIORITY) Like \"S\")) ORDER BY order.ordernumber;");
+
+            queries.Add("STAT Query", attributeQuery("WHERE o.priority = 'S'"));
 
             interactions.Add("Last Name Query", () => Interaction.InputBox("LastName", "EnterLastName"));
-            queries.Add("Last Name Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.FIRSTNAME, order.LASTNAME, order.CALLS, order.REDTEST, order.LAVCHEMTEST, order.BLUETEST, order.LAVHEMTEST, order.GREENTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.TECHID, order.ORDERCOMMENT FROM(Table1) WHERE order.LASTNAME='{0}' ORDER BY ID;");
+            queries.Add("Last Name Query", attributeQuery("WHERE o.LASTNAME='{0}'"));
 
             interactions.Add("Tracking Query", () => Interaction.InputBox("ordernumber", "enterordernumber"));
-            queries.Add("Tracking Query", "SELECT dttracking.ordernumber, dttracking.TRACKING, dttracking.TRACKINGCOMMENT, dttracking.tracklocation, dttracking.TIMESTAMP, dttracking.tracktechid FROM (dttracking) where dttracking.ordernumber = '{0}';");
+            queries.Add("Tracking Query", "SELECT [dttracking].ordernumber, dttracking.TRACKING, dttracking.TRACKINGCOMMENT, dttracking.tracklocation, dttracking.TIMESTAMP, dttracking.tracktechid FROM (dttracking) where dttracking.ordernumber = '{0}';");
             queries.Add("Tracking Query*", "SELECT * FROM dttracking where tracklocation = 'OT->STOR';");
 
             interactions.Add("Med Req Query", () => Interaction.InputBox("Med Req Number (Must Enter All 12 Digits - ############)", "EnterMedReqNumber"));
-            queries.Add("Med Req Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.MRN, order.FIRSTNAME, order.LASTNAME,order.CALLS, order.REDTEST, order.LAVCHEMTEST, order.BLUETEST, order.LAVHEMTEST, order.GREENTEST, order.GRYTEST, order.URINEHEM, order.URINECHEM, order.BLOODGAS, order.OTHERTEST, order.TECHID, order.ORDERCOMMENT FROM Table1 where order.MRN = '{0}';");
+            queries.Add("Med Req Query", attributeQuery("WHERE o.mrn = '{0}'"));
 
-            queries.Add("Coag Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.FIRSTNAME, order.LASTNAME, order.CALLS, order.BLUETEST, order.OTHERTEST, order.ORDERCOMMENT FROM Table1 where BLUETEST <> '' ;");
+            queries.Add("Coag Query", extensionQuery("23"));
 
-            queries.Add("Chemistry Query", "SELECT order.ordernumber, order.COLLECTIONTIME, order.LOCATION, order.PRIORITY, order.FIRSTNAME, order.LASTNAME, order.CALLS, order.REDTEST, order.LAVCHEMTEST, order.GREENTEST, order.GRYTEST, order.OTHERTEST, order.TECHID, order.ORDERCOMMENT FROM Table1 where REDTEST <> '' or LAVCHEMTEST <> '' OR GREENTEST <> '' or GRYTEST <> '' ;");
+            queries.Add("Chemistry Query",extensionQuery("00","79","40","19"));
 
-            queries.Add("Bloodgas Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.BLOODGAS, T.OTHERTEST, T.TECHID, T.ORDERCOMMENT FROM Table1 T where BLOODGAS <> '';");
+            queries.Add("Bloodgas Query", extensionQuery("20"));
 
-            queries.Add("Hematology Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.LAVHEMTEST, T.OTHERTEST, T.TECHID, T.ORDERCOMMENT FROM Table1 T where LAVHEMTEST <> '';");
+            queries.Add("Hematology Query", extensionQuery("18"));
 
-            queries.Add("Urinalisys Query", "SELECT T.ordernumber, T.COLLECTIONTIME, T.LOCATION, T.PRIORITY, T.FIRSTNAME, T.LASTNAME, T.CALLS, T.URINEHEM, T.FLUIDTEST, T.CSFTEST, T.OTHERTEST, T.TECHID FROM Table1 T where URINEHEM <> '' OR FLUIDTEST <> '' OR CSFTEST <> '';");
+            queries.Add("Urinalisys Query", extensionQuery("UA", "38", "26"));
 
         }
 
+        private string attributeQuery(string where)
+        {
+            return string.Format(@"SELECT ISNULL(t.tn,'') testNames, o.ordernumber, o.collectiontime, o.receivetime, o.priority, o.lastname, o.techid, o.CALLS 
+FROM [currentOrders] o 
+CROSS APPLY
+(
+    SELECT too.test + ','
+    FROM testOnOrder as too
+    WHERE o.ID = too.ordernumberId
+    FOR XML PATH('')
+) t (tn)
+{0} ORDER BY o.ordernumber",where);
+        }
 
+        private string extensionQuery(params string[] extensions)
+        {
+           var ex = extensions.mkString("' OR twse.Extension = '");
+          return  string.Format(@"SELECT t.tn testNames, o.ordernumber, o.collectiontime, o.receivetime, o.priority, o.lastname, o.techid, o.CALLS 
+FROM [currentOrders] o 
+CROSS APPLY
+(
+    SELECT DISTINCT too.test + ','
+    FROM testOnOrder as too
+    join [TestsWithSpecimenExtension] twse on too.test = twse.Id
+    WHERE o.ID = too.ordernumberId and (twse.Extension = '{0}')
+    FOR XML PATH('')
+) t (tn)
+WHERE t.tn is not null
+ORDER BY o.ordernumber", ex);
+        }
    
 
         private void ComboBoxSelectQuery_SelectedIndexChanged(System.Object sender, System.EventArgs e)

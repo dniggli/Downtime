@@ -281,7 +281,7 @@ namespace HL7
             return new ImmutableOrderData(orderNum, collectiontime.Text, receivetime.Text,
                  comboBoxWard.Text, ComboBoxPriority.Text, mrn.Text, DOB.Text,
                  firstname.Text, problem.Text, cal1.Text, comment.Text,
-                 lastname.Text, TextBoxTechId.Text, TextBoxbillingnumber.Text,
+                 lastname.Text, TextBoxTechId.Text, TextBoxbillingnumber.Text,this.TextboxCollectDate.Text,
                  testsToOrder.ToReadOnly());
         }
 

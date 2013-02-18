@@ -19,12 +19,13 @@ namespace downtimeC
             public readonly string problem; public readonly string calls;
             public readonly string comment; public readonly string lastName;
           public readonly string techId;
+          public readonly string collectDate;
           public readonly string billingNumber; public readonly ReadOnlyDictionary<DataRow, bool> tests;
 
             public ImmutableOrderData(string orderNumber, string collectionTime, string receiveTime,
             string ward, string priority, string mrn, string dob,
             string firstName, string problem, string calls, string comment,
-            string lastName, string techId, string billingNumber,
+            string lastName, string techId, string billingNumber, string collectDate,
             ReadOnlyDictionary<DataRow, bool> tests)
             {
                 this.billingNumber = billingNumber; this.calls = calls; this.collectionTime = collectionTime;
@@ -32,6 +33,7 @@ namespace downtimeC
                 this.lastName = lastName; this.mrn = mrn; this.orderNumber = orderNumber;
                 this.priority = priority; this.problem = problem; this.receiveTime = receiveTime;
                 this.techId = techId; this.tests = tests; this.ward = ward;
+                this.collectDate =collectDate;
             }
 
             public Priority getPriority
@@ -68,12 +70,12 @@ namespace downtimeC
 
                 getSqlServer.ExecuteNonQuery(String.Format(@"INSERT INTO [ordered] ([ordernumber]
   ,[collectiontime], [receivetime], [ward], [priority], [mrn], [dob], [FIRSTNAME],[PROBLEM],[CALLS]
-  ,[ORDERCOMMENT],[LASTNAME],[TRACKING],[TRACKINGCOMMENT],[TECHID],[BILLINGNUMBER])
+  ,[ORDERCOMMENT],[LASTNAME],[TRACKING],[TRACKINGCOMMENT],[TECHID],[BILLINGNUMBER],[collectdate])
  VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',
- '{10}','{11}','{12}','{13}','{14}','{15}'); " +
+ '{10}','{11}','{12}','{13}','{14}','{15}','{16}'); " +
 
 "Insert INTO [testOnOrder] (test,hl7Sent,ordernumberId) " + testRows, orderNumber, collectionTime, receiveTime, ward, priority,
-mrn, dob, firstName, problem, calls, comment, lastName, "", "", techId, billingNumber));
+mrn, dob, firstName, problem, calls, comment, lastName, "", "", techId, billingNumber,collectDate));
                                                    
             }
 
@@ -83,7 +85,7 @@ mrn, dob, firstName, problem, calls, comment, lastName, "", "", techId, billingN
            /// <returns></returns>
             public ImmutableOrderData getUnsentTests()
             {
-                return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,
+                return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,collectDate,
                     tests.filter(x => !x.Value));
             }
 
@@ -95,7 +97,7 @@ mrn, dob, firstName, problem, calls, comment, lastName, "", "", techId, billingN
             public ImmutableOrderData setTestsToSent(IEnumerable<string> sentTests)
             {
                 var updated = tests.map(x => new KeyValuePair<DataRow, bool>(x.Key, (sentTests.Contains(x.Key["Id"].ToString())) ? true : x.Value));
-                return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,
+                return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,collectDate,
                    updated);
             }
 
@@ -106,7 +108,7 @@ mrn, dob, firstName, problem, calls, comment, lastName, "", "", techId, billingN
            /// <returns></returns>
             public ImmutableOrderData getDiTests()
             {
-                return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,
+                return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,collectDate,
                     tests.filter(dr => dr.Key.getOptionString("DiTranslation").isDefined));
             }
 

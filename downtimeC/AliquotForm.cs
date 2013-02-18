@@ -38,78 +38,6 @@ namespace downtimeC
             this.DisableAll<ComboBox>(this.ComboboxPrinter);
         }
     
-    //    public void printDowntimeLables(Priority priority)
-    //    {                
-    //        //get all tubeTypeTextboxes in this form
-    //        var tubeTypeTextboxes = this.Controls.Cast<Control>().Where(x => x is TubeTypeTextBox).Cast<TubeTypeTextBox>();
-    //        var labelData = new LabelData(this.ordernumber.Text, this.comboBoxWard.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
-    //this.DateTimePicker1.Text);
-       
-
-    //        tubeTypeTextboxes.forEach(tb => tb.LabelAppend(labelData,priority));
-
-
-    //        labelData.doPrint(ComboboxPrinter.Text, setupTableData);
-
-    //    }
-
-
-
-        //public void writeDowntimeTable()
-        //{
-
-        //    string ranletter = RandomLetter.get;
-
-
-        //    string receivetime1 = receivetime.Text + ":00";
-
-        //    string query = "insert into dtdb1.Table1 (ordernumber,COLLECTIONTIME,RECEIVETIME,LOCATION,PRIORITY,MRN,DOB,FIRSTNAME,REDTEST,BLUETEST,LAVHEMTEST,GREENTEST,LAVCHEMTEST,GRYTEST,URINEHEM,URINECHEM,BLOODGAS,PROBLEM,CALLS,ORDERCOMMENT,LASTNAME,SENDOUT,SEROLOGY,HEPPETITAS,COLLECTDATE,TECHID,CSFTEST,FLUIDTEST,VIRALLOADTEST) VALUES ('"
-        //        + ordernumber.Text + "', '" + collectiontime.Text + "','" + receivetime1 + "','" + comboBoxWard.Text + "', '" + comboBoxWard.Text + "', '" + mrn.Text + "','" + DOB.Text + "','" + firstname.Text + "', '" +
-        //        redtest.Text + "', '" + bluetest.Text + "', '" + lavhemtest.Text + "','" + greentest.Text + "', '" + lavchemtest.Text + "', '" + graytest.Text + "','" + urinehem.Text +
-        //        "','" + urinechem.Text + "','" + bloodgas.Text + "', '" + problem.Text + "','" + cal1.Text + "','" +
-        //        comment.Text + "','" + lastname.Text + "','" + sendout.Text + "','" + ser.Text + "', '" + hepp.Text + "','" + colldate.Text + "','" + ordertechid.Text + "','" + csfbox.Text + "','" + fluidbox.Text + "','" + Viralloadbox.Text + "')";
-
-        //    //execute the insert asynchronously, don't perform an action after the insert completes.
-        //    getMySql.Async(this).ExecuteNonQuery(query, () => { });
-        //}
-
-
-
-        private void ordernumber_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-
-
-
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (ComboboxPrinter.Text == string.Empty)
-                {
-                   var response = Interaction.MsgBox("INVALID PRINTER", MsgBoxStyle.DefaultButton1, "MsgBox");
-                    if (response == MsgBoxResult.Ok)
-                    {
-                        ComboboxPrinter.Focus();
-                        return;
-                    }
-
-                }
-                else
-                {
-                    if (orderExists())
-                    {
-
-                        if (validateInputControls())
-                        {
-                            var orderData = cloneOrderData(this.ordernumber.Text);
-                            printLabels(orderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
-                        }
-
-                        this.ClearAllTextBoxes();
-                        ordernumber.Focus();
-                    }
-                }
-            }
-        }
-
         public bool orderExists()
         {
             Option<DataRow> order = orderLookup(this.ordernumber.Text, getSqlServer);
@@ -123,33 +51,9 @@ namespace downtimeC
                 Interaction.MsgBox("Order Does Not exist .", MsgBoxStyle.OkOnly, "MsgBox");
             }
 
-
-
             return order.isDefined;
 
-        }
-
-
-
-
-//        /// <summary>
-//        /// prints demographic labels or routines
-//        /// </summary>
-//        public void printdemographiclabels()
-//        {
-//            if (!(this.firstname.Text == string.Empty))
-//            {
-//                var labelData = new LabelData(this.ordernumber.Text, this.comboBoxWard.Text, this.mrn.Text, this.lastname.Text, this.firstname.Text, this.comboBoxWard.Text,
-//this.DateTimePicker1.Text);
-
-//                collectiontime.LabelAppend(labelData, Priority.Routine);
-//                collectiontime.LabelAppend(labelData, Priority.Routine);
-//                labelData.doPrint(ComboboxPrinter.Text, setupTableData);
-//            }
-
-//        }
-
-     
+        }    
      
         private void ComboBoxprinter_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
@@ -166,11 +70,40 @@ namespace downtimeC
         protected override void OnPrintClick() {
             var immutableOrderData = cloneOrderData(this.ordernumber.Text);
             printLabels(immutableOrderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
+            this.ClearAllInputControls(ComboboxPrinter, ComboBoxRecentOrder, ComboboxPrintType);
+            testTable.Clear();
+            ordernumber.Focus();
         }
 
         protected override LabelPrintMode TestPrintMode()
         {
             return LabelPrintMode.Aliquot;
+        }
+
+        private void ordernumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (ComboboxPrinter.Text == string.Empty)
+                {
+                    var response = Interaction.MsgBox("INVALID PRINTER", MsgBoxStyle.DefaultButton1, "MsgBox");
+                    if (response == MsgBoxResult.Ok)
+                    {
+                        ComboboxPrinter.Focus();
+                        return;
+                    }
+
+                }
+                else
+                {
+                    if (orderExists())
+                    {
+                        ButtonPrint.PerformClick();
+                        ordernumber.Focus();
+                    }
+                }
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }
