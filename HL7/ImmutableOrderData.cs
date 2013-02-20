@@ -90,11 +90,11 @@ mrn, dob, firstName, problem, calls, comment, lastName, "", "", techId, billingN
             }
 
            /// <summary>
-           /// set the given tests as sent and return all tests
+           /// set the given tests as sent in the DB and return all tests
            /// </summary>
            /// <param name="sentTests"></param>
            /// <returns></returns>
-            public ImmutableOrderData setTestsToSent(IEnumerable<string> sentTests)
+            public ImmutableOrderData setTestsAsSentInDb(IEnumerable<string> sentTests)
             {
                 var updated = tests.map(x => new KeyValuePair<DataRow, bool>(x.Key, (sentTests.Contains(x.Key["Id"].ToString())) ? true : x.Value));
                 return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,collectDate,

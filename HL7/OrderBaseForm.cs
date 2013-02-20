@@ -150,7 +150,7 @@ namespace HL7
                     dr["Tube"].ToString(), dr["Extension"].ToString()));
 
 
-              //  labelData.doPrint(printer, setupTableData);
+                labelData.doPrint(printer, setupTableData);
         }
 
         protected virtual LabelPrintMode TestPrintMode() {

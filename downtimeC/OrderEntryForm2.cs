@@ -63,18 +63,26 @@ namespace downtimeC
 
             var testsToSend = orderData.getDiTests().getUnsentTests().tests.Select(x => x.Key);
 
+            
+            var dict = testsToSend.GroupBy(x =>
+                //group test DataRows by the SpecimenType
+                new SpecimenType { extension = x["Extension"].ToString(), diSpecimenType = x["DiTranslation"].ToString() })
+                .ToDictionary(gdc => gdc.Key,
+                //convert to a Dictionary<SpecimenType,List<String>> where List<string> is the list of testIDs
+                //, but those testIDs are all IndividualTests and not group Tests
+                gdc => groupTestToIndividualTest.getUniqueIndividualTests(
+                    gdc.ToList().Select(row => row["Id"].ToString())
+                    )
+                );
+
             //send the HL7
-            foreach (DataRow row in testsToSend)
-            {
-                var specType = new SpecimenType { extension = row["Extension"].ToString(), diSpecimenType = row["DiTranslation"].ToString() };
+            sendHL7(orderData.mrn, orderData.firstName,
+              orderData.lastName, orderData.orderNumber, orderData.ward,
+              dict);
+            
 
-                var indiCodes = groupTestToIndividualTest.getIndividualTests(row["Id"].ToString());
-                sendHL7(groupTestToIndividualTest, orderData.mrn, orderData.firstName,
-                    orderData.lastName, orderData.orderNumber, orderData.ward,
-                    indiCodes, specType);
-            }
-
-            orderData.setTestsToSent(testsToSend.Select(dr=>dr["Id"].ToString())).InsertOrder(getSqlServer); //update data about the order in the DB
+            orderData.setTestsAsSentInDb(testsToSend.Select(dr=>dr["Id"].ToString())).InsertOrder(getSqlServer); //update data about the order in the DB
+          
 
         }
         protected override void OnPrintClick()
@@ -110,35 +118,34 @@ namespace downtimeC
             this.TextBoxbillingnumber.Focus();
             this.ComboBoxRecentOrder.SelectedIndexChanged += ComboBoxRecentOrder_SelectedIndexChanged;
         }
-        public static void sendHL7(GroupTestToIndividualTest groupTestToIndividualTest, string mrn, string firstName, string lastName, string ordernumber, string ward, IEnumerable<string> codes, SpecimenType specimenType)
+        public static void sendHL7(string mrn, string firstName, string lastName, string ordernumber, string ward, Dictionary<SpecimenType, IEnumerable<string>> testCodeUniqueIndividual)
         {
             //set the IP and port to send to
             var sendhl = new SendHl7("172.18.140.209", 10013);
 
             //create the HL7 message
-            var co = new OrderMessage(mrn, firstName, lastName, ordernumber, "", ward, Sex.U, codes, specimenType);
-            var hl = co.toHl7(groupTestToIndividualTest);
+            var co = new OrderMessage(mrn, firstName, lastName, ordernumber, "", ward, Sex.U, testCodeUniqueIndividual);
+
+            var hl7Messages = co.toHl7();
 
             if (DialogResult.Yes == MessageBox.Show("Send Order Message to DI?", "Send Order Message to DI?", MessageBoxButtons.YesNo))
             {
 
-                //send the hl7 message
-                var status = sendhl.SendHL7(hl);
-                if ((status == HL7Status.NOCONNECTION))
+                //send the hl7 messages
+                var status = sendhl.SendHL7Multiple(hl7Messages);
+
+                if (status == HL7Status.NOCONNECTION)
                 {
                     MessageBox.Show("HL7 connection failed");
                 }
-                else if ((status == HL7Status.NACK))
+                else if ( status == HL7Status.NACK)
                 {
                     //  MessageBox.Show("HL7 connection Successful, but NACK returned")
                 }
-                else if ((status == HL7Status.EXCEPTION))
+                 else if ( status == HL7Status.EXCEPTION)
                 {
                     MessageBox.Show("HL7 connection tried, but exception thrown");
                 }
-
-
-
             }
 
         }

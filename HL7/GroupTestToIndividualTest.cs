@@ -17,6 +17,16 @@ namespace HL7
         }
 
         /// <summary>
+        /// break down all given tests into smallest components, make components unique.
+        /// </summary>
+        /// <param name="testCode"></param>
+        /// <returns></returns>
+        public IEnumerable<string> getUniqueIndividualTests(IEnumerable<string> testCodes)
+        {
+           return testCodes.SelectMany(getIndividualTests).Distinct();
+        }
+
+        /// <summary>
         /// Break down all groups into individual tests.
         /// Given a group test, get all the individual tests.
         /// Given a Group Test in a group test, reduce just to indivudal tests.
@@ -24,7 +34,7 @@ namespace HL7
         /// </summary>
         /// <param name="testCode"></param>
         /// <returns></returns>
-        public IEnumerable<String> getIndividualTests(String testCode)
+        private IEnumerable<String> getIndividualTests(String testCode)
         {
             var rows = groupTestsTable.Select("GROUP_TEST_ID =" + quotequote(testCode));
 

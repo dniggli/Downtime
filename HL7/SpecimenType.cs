@@ -7,9 +7,11 @@ namespace HL7
 {
     public struct SpecimenType
     {
-       public String extension;
-       public String diSpecimenType;
+        public string extension;
+        public string diSpecimenType;
     }
+
+     
 
   //public class SpecimenType {
   //public readonly String extension;

@@ -118,7 +118,6 @@
     <Compile Include="TrackingBase.Designer.cs">
       <DependentUpon>TrackingBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetMySQL.cs" />
