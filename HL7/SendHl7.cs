@@ -35,10 +35,9 @@ namespace HL7
         /// <returns></returns>
         public HL7Status SendHL7Multiple(IEnumerable<string> hl7messages)
         {
-            return _SendHL7(SerializeHL7Message(
-                //delimit with special characters and thenmerge the messages together with mkString.
-                hl7messages.Select(DelimitHL7Message).mkString("\r")
-                ));
+             //delimit with special characters and thenmerge the messages together with mkString.
+            var mergedMessage = hl7messages.Select(DelimitHL7Message).mkString("\r");
+            return _SendHL7(SerializeHL7Message(mergedMessage));
         }
 
         /// <summary>
