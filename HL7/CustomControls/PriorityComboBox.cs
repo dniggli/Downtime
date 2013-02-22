@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using FunctionalCSharp;
 using CodeBase2.Database;
-using downtimeC.LabelPrinting;
 
 namespace downtimeC
 {
@@ -18,22 +17,6 @@ namespace downtimeC
         public PriorityComboBox() : base()
         {
             InitializeComponent();
-        }
-
-        public override String Text
-        {
-            get
-            {
-            
-                if (base.Text == "S")
-                {
-                    return "STAT";
-                }
-                else 
-                {
-                    return base.Text;
-                }
-            }
         }
 
         public Option<Priority> getPriorityOption

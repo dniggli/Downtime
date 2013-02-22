@@ -75,7 +75,6 @@
             this.ComboBoxNewOrderNumber.Name = "ComboBoxNewOrderNumber";
             this.ComboBoxNewOrderNumber.Size = new System.Drawing.Size(133, 21);
             this.ComboBoxNewOrderNumber.TabIndex = 4;
-            this.ComboBoxNewOrderNumber.SelectedIndexChanged += new System.EventHandler(this.ComboBoxNewOrderNumber_SelectedIndexChanged);
             this.ComboBoxNewOrderNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ComboBoxNewOrderNumber_KeyDown);
             // 
             // ButtonNumberReset

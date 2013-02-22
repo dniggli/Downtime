@@ -8,7 +8,7 @@ namespace downtimeC
 {
     interface IOption
     {
-        Option<string> TextOption  {   get;  }
+        Option<string> TextOption { get; set; }
 
 
         string ValidationPrompt

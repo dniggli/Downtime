@@ -9,14 +9,15 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Diagnostics;
-using MySql.Data.MySqlClient;
+using HL7;
+
 
 namespace downtimeC
 {
     public partial class TrackSmsForm : TrackingBase
     {
-        public TrackSmsForm()
-            : base()
+        public TrackSmsForm(GetSqlServer getSqlServer)
+            : base(getSqlServer)
         {
             InitializeComponent();
         }

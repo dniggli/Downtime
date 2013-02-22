@@ -9,18 +9,22 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Diagnostics;
-using MySql.Data.MySqlClient;
+using HL7;
+using System.Data.SqlClient;
+using FunctionalCSharp;
 
 namespace downtimeC
 {
     public partial class TrackingBase : Form
     {
+        readonly GetSqlServer getSqlServer;
         /// <summary>
         /// Required for VisualStudio designer
         /// </summary>
-        public TrackingBase() : base()
+        public TrackingBase(GetSqlServer getSqlServer) : base()
         {
             InitializeComponent();
+            this.getSqlServer = getSqlServer;
         }
 
         public void writeDowntimeTable2()
@@ -39,13 +43,7 @@ namespace downtimeC
 
 
 
-
-            MySqlCommand comm = new MySqlCommand("insert into dtdb1.dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" + ordernumber1 + "','" + tracktag + "','" + trackcomnt + "','" + trakloct + "','" + trcktech + "')", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-
-
-            comm.Connection.Open();
-            comm.ExecuteNonQuery();
-            comm.Connection.Close();
+            getSqlServer.ExecuteNonQuery("insert into dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" + ordernumber1 + "','" + tracktag + "','" + trackcomnt + "','" + trakloct + "','" + trcktech + "')");
 
         }
 
@@ -69,18 +67,8 @@ namespace downtimeC
             trcktech = Techidbox.Text;
 
 
-            MySqlCommand comm = new MySqlCommand("update dtdb1.dttracking set ordernumber = ?ordernumber,TRACKING= '" + tracktag + "',TRACKINGCOMMENT='" + trackcomnt + "',tracklocation = '" + trakloct + "', tracktechid = '" + trcktech + "'  WHERE ordernumber = '" + ordernumber1 + "' and tracklocation = '" + trakloct + "'", new MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"));
-
-            comm.Parameters.AddWithValue("?ordernumber", ordernumber1);
-
-
-            //Dim comm As New MySqlCommand("insert into dtdb1.dttracking (ordernumber,TRACKING,TRACKINGCOMMENT,tracklocation,tracktechid)VALUES('" _
-            //& ordernumber1 & "','" & tracktag & "','" & trackcomnt & "','" & trakloct & "','" & trcktech & "')", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
-
-
-            comm.Connection.Open();
-            comm.ExecuteNonQuery();
-            comm.Connection.Close();
+            getSqlServer.ExecuteNonQuery("update dttracking set ordernumber = @ordernumber,TRACKING= '" + tracktag + "',TRACKINGCOMMENT='" + trackcomnt + "',tracklocation = '" + trakloct + "', tracktechid = '" + trcktech + "'  WHERE ordernumber = '" + ordernumber1 + "' and tracklocation = '" + trakloct + "'",
+                new SqlParameter("@ordernumber", ordernumber1));
 
             ORDERNUMBER.Focus();
 
@@ -89,52 +77,45 @@ namespace downtimeC
         public void readDowntimeTable()
         {
             SUBMITTRACK.Focus();
-            MySqlDataAdapter da = new MySqlDataAdapter("select * from dtdb1.dttracking where ordernumber like '" + this.ORDERNUMBER.Text + "' and tracklocation like '" + this.trklocatn.Text + "' ORDER BY ID DESC LIMIT 1", "server=lis-s22104-db1;uid=dniggli;pwd=vvo084;");
-            DataTable t = new DataTable();
 
-            da.Fill(t);
+            Option<DataRow> rowOption = getSqlServer.FilledRowOption("select TOP 1 * from dttracking where ordernumber like '" + this.ORDERNUMBER.Text + "' and tracklocation like '" + this.trklocatn.Text + "' ORDER BY ID DESC");
 
-            DataRow r = null;
-            try
+            rowOption.forEach(r =>
             {
-                r = t.Rows[0];
+                ORDERNUMBER.Text = r["ordernumber"].ToString();
+                OLDTRACKTAG.Text = r["tracking"].ToString();
+                oldtrackingcomment.Text = r["trackingcomment"].ToString();
+                OLDTECH.Text = r["tracktechid"].ToString();
+                OLDTRKLOCATN.Text = r["tracklocation"].ToString();
+                if (this.OLDTRACKTAG.Text == OLDTRACKTAG.Text)
+                {
+                    string msg = null;
+                    string title = null;
+                    MsgBoxStyle style = default(MsgBoxStyle);
+                    MsgBoxResult response = default(MsgBoxResult);
+                    msg = "Do you wish to edit tracking information?";
+                    // Define message.
+                    style = MsgBoxStyle.YesNo;
+                    title = "MsgBox";
+                    // Define title.
+                    // Display message.
+                    response = Interaction.MsgBox(msg, style, title);
+                    if (response == MsgBoxResult.Yes)
+                        trackcomment.Focus();
+                    if (response == MsgBoxResult.No)
+                        msgboxno();
+                }
+                trackcomment.Text = OLDTRACKTAG.Text + "," + oldtrackingcomment.Text;
 
-            }
-            catch (Exception ex)
-            {
-                return;
-            }
+                Application.DoEvents();
+                //Display the changes immediately (redraw the label text)
+                System.Threading.Thread.Sleep(500);
+                //do it slow enough so we can actually read the text before it changes, pause half a second
 
-            ORDERNUMBER.Text = r["ordernumber"].ToString();
-            OLDTRACKTAG.Text = r["tracking"].ToString();
-            oldtrackingcomment.Text = r["trackingcomment"].ToString();
-            OLDTECH.Text = r["tracktechid"].ToString();
-            OLDTRKLOCATN.Text = r["tracklocation"].ToString();
-            if (this.OLDTRACKTAG.Text == OLDTRACKTAG.Text)
-            {
-                string msg = null;
-                string title = null;
-                MsgBoxStyle style = default(MsgBoxStyle);
-                MsgBoxResult response = default(MsgBoxResult);
-                msg = "Do you wish to edit tracking information?";
-                // Define message.
-                style = MsgBoxStyle.YesNo;
-                title = "MsgBox";
-                // Define title.
-                // Display message.
-                response = Interaction.MsgBox(msg, style, title);
-                if (response == MsgBoxResult.Yes)
-                    trackcomment.Focus();
-                if (response == MsgBoxResult.No)
-                    msgboxno();
-            }
-            trackcomment.Text = OLDTRACKTAG.Text + "," + oldtrackingcomment.Text;
+            });
+      
 
-            Application.DoEvents();
-            //Display the changes immediately (redraw the label text)
-            System.Threading.Thread.Sleep(500);
-            //do it slow enough so we can actually read the text before it changes, pause half a second
-
+          
         }
 
 

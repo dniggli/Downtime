@@ -15,7 +15,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
-using MySql.Data.MySqlClient;
+
 using HL7;
 
 namespace downtimeC
@@ -29,8 +29,8 @@ namespace downtimeC
 
     string QUERY;
     string QUERYName;
-    readonly GetMySQL getMySql;
-    public StatOrderQueryForm(string query, string queryName, GetMySQL getMySql)
+    readonly GetSqlServer getSqlServer;
+    public StatOrderQueryForm(string query, string queryName, GetSqlServer getSqlServer)
     {
         // This call is required by the Windows Form Designer.
         InitializeComponent();
@@ -38,7 +38,7 @@ namespace downtimeC
         // Add any initialization after the InitializeComponent() call.
         this.QUERY = query;
         this.QUERYName = queryName;
-        this.getMySql = getMySql;
+        this.getSqlServer = getSqlServer;
     }
 
     private void Form2_Load(System.Object sender, System.EventArgs e)
@@ -46,7 +46,7 @@ namespace downtimeC
         
         
         this.Text = QUERYName;
-         getMySql.Async(this).FilledTable(QUERY, dt => {
+         getSqlServer.Async(this).FilledTable(QUERY, dt => {
              this.DataGridView1.DataSource = dt;
         });
     }
@@ -286,7 +286,7 @@ namespace downtimeC
 
     public void Button2_Click(System.Object sender, System.EventArgs e)
     {
-        DataTable dt = getMySql.FilledTable(QUERY);       
+        DataTable dt = getSqlServer.FilledTable(QUERY);       
 
         try {
             StreamWriter sw1 = new StreamWriter("C:\\Program Files\\downtime\\Testlist.csv", false);

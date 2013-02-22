@@ -9,11 +9,10 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Diagnostics;
-using NUnit.Framework;
 using AutoItHelper;
 using System.Threading;
 using System.Text.RegularExpressions;
-using MySql.Data.MySqlClient;
+
 using HL7;
 
 namespace downtimeC
@@ -25,11 +24,11 @@ namespace downtimeC
             InitializeComponent();
         }
 
-        readonly GetMySQL getMySql;
-        public MolisEntry(GetMySQL getMySql)
+     readonly GetSqlServer getSqlServer;
+        public MolisEntry(GetSqlServer getSqlServer)
         {
             InitializeComponent();
-            this.getMySql = getMySql;
+            this.getSqlServer = getSqlServer;
         }
 
     static MolisEntry myOrder;
@@ -60,7 +59,7 @@ namespace downtimeC
     {
         string ordernumbers = Strings.Left(TextBoxOrderNumber.Text, 8);
 
-        DataTable t = getMySql.FilledTable("select * from dtdb1.Table1 where ordernumber like '" + ordernumbers + "' ORDER BY ID DESC LIMIT 1");
+        DataTable t = getSqlServer.FilledTable("select TOP 1 * FROM [ordered] where ordernumber like '" + ordernumbers + "' ORDER BY ID DESC");
 
         try {
             DataRow r = t.Rows[0];
@@ -72,7 +71,7 @@ namespace downtimeC
             string collectiontime = r["collectiontime"].ToString();
             string receivetime = r["receivetime"].ToString();
             string priority = r["priority"].ToString();
-            string ComboBoxWard = r["location"].ToString();
+            string ComboBoxWard = r["ward"].ToString();
             string bluetest = r["bluetest"].ToString();
             string redtest = r["redtest"].ToString();
             string greentest = r["greentest"].ToString();

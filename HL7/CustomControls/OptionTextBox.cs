@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using FunctionalCSharp;
 using CodeBase2.Database;
-using downtimeC.LabelPrinting;
 using System.Text.RegularExpressions;
 
 namespace downtimeC
@@ -27,6 +26,10 @@ namespace downtimeC
             {
                 string v = this.Text.Trim();
                 return (string.IsNullOrEmpty(v)) ? Option.None<String>() : Option.Some(v);
+            }
+            set
+            {
+                value.forEach(v => this.Text = v);
             }
         }
 

@@ -18,30 +18,31 @@ namespace HL7
         string mrn;
         string firstName;
         string lastName;
-        string orderNumberWithSpecExtension;
         string dob;
         string sex;
         string ward;
-        IEnumerable<string> testCodes;
         string messageUniqueIDForAck;
-        SpecimenType specimenType;
-        public OrderMessage(string mrn, string firstName, string lastName, string orderNumber, string dob, string ward, Sex sex, IEnumerable<string> testCodes, string messageUniqueIDForAck, SpecimenType specimenType)
+        Dictionary<SpecimenType, IEnumerable<string>> testCodeUniqueIndividual;
+        string orderNumber;
+        public OrderMessage(string mrn, string firstName, string lastName, string orderNumber,
+            string dob, string ward, Sex sex, string messageUniqueIDForAck, Dictionary<SpecimenType, IEnumerable<string>> testCodeUniqueIndividual)
         {
             this.mrn = mrn;
             this.firstName = firstName;
             this.lastName = lastName;
-            this.orderNumberWithSpecExtension = orderNumber + specimenType.extension;
-            this.testCodes = testCodes;
+            this.testCodeUniqueIndividual = testCodeUniqueIndividual;
             this.ward = ward;
             this.dob = dob;
+            this.orderNumber = orderNumber;
             this.messageUniqueIDForAck = messageUniqueIDForAck;
-            this.specimenType = specimenType;
             if (sex == Sex.M) this.sex = "M";
             else if (sex == Sex.F) this.sex = "F";
             else if (sex == Sex.U) this.sex = "U";
         }
 
-        public OrderMessage(string mrn, string firstName, string lastName, string orderNumberWithSpecExtension, string dob, string ward, Sex sex, IEnumerable<string> testCodes, SpecimenType specimenType) : this(mrn, firstName, lastName, orderNumberWithSpecExtension, dob, ward, sex, testCodes, "00000000", specimenType) { }
+        public OrderMessage(string mrn, string firstName, string lastName, string orderNumber,
+            string dob, string ward, Sex sex, Dictionary<SpecimenType, IEnumerable<string>> testCodeUniqueIndividual)
+            : this(mrn, firstName, lastName, orderNumber, dob, ward, sex, "00000000", testCodeUniqueIndividual) { }
         
         
         
@@ -60,36 +61,51 @@ namespace HL7
             return "PV1|||" + ward;
         }
 
-        private string SAC()
+        private string orderNumberWithSpecExtension(string extension)
         {
-            return "SAC|||" + orderNumberWithSpecExtension;
+            return orderNumber + extension;
         }
 
-        private string ORC()
+        private string SAC(string extension)
         {
-            return "ORC|XO|" + orderNumberWithSpecExtension + "|||||1^^^^^R^EVER";
+            return "SAC|||" + orderNumberWithSpecExtension(extension);
+        }
+
+        private string ORC(string extension)
+        {
+            return "ORC|XO|" + orderNumberWithSpecExtension(extension) + "|||||1^^^^^R^EVER";
             
         }
 
-       
 
-        public string toHl7() {
-         var individualTestCodes = this.testCodes.SelectMany(code => GroupTestToIndividualTest.getIndividualTests(code));
-            var index = 0;
-            var testList = new List<String>();
-            foreach (string code in individualTestCodes) {
-                index = index + 1;
-                var tco = new TestCodeForOrder(index.ToString(), code, orderNumberWithSpecExtension, ward, specimenType);
+        /// <summary>
+        /// Returns multiple HL7 messages, one for each specimenType. To be sent to the instrument.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> toHl7()
+        {
+           // var individualTestCodes = this.testCodes.SelectMany(code => groupTestToIndividualTest.getIndividualTests(code));
 
-                tco.toHl7().forEach<string>( hl7 =>
-                    testList.Add(hl7)
-                );
+           return testCodeUniqueIndividual.Keys.Select(specimenType =>
+            {
+                var tests = testCodeUniqueIndividual[specimenType];
 
-                
-            }
-            var segments = new List<String>(new String[] {MSH(),PID(),PV1(), SAC(),ORC()});
-            segments.AddRange(testList);
-            return Util.mkString(segments, "\r");
+                var index = 0;
+
+                var testsHL7 = tests.Select(code =>
+               {
+                   index = index + 1;
+                   return new TestCodeForOrder(index.ToString(), code,
+                       orderNumberWithSpecExtension(specimenType.extension), ward, specimenType)
+                        .toHl7();
+               });
+
+                var segments = new List<String>(
+                    new String[] { MSH(), PID(), PV1(), SAC(specimenType.extension),
+                        ORC(specimenType.extension) });
+                segments.AddRange(testsHL7);
+                return testsHL7.Count() > 0 ? segments.mkString("\r") : "";
+            }).Where(x => x != "");
         }
 
 /*
@@ -143,35 +159,34 @@ TCD|^^^ALK^ALK PHOS||||||Y<cr>
    public class TestCodeForOrder {
 
         string orderNumberWithSpecExtension;
-        string testCode;
         string testIndex;
         string testName = "";
         string ward;
+        string testCode;
+        string diSpecimenType;
         SpecimenType specimenType;
-        public TestCodeForOrder(string testIndex,string testCode, string orderNumberWithSpecExtension, string ward, SpecimenType specimenType)
+        public TestCodeForOrder(string testIndex, string testCode, string orderNumberWithSpecExtension, string ward, SpecimenType SpecimenType)
         {
             this.testIndex = testIndex;
             this.orderNumberWithSpecExtension = orderNumberWithSpecExtension;
             this.testCode = testCode;
             this.ward = ward;
-            this.specimenType = specimenType;
+            this.diSpecimenType = specimenType.diSpecimenType;
         }
 
  
 
-        private Option<string> OBR() {
-            return specimenType.diSpecimenType.map(diName =>
-
-               "OBR|" + testIndex + "|" + orderNumberWithSpecExtension + "||^^^" + testCode + "^" + testName +
-                  "|||" + DateTime.Now.ToString("yyyyMMdd") + "000000||||A||||" + diName + "|||" + ward + "\r");
+        private string OBR() {
+            return "OBR|" + testIndex + "|" + orderNumberWithSpecExtension + "||^^^" + testCode + "^" + testName +
+                  "|||" + DateTime.Now.ToString("yyyyMMdd") + "000000||||A||||" + diSpecimenType + "|||" + ward + "\r";
         }
 
         private string TCD() {
            return "TCD|^^^" + testCode + "^" + testName + "||||||Y";
         }
 
-        public Option<string> toHl7() {
-            return OBR().map(obr => obr + TCD());
+        public string toHl7() {
+            return OBR() + TCD();
         }
     }
 

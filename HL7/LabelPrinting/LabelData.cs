@@ -12,8 +12,31 @@ using System.Collections;
 using CodeBase2.MySql.URMC;
 using System.Windows.Forms;
 using System.Linq;
-namespace downtimeC.LabelPrinting
+namespace downtimeC
 {
+
+    public enum Hospital
+    {
+        Strong,
+        Highland
+
+    }
+
+    public enum LabelPrintMode
+    {
+        Collection,
+        Demographic,
+        Comment,
+        Aliquot
+    }
+
+    public enum HL7Destination
+    {
+        None,
+        DI,
+        MOLIS
+    }
+
 
     public enum Priority
     {
@@ -28,25 +51,55 @@ namespace downtimeC.LabelPrinting
 
 
         readonly string orderNumber;
-        readonly string location;
+        readonly string ward;
         readonly string lastname;
         readonly string firstname;
         readonly string medreqnum;
      
         readonly string collectiontime = "Collected";
-        readonly string todaysdate;
 
         readonly string priority;
-        public LabelData(string _ordernumber, string _PRIORITY, string _medreqnum, string _lastname, string _firstname, string _location, string _todaysdate)
+        public LabelData(string _ordernumber, string _PRIORITY, string _medreqnum, string _lastname, string _firstname, string _ward)
         {
             orderNumber = _ordernumber;
             lastname = _lastname;
             firstname = _firstname;
             medreqnum = _medreqnum;
-            priority = _PRIORITY;
-            location = _location;
-            todaysdate = _todaysdate;
-        }    
+            priority = (_PRIORITY == "S") ? "STAT" : _PRIORITY;
+            ward = _ward;
+        }
+
+        public void AppendTestLabel(Priority priority, LabelPrintMode labelPrintMode, string test, string specimenType, string specimenExtension)
+        {
+            if (labelPrintMode == LabelPrintMode.Collection)
+            {
+                this.LabelAppendCollection(test, specimenType, specimenExtension);
+            }
+            else if (labelPrintMode == LabelPrintMode.Demographic)
+            {
+                this.LabelAppendDemographic(test, specimenType, specimenExtension);
+            }
+            else if (labelPrintMode == LabelPrintMode.Comment)
+            {
+                this.LabelAppendComment(test, specimenType, specimenExtension);
+            }
+            else if (labelPrintMode == LabelPrintMode.Aliquot)
+            {
+                if (priority == Priority.Routine)
+                {
+                    this.LabelAppendAliquotRoutine(test, specimenType, specimenExtension);
+                }
+                else if (priority == Priority.Stat)
+                {
+                    this.LabelAppendAliquotStat(test, specimenType, specimenExtension);
+                }
+
+            }
+            else
+            {
+                throw new Exception("Unknown LabelPrintMode");
+            }
+        }
 
         /// <summary>
         /// THIS PRINTS COLLECTION LABLES FOR TUBES 
@@ -54,9 +107,9 @@ namespace downtimeC.LabelPrinting
         /// <param name="ldata"></param>
         /// <param name="printer"></param>
         /// <remarks></remarks>
-        internal void LabelAppendCollection(string testlist, string specimenType, string extension)
+        internal void LabelAppendCollection(string content, string specimenType, string extension)
         {
-            if (testlist == string.Empty)
+            if (content == string.Empty)
                 return;
             ArrayList sTemplatelines = new ArrayList();
 
@@ -75,26 +128,26 @@ namespace downtimeC.LabelPrinting
             label += "^FO 30, 42,^A0,28,25      ^FD" + lastname + "," + firstname + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 75,^AB            ^FDM#^FS" + Constants.vbNewLine;
             label += "^FO 55, 70,^A0,22,20      ^FD" + medreqnum + "^FS" + Constants.vbNewLine;
-            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + location + "^FS" + Constants.vbNewLine;
-            if (testlist.Length > 37)
+            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + ward + "^FS" + Constants.vbNewLine;
+            if (content.Length > 37)
             {
-                label += "^FO  0, 92,^AB            ^FD" + testlist.Substring(0, 37) + "^FS" + Constants.vbNewLine;
+                label += "^FO  0, 92,^AB            ^FD" + content.Substring(0, 37) + "^FS" + Constants.vbNewLine;
 
             }
             else
             {
-                label += "^FO  0, 92,^AB            ^FD" + testlist + "^FS" + Constants.vbNewLine;
+                label += "^FO  0, 92,^AB            ^FD" + content + "^FS" + Constants.vbNewLine;
             }
             label += "^FO  0,107,^AB            ^FD^FS" + Constants.vbNewLine;
             label += "^FO  0,122,^AB            ^FD^FS" + Constants.vbNewLine;
-            if (testlist.Length > 74)
+            if (content.Length > 74)
             {
-                label += "^FO  0, 112,^AB            ^FD" + testlist.Substring(37, 34) + "...^FS" + Constants.vbNewLine;
+                label += "^FO  0, 112,^AB            ^FD" + content.Substring(37, 34) + "...^FS" + Constants.vbNewLine;
 
             }
-            else if (testlist.Length > 37)
+            else if (content.Length > 37)
             {
-                label += "^FO  0, 112,^AB            ^FD" + testlist.Substring(37) + "^FS" + Constants.vbNewLine;
+                label += "^FO  0, 112,^AB            ^FD" + content.Substring(37) + "^FS" + Constants.vbNewLine;
 
 
 
@@ -123,9 +176,9 @@ namespace downtimeC.LabelPrinting
         /// <param name="ldata1"></param>
         /// <param name="printer"></param>
         /// <remarks></remarks>
-        internal void LabelAppendComment(string testlist, string specimenType, string extension)
+        internal void LabelAppendComment(string content, string specimenType, string extension)
         {
-            if (testlist == string.Empty)
+            if (content == string.Empty)
                 return;
 
             string label = null;
@@ -142,8 +195,8 @@ namespace downtimeC.LabelPrinting
             label += "^FO 30, 42,^A0,28,25      ^FD" + lastname + "," + firstname + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 75,^AB            ^FDM#^FS" + Constants.vbNewLine;
             label += "^FO 55, 70,^A0,22,20      ^FD" + medreqnum + "^FS" + Constants.vbNewLine;
-            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + location + "^FS" + Constants.vbNewLine;
-            label += "^FO  0, 92,^AB            ^FD" + testlist + "^FS" + Constants.vbNewLine;
+            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + ward + "^FS" + Constants.vbNewLine;
+            label += "^FO  0, 92,^AB            ^FD" + content + "^FS" + Constants.vbNewLine;
             label += "^FO  0,107,^AB            ^FD^FS" + Constants.vbNewLine;
             label += "^FO  0,122,^AB            ^FD^FS" + Constants.vbNewLine;
             label += "^FO365,100,^A0,40         ^FD*" + specimenType + "*^FS" + Constants.vbNewLine;
@@ -188,9 +241,9 @@ namespace downtimeC.LabelPrinting
             label += "^FO 30, 42,^A0,28,25      ^FD" + lastname + "," + firstname + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 75,^AB            ^FDM#^FS" + Constants.vbNewLine;
             label += "^FO 55, 70,^A0,22,20      ^FD" + medreqnum + "^FS" + Constants.vbNewLine;
-            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + location + "^FS" + Constants.vbNewLine;
+            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + ward + "^FS" + Constants.vbNewLine;
             label += "^FO  0, 92,^AB            ^FD^FS" + Constants.vbNewLine;
-            label += "^FO  0,107,^A0,22,20      ^FD" + collectiontime + " @ " + testlist + " On " + todaysdate + "  ^FS" + Constants.vbNewLine;
+            label += "^FO  0,107,^A0,22,20      ^FD" + collectiontime + " @ " + testlist + " On " + DateTime.Now.ToShortDateString() + "  ^FS" + Constants.vbNewLine;
             label += "^FO  0,122,^AB            ^FD^FS" + Constants.vbNewLine;
             label += "^FO365,100,^A0,40         ^FD*" + specimenType + "*^FS" + Constants.vbNewLine;
             label += Constants.vbNewLine;
@@ -224,7 +277,7 @@ namespace downtimeC.LabelPrinting
             label += "^FO 30, 42,^A0,28,25      ^FD" + lastname + "," + firstname + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 75,^AB            ^FDM#^FS" + Constants.vbNewLine;
             label += "^FO 55, 70,^A0,22,20      ^FD" + medreqnum + "^FS" + Constants.vbNewLine;
-            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + location + "^FS" + Constants.vbNewLine;
+            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + ward + "^FS" + Constants.vbNewLine;
             if (testlist.Length > 37)
             {
                 label += "^FO  0, 92,^AB            ^FD" + testlist.Substring(0, 37) + "^FS" + Constants.vbNewLine;
@@ -285,7 +338,7 @@ namespace downtimeC.LabelPrinting
             label += "^FO 30, 42,^A0,28,25      ^FD" + lastname + "," + firstname + "^FS" + Constants.vbNewLine;
             label += "^FO 30, 75,^AB            ^FDM#^FS" + Constants.vbNewLine;
             label += "^FO 55, 70,^A0,22,20      ^FD" + medreqnum + "^FS" + Constants.vbNewLine;
-            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + location + "^FS" + Constants.vbNewLine;
+            label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + ward + "^FS" + Constants.vbNewLine;
             if (testlist.Length > 37)
             {
                 label += "^FO  0, 92,^AB            ^FD" + testlist.Substring(0, 37) + "^FS" + Constants.vbNewLine;

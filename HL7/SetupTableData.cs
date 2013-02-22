@@ -21,9 +21,9 @@ namespace downtimeC
 
       public readonly ReadOnlyDictionary<string, string> LabelersByIp;
 
-      public SetupTableData(GetMySQL getMySql, GetSqlServer getSqlServer, Hospital hospital)
+      public SetupTableData(GetSqlServer getSqlServer, Hospital hospital)
       {
-          wards = getMySql.FilledColumn("select Clinic_code from dtdb1.CLINIC");
+          wards = getSqlServer.FilledColumn("select Clinic_code from [CLINIC]");
 
           DISpecimenTranslation = getSqlServer.FilledDictionary("SELECT [type], [translation] FROM [downtime].[dbo].[diTranslation]").ToReadOnly();
 
