@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using downtimeC;
 using FunctionalCSharp;
 using Microsoft.VisualBasic;
+using CodeBase2;
 using System.Data.SqlClient;
 namespace HL7
 {
@@ -152,7 +153,7 @@ namespace HL7
             var labelData = new LabelData(immutableOrderData.orderNumber, immutableOrderData.priority,
                 immutableOrderData.mrn, immutableOrderData.lastName, immutableOrderData.firstName, immutableOrderData.ward);
 
-         //   configureLabels(labelData).doPrint(printer, setupTableData);
+           configureLabels(labelData).doPrint(printer, setupTableData);
         }
 
         /// <summary>
@@ -169,10 +170,17 @@ namespace HL7
                    //print comment label
                    labelData.LabelAppendComment(immutableOrderData.comment, "CMT", "");
 
-                   orderedTests.forEach(dr =>
+                   var testBySpecimen = orderedTests.GroupBy(x =>
+                       //group test DataRows by the SpecimenType
+          new Tuple2<string,string> (x["Tube"].ToString(),  x["Extension"].ToString() ))
+              .ToDictionary(
+                grouped => grouped.Key,
+                grouped => grouped.ToList().Select(dr => dr["Id"].ToString()).mkString(" ")
+              );
+                   testBySpecimen.forEach(specimenTest =>
                         labelData.AppendTestLabel(immutableOrderData.getPriority,
-                        testPrintMode, dr["Id"].ToString(),
-                        dr["Tube"].ToString(), dr["Extension"].ToString()));
+                        testPrintMode, specimenTest.Value,
+                       specimenTest.Key._1, specimenTest.Key._2));
 
                    return labelData;
                };

@@ -132,21 +132,21 @@ namespace downtimeC
             if (DialogResult.Yes == MessageBox.Show("Send Order Message to DI?", "Send Order Message to DI?", MessageBoxButtons.YesNo))
             {
 
-                //send the hl7 messages
-                //var status = sendhl.SendHL7Multiple(hl7Messages);
+              //  send the hl7 messages
+                var status = sendhl.SendHL7Multiple(hl7Messages);
 
-                //if (status == HL7Status.NOCONNECTION)
-                //{
-                //    MessageBox.Show("HL7 connection failed");
-                //}
-                //else if ( status == HL7Status.NACK)
-                //{
-                //    //  MessageBox.Show("HL7 connection Successful, but NACK returned")
-                //}
-                // else if ( status == HL7Status.EXCEPTION)
-                //{
-                //    MessageBox.Show("HL7 connection tried, but exception thrown");
-                //}
+                if (status == HL7Status.NOCONNECTION)
+                {
+                    MessageBox.Show("HL7 connection failed");
+                }
+                else if ( status == HL7Status.NACK)
+                {
+                    //  MessageBox.Show("HL7 connection Successful, but NACK returned")
+                }
+                 else if ( status == HL7Status.EXCEPTION)
+                {
+                    MessageBox.Show("HL7 connection tried, but exception thrown");
+                }
             }
 
         }
