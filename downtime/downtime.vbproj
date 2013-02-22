@@ -159,7 +159,6 @@
     <Compile Include="AUtoLabReprintform.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GetMySQL.vb" />
     <Compile Include="LabelPrinting\LabelData.vb" />
     <Compile Include="PrintLabels.vb" />
     <Compile Include="DateTimeFunctions.vb" />
