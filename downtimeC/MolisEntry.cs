@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Diagnostics;
-using NUnit.Framework;
 using AutoItHelper;
 using System.Threading;
 using System.Text.RegularExpressions;
