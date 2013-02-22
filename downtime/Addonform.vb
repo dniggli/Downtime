@@ -1,25 +1,18 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports HL7
+Imports downtimeC
+
 Public Class Addons
 
-    ''' <summary>
-    ''' Starts the Order Thread
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Shared Sub addon()
-        Dim myorder As New Addons
-        Application.Run(myorder)
 
-    End Sub
 
     'Dave: Give it a password to connect!!!!  in both the readDowntimeTable and writeDowntimeTable subroutines
     Sub printDowntimeLables()
         Dim test As New List(Of String)
         If Me.priority.Text = "S" Then Me.priority.Text = "STAT"
 
-        'test.Add("ld")
-        'test.Add("glu")
-        'test.Add("phos")
 
+        'TODO: Subclass TextBoxes and associate TubeType and TubeExtension with the Textboxes.
         If Not Me.firstname.Text = String.Empty Then
             Dim fn2 As New LabelData(Me.ordernumber.Text, Me.collectiontime.Text, "", "", Me.priority.Text, Me.mrn.Text, Me.lastname.Text, Me.firstname.Text, Me.ComboBoxWard.Text, "Collected", Me.DateTimePicker1.Text)
             fn2.LabelPrint2(Me.ComboBoxprinter.Text)
@@ -335,8 +328,8 @@ Public Class Addons
         Next
         ordernumber.Focus()
 
-        Dim STRLENGTH As Integer = orderentry.strNecessary.Length
-        orderentry.strNecessary.Remove(0, STRLENGTH)
+        Dim STRLENGTH As Integer = GlobalMutableState.strNecessary.Length
+        GlobalMutableState.strNecessary.Remove(0, STRLENGTH)
 
     End Sub
 
@@ -482,11 +475,11 @@ Public Class Addons
     End Sub
 
 
-    Sub Techid2()
+    'Sub Techid2()
 
-        ordertechid.Text = main.Username
+    '    ordertechid.Text = main.Username
 
-    End Sub
+    'End Sub
 
 
     Private Sub read_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles buttonRead.Click

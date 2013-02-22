@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
-
+using FunctionalCSharp;
 namespace HL7
 {
 
@@ -28,17 +28,43 @@ namespace HL7
             this.port = port;
         }
 
+        /// <summary>
+        /// Send multiple HL7 messages at once
+        /// </summary>
+        /// <param name="hl7message"></param>
+        /// <returns></returns>
+        public HL7Status SendHL7Multiple(IEnumerable<string> hl7messages)
+        {
+             //delimit with special characters and thenmerge the messages together with mkString.
+            var mergedMessage = hl7messages.Select(DelimitHL7Message).mkString("\r");
+            return _SendHL7(SerializeHL7Message(mergedMessage));
+        }
+
+        /// <summary>
+        /// Add the leading and trailing characters so it is LLP compliant.
+        /// </summary>
+        /// <param name="hl7message"></param>
+        /// <returns></returns>
+        private string DelimitHL7Message(string hl7message)
+        {
+            return Convert.ToChar(11).ToString() + hl7message + Convert.ToChar(28).ToString() + Convert.ToChar(13).ToString();
+        }
+
+        private Byte[] SerializeHL7Message(string delimitedHl7message)
+        {
+            //serialize the message
+            return Encoding.ASCII.GetBytes(delimitedHl7message);
+        }
+
+
         public HL7Status SendHL7(string hl7message)
+        {
+            return _SendHL7(SerializeHL7Message(DelimitHL7Message((hl7message))));
+        }
+        private HL7Status _SendHL7(Byte[] bytesToSend)
         {
             try
             {
-                // Add the leading and trailing characters so it is LLP compliant.
-                string llphl7message = Convert.ToChar(11).ToString() + hl7message + Convert.ToChar(28).ToString() + Convert.ToChar(13).ToString();
-
-                // Get the size of the message that we have to send.
-                Byte[] bytesSent = Encoding.ASCII.GetBytes(llphl7message);
-                Byte[] bytesReceived = new Byte[256];
-
                 // Create a socket connection with the specified server and port.
                 Socket s = ConnectSocket();
 
@@ -47,12 +73,13 @@ namespace HL7
                     return HL7Status.NOCONNECTION;
 
                 // Send message to the server.
-                s.Send(bytesSent, bytesSent.Length, 0);
+                s.Send(bytesToSend, bytesToSend.Length, 0);
 
                 // Receive the response back
                 int bytes = 0;
                 s.ReceiveTimeout = 3000;
-                bytes = s.Receive(bytesReceived, bytesReceived.Length, 0);
+                Byte[] bytesReceived = new Byte[256];
+                bytes = s.Receive(bytesReceived, bytesReceived.Length, 0); //fails here.
                 string page = Encoding.ASCII.GetString(bytesReceived, 0, bytes);
                 s.Close();
 
@@ -66,7 +93,7 @@ namespace HL7
                     return HL7Status.NACK;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return HL7Status.EXCEPTION;
             }

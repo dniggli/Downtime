@@ -1,6 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.Text.RegularExpressions
-Public Class restartwheel
+Public Class RestartWheel
 
     Dim monthday As String = ""
     Dim ordernumber As String = ""
@@ -9,13 +9,13 @@ Public Class restartwheel
 
 
     Public Shared Sub number()
-        Dim myorder As New restartwheel
+        Dim myorder As New RestartWheel
         Application.Run(myorder)
 
     End Sub
     Sub Deleteoldinfo()
 
-       
+
 
         Dim comm1 As New MySqlCommand("truncate table dtdb1.ordernumber", New MySqlConnection("server=lis-s22104-db1;uid=dniggli;pwd=vvo084;"))
 
@@ -116,11 +116,6 @@ Public Class restartwheel
 
     End Sub
 
-    Private Sub SplitContainer1_Panel1_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles SplitContainer1.Panel1.Paint
-
-    End Sub
-
-
     Private Sub Buttondelettrack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Buttondelettrack.Click
         Dim msg As String
         Dim title As String
@@ -139,6 +134,36 @@ Public Class restartwheel
         If response = MsgBoxResult.No Then Exit Sub
 
     End Sub
+
+    Function date2ordernumber(ByVal dates As String)
+        Dim ordend As String = dates
+
+        Dim dateend As System.Text.RegularExpressions.Match = Regex.Match(ordend, "([0-9]+)/([0-9]+)/([0-9]+)")
+        Dim endmonth As String = dateend.Groups(1).Value
+        Dim endday As String = dateend.Groups(2).Value
+        Dim endyear As String = dateend.Groups(3).Value
+        While endday.Length < 2
+            endday = "0" & endday
+        End While
+
+
+
+        Dim endmnth As Integer = endyear + -2004
+        endmnth = endmnth * 12
+
+
+        Dim monthend As String = CStr(CInt(endmonth) + CInt(endmnth))
+
+        If monthend > 99 Then
+            Dim newmonthstart As String = Microsoft.VisualBasic.Left(monthend, 2)
+            Dim newmonthend As String = Microsoft.VisualBasic.Right(monthend, 1)
+            newmonthstart = newmonthstart + 55
+            monthend = Chr(newmonthstart) + newmonthend
+        End If
+        Dim monthday As String = monthend + endday
+        Return (monthday)
+
+    End Function
 
     Private Sub restartwheel_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -169,7 +194,7 @@ Public Class restartwheel
         Dim n As Integer = Convert.ToInt32(lownumber)
 
         Do While n < 8001
-            Dim nonalphaordernumber As String = (orderentry.date2ordernumber(Date.Now) + n.ToString)
+            Dim nonalphaordernumber As String = (date2ordernumber(Date.Now) + n.ToString)
             ComboBoxNewOrderNumber.Items.Add(nonalphaordernumber)
 
             dict.Add(nonalphaordernumber, n.ToString)
@@ -181,7 +206,7 @@ Public Class restartwheel
 
         Dim ordernums As String = Microsoft.VisualBasic.Right(datanumber, 3)
         Dim letters As String = Microsoft.VisualBasic.Left(datanumber, 2)
-        Dim alphanum As String = orderentry.date2ordernumber(Date.Now) + Chr(letters) + ordernums
+        Dim alphanum As String = date2ordernumber(Date.Now) + Chr(letters) + ordernums
         Dim ordnumend As String = letters + ordernums
 
 
@@ -194,10 +219,6 @@ Public Class restartwheel
 
 
 
-
-    End Sub
-
-    Private Sub SplitContainer1_Panel2_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles SplitContainer1.Panel2.Paint
 
     End Sub
 
@@ -297,11 +318,6 @@ Public Class restartwheel
 
     End Sub
 
-    Private Sub Label1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Label1.Click
-
-    End Sub
-
-    
     Private Sub ComboBoxNewOrderNumber_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles ComboBoxNewOrderNumber.KeyDown
         e.SuppressKeyPress = True
     End Sub

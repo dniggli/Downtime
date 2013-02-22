@@ -1,21 +1,13 @@
 ﻿Imports MySql.Data.MySqlClient
-Public Class aliquotform
-    Public Shared ALIQUOTSTR As New System.Text.StringBuilder("")
-    ''' <summary>
-    ''' Starts the Order Thread
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Shared Sub aliquot()
-        Dim myorder As New aliquotform
-        Application.Run(myorder)
+Imports HL7
+Imports downtimeC
 
-    End Sub
+Public Class AliquotForm
+    Public Shared ALIQUOTSTR As New System.Text.StringBuilder("")
 
 
     'prints empgraphic labels for stats only!!
     Sub printdemographiclabels()
-       
-
         Dim test As New List(Of String)
         If Me.priority.Text = "S" Then Me.priority.Text = "STAT"
 
@@ -386,8 +378,8 @@ Public Class aliquotform
             End If
         Next
         ordernumber.Focus()
-        Dim STRLENGTH As Integer = orderentry.strNecessary.Length
-        orderentry.strNecessary.Remove(0, STRLENGTH)
+        Dim STRLENGTH As Integer = GlobalMutableState.strNecessary.Length
+        GlobalMutableState.strNecessary.Remove(0, STRLENGTH)
 
     End Sub
 
@@ -610,11 +602,11 @@ Public Class aliquotform
     'End Sub
 
 
-    Sub Techid2()
+    'Sub Techid2()
 
-        ordertechid.Text = main.Username
+    '    ordertechid.Text = main.Username
 
-    End Sub
+    'End Sub
 
 
     Private Sub read_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles buttonRead.Click
@@ -725,6 +717,6 @@ Public Class aliquotform
         Next
     End Sub
 
-    
+
 End Class
 

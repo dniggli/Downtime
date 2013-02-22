@@ -7,12 +7,13 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F677D482-BDC8-40D2-97C2-F39B371F0683}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>downtime.main</StartupObject>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
     <RootNamespace>downtime</RootNamespace>
     <AssemblyName>downtime</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
@@ -140,123 +141,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aliquotform.Designer.vb">
-      <DependentUpon>Aliquotform.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Aliquotform.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Addonform.Designer.vb">
-      <DependentUpon>Addonform.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Addonform.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AutoIT.vb" />
-    <Compile Include="AUtoLabReprintform.Designer.vb">
-      <DependentUpon>AUtoLabReprintform.vb</DependentUpon>
-    </Compile>
-    <Compile Include="AUtoLabReprintform.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GetMySQL.vb" />
-    <Compile Include="LabelPrinting\LabelData.vb" />
-    <Compile Include="PrintLabels.vb" />
-    <Compile Include="DateTimeFunctions.vb" />
-    <Compile Include="DIOrderEntryForm.Designer.vb">
-      <DependentUpon>DIOrderEntryForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="DIOrderEntryForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MolisEntry.Designer.vb">
-      <DependentUpon>MolisEntry.vb</DependentUpon>
-    </Compile>
-    <Compile Include="MolisEntry.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RecoveryForm.Designer.vb">
-      <DependentUpon>RecoveryForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="RecoveryForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InputBoxForm.Designer.vb">
-      <DependentUpon>InputBoxForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="InputBoxForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TrackCoagfrom.Designer.vb">
-      <DependentUpon>TrackCoagfrom.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TrackCoagfrom.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LoginForm2.Designer.vb">
-      <DependentUpon>LoginForm2.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LoginForm2.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="restartwheel.Designer.vb">
-      <DependentUpon>restartwheel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="restartwheel.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trackurinechemfrom.Designer.vb">
-      <DependentUpon>Trackurinechemfrom.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Trackurinechemfrom.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trackurinehemfrom.Designer.vb">
-      <DependentUpon>Trackurinehemfrom.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Trackurinehemfrom.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Trackhemfrom.Designer.vb">
-      <DependentUpon>Trackhemfrom.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Trackhemfrom.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainMenu.Designer.vb">
-      <DependentUpon>MainMenu.vb</DependentUpon>
-    </Compile>
-    <Compile Include="MainMenu.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="statorderqueryform.Designer.vb">
       <DependentUpon>statorderqueryform.vb</DependentUpon>
     </Compile>
     <Compile Include="statorderqueryform.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TrackSMSfrom.Designer.vb">
-      <DependentUpon>TrackSMSfrom.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TrackSMSfrom.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LoginForm1.Designer.vb">
-      <DependentUpon>LoginForm1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LoginForm1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="main.vb" />
-    <Compile Include="AD.vb" />
-    <Compile Include="orderentry.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="orderentry.Designer.vb">
-      <DependentUpon>orderentry.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LabelPrinting\LabelerModule.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -275,74 +165,8 @@
     <Compile Include="UnitTests.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Aliquotform.resx">
-      <DependentUpon>Aliquotform.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Addonform.resx">
-      <DependentUpon>Addonform.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AUtoLabReprintform.resx">
-      <DependentUpon>AUtoLabReprintform.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DIOrderEntryForm.resx">
-      <DependentUpon>DIOrderEntryForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MolisEntry.resx">
-      <DependentUpon>MolisEntry.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RecoveryForm.resx">
-      <DependentUpon>RecoveryForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InputBoxForm.resx">
-      <DependentUpon>InputBoxForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrackCoagfrom.resx">
-      <DependentUpon>TrackCoagfrom.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LoginForm2.resx">
-      <DependentUpon>LoginForm2.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="restartwheel.resx">
-      <DependentUpon>restartwheel.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Trackurinechemfrom.resx">
-      <DependentUpon>Trackurinechemfrom.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Trackurinehemfrom.resx">
-      <DependentUpon>Trackurinehemfrom.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Trackhemfrom.resx">
-      <DependentUpon>Trackhemfrom.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu.resx">
-      <DependentUpon>MainMenu.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="statorderqueryform.resx">
       <DependentUpon>statorderqueryform.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrackSMSfrom.resx">
-      <DependentUpon>TrackSMSfrom.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LoginForm1.resx">
-      <DependentUpon>LoginForm1.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="orderentry.resx">
-      <DependentUpon>orderentry.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -410,14 +234,15 @@
     <None Include="AutoItX3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="lbl.txt" />
-    <Content Include="lbl2.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HL7\HL7.csproj">
       <Project>{C60166B5-E748-4606-BD6A-DA84F4CA516C}</Project>
       <Name>HL7</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LabelPrinting\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

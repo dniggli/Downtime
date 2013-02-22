@@ -12,7 +12,7 @@
 
         Dim b As Boolean
         b = True  'AD.Authenticate(Me.UsernameTextBox.Text, Me.PasswordTextBox.Text)
-        main.Valid = b
+        ' main.Valid = b
         main.Username = UsernameTextBox.Text
         If b = True Then
 

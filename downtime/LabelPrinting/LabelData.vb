@@ -1,4 +1,6 @@
-﻿Class LabelData
+﻿Imports downtimeC
+
+Public Class LabelData
     Public orderNumber As String
     Public location As String
     Public lastname As String
@@ -106,7 +108,7 @@
 
 
 
-        orderentry.strNecessary.Append(label)
+        GlobalMutableState.strNecessary.Append(label)
 
 
     End Sub
@@ -150,7 +152,7 @@
 
 
 
-        orderentry.strNecessary.Append(label)
+        GlobalMutableState.strNecessary.Append(label)
 
 
 
@@ -192,7 +194,7 @@
         label += "^FO0025,137,^B3,N,72,N,^FD" & orderNumber & extension & "^FS" & vbNewLine
         label += "^FT370,160,^AD             ^FD^FS" & vbNewLine
         label += "^XZ" & vbNewLine
-        orderentry.strNecessary.Append(label)
+        GlobalMutableState.strNecessary.Append(label)
     End Sub
 
     ''' <summary>
@@ -248,7 +250,7 @@
         label += "^XZ" & vbNewLine
 
 
-        orderentry.strNecessary.Append(label)
+        GlobalMutableState.strNecessary.Append(label)
     End Sub
 
     ''' <summary>
@@ -307,7 +309,7 @@
 
 
 
-        orderentry.strNecessary.Append(label)
+        GlobalMutableState.strNecessary.Append(label)
 
 
     End Sub
@@ -318,7 +320,7 @@
     End Function
 
 
-   
+
 
 
 End Class
