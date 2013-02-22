@@ -57,10 +57,9 @@ namespace downtimeC
         readonly string medreqnum;
      
         readonly string collectiontime = "Collected";
-        readonly string todaysdate;
 
         readonly string priority;
-        public LabelData(string _ordernumber, string _PRIORITY, string _medreqnum, string _lastname, string _firstname, string _ward, string _todaysdate)
+        public LabelData(string _ordernumber, string _PRIORITY, string _medreqnum, string _lastname, string _firstname, string _ward)
         {
             orderNumber = _ordernumber;
             lastname = _lastname;
@@ -68,7 +67,6 @@ namespace downtimeC
             medreqnum = _medreqnum;
             priority = (_PRIORITY == "S") ? "STAT" : _PRIORITY;
             ward = _ward;
-            todaysdate = _todaysdate;
         }
 
         public void AppendTestLabel(Priority priority, LabelPrintMode labelPrintMode, string test, string specimenType, string specimenExtension)
@@ -245,7 +243,7 @@ namespace downtimeC
             label += "^FO 55, 70,^A0,22,20      ^FD" + medreqnum + "^FS" + Constants.vbNewLine;
             label += "^FO200, 70,^A0,22,20      ^FD*" + specimenType + "*/" + ward + "^FS" + Constants.vbNewLine;
             label += "^FO  0, 92,^AB            ^FD^FS" + Constants.vbNewLine;
-            label += "^FO  0,107,^A0,22,20      ^FD" + collectiontime + " @ " + testlist + " On " + todaysdate + "  ^FS" + Constants.vbNewLine;
+            label += "^FO  0,107,^A0,22,20      ^FD" + collectiontime + " @ " + testlist + " On " + DateTime.Now.ToShortDateString() + "  ^FS" + Constants.vbNewLine;
             label += "^FO  0,122,^AB            ^FD^FS" + Constants.vbNewLine;
             label += "^FO365,100,^A0,40         ^FD*" + specimenType + "*^FS" + Constants.vbNewLine;
             label += Constants.vbNewLine;

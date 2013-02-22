@@ -104,8 +104,8 @@ namespace HL7
                     new String[] { MSH(), PID(), PV1(), SAC(specimenType.extension),
                         ORC(specimenType.extension) });
                 segments.AddRange(testsHL7);
-                return segments.mkString("\r");
-            });
+                return testsHL7.Count() > 0 ? segments.mkString("\r") : "";
+            }).Where(x => x != "");
         }
 
 /*

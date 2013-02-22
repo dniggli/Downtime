@@ -127,30 +127,57 @@ namespace HL7
 
         }
 
+        protected static void printDemographicLabelsOnly(ImmutableOrderData immutableOrderData, string printer,
+            SetupTableData setupTableData)
+        {
+
+            Func<LabelData,LabelData> configureLabels = labelData =>
+            {  //print collection label
+                labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
+                labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
+                return labelData;
+            };
+
+            _printLabels(immutableOrderData, printer, setupTableData, configureLabels);
+          
+        }
+
+           /// <summary>
+        /// Print collection, comment, and (collection or aliquot) labels
+        /// </summary>
+        private static void _printLabels(ImmutableOrderData immutableOrderData, string printer,
+            SetupTableData setupTableData, Func<LabelData,LabelData> configureLabels) {
+            
+            //PrintDowntimeLabels
+            var labelData = new LabelData(immutableOrderData.orderNumber, immutableOrderData.priority,
+                immutableOrderData.mrn, immutableOrderData.lastName, immutableOrderData.firstName, immutableOrderData.ward);
+
+         //   configureLabels(labelData).doPrint(printer, setupTableData);
+        }
+
         /// <summary>
         /// Print collection, comment, and (collection or aliquot) labels
         /// </summary>
         protected static void printLabels(ImmutableOrderData immutableOrderData, string printer, 
-            SetupTableData setupTableData, IEnumerable<DataRow> orderedTests, LabelPrintMode testPrintMode )
+            SetupTableData setupTableData, IEnumerable<DataRow> orderedTests, LabelPrintMode testPrintMode)
         {
-                //PrintDowntimeLabels
-            var labelData = new LabelData(immutableOrderData.orderNumber, immutableOrderData.priority,
-                immutableOrderData.mrn, immutableOrderData.lastName, immutableOrderData.firstName, immutableOrderData.ward,
-        DateTime.Now.ToString());
+               Func<LabelData, LabelData> configureLabels = labelData =>
+               {  //print collection label
+                   //print collection label
+                   labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
+                   labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
+                   //print comment label
+                   labelData.LabelAppendComment(immutableOrderData.comment, "CMT", "");
 
-                //print collection label
-            labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
-            labelData.LabelAppendDemographic(immutableOrderData.collectionTime, "", "");
-                //print comment label
-            labelData.LabelAppendComment(immutableOrderData.comment, "CMT", "");
+                   orderedTests.forEach(dr =>
+                        labelData.AppendTestLabel(immutableOrderData.getPriority,
+                        testPrintMode, dr["Id"].ToString(),
+                        dr["Tube"].ToString(), dr["Extension"].ToString()));
 
-               orderedTests.forEach(dr =>
-                    labelData.AppendTestLabel(immutableOrderData.getPriority,
-                    testPrintMode, dr["Id"].ToString(),
-                    dr["Tube"].ToString(), dr["Extension"].ToString()));
+                   return labelData;
+               };
 
-
-                labelData.doPrint(printer, setupTableData);
+               _printLabels(immutableOrderData, printer, setupTableData, configureLabels);
         }
 
         protected virtual LabelPrintMode TestPrintMode() {
@@ -272,11 +299,14 @@ namespace HL7
         /// Capture all of the current Order Data
         /// </summary>
         /// <returns></returns>
-        public ImmutableOrderData cloneOrderData(string orderNum)
+        public ImmutableOrderData cloneFormOrderData(string orderNum)
         {
+            Func<string, bool> queryTestSent = test => getSqlServer
+                .asBoolOption(string.Format("SELECT [hl7Sent] FROM [downtime].[dbo].[ordersWithTests] where ordernumber = '{0}' and test = '{1}'", orderNum, test))
+                .getOrElse(() => false);
             
             var testsToOrder = new Dictionary<DataRow, bool>();
-            this.orderedTests.forEach(x => testsToOrder.Add(x, false));
+            this.orderedTests.forEach(x => testsToOrder.Add(x, queryTestSent.Invoke(x["Id"].ToString())));
 
             return new ImmutableOrderData(orderNum, collectiontime.Text, receivetime.Text,
                  comboBoxWard.Text, ComboBoxPriority.Text, mrn.Text, DOB.Text,

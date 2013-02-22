@@ -48,7 +48,7 @@ namespace downtimeC
             }
             else
             {
-                Interaction.MsgBox("Order Does Not exist .", MsgBoxStyle.OkOnly, "MsgBox");
+                Interaction.MsgBox("Order Does Not exist.", MsgBoxStyle.OkOnly, "MsgBox");
             }
 
             return order.isDefined;
@@ -68,8 +68,16 @@ namespace downtimeC
         }
 
         protected override void OnPrintClick() {
-            var immutableOrderData = cloneOrderData(this.ordernumber.Text);
-            printLabels(immutableOrderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
+            var immutableOrderData = cloneFormOrderData(this.ordernumber.Text);
+            if (this.ComboboxPrintType.Text == "Print Demographic Labels")
+            {
+                printDemographicLabelsOnly(immutableOrderData, this.ComboboxPrinter.Text, setupTableData);
+            }
+            else
+            {
+                printLabels(immutableOrderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
+            }
+          
             this.ClearAllInputControls(ComboboxPrinter, ComboBoxRecentOrder, ComboboxPrintType);
             testTable.Clear();
             ordernumber.Focus();

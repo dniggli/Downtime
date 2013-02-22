@@ -38,20 +38,21 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeBase2, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.0.0.0.15\lib\net35\CodeBase2.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.0.0.0.18\lib\net35\CodeBase2.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.Database, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2.Database, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.Database.0.0.0.15\lib\net35\CodeBase2.Database.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.Database.0.0.0.18\lib\net35\CodeBase2.Database.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.MySql, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CodeBase2.MySql.0.0.0.15\lib\net35\CodeBase2.MySql.dll</HintPath>
-    </Reference>
-    <Reference Include="FunctionalCSharp, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2.MySql, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FunctionalCSharp.0.0.0.15\lib\net35\FunctionalCSharp.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.MySql.0.0.0.18\lib\net35\CodeBase2.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="FunctionalCSharp, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FunctionalCSharp.0.0.0.18\lib\net35\FunctionalCSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Access, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>

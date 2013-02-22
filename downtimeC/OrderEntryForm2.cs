@@ -16,7 +16,7 @@ using HL7;
 using FunctionalCSharp;
 using Microsoft.VisualBasic.CompilerServices;
 using System.Data.SqlClient;
-
+using CodeBase2;
 namespace downtimeC
 {
     public partial class OrderEntryForm2 : OrderBaseForm
@@ -61,17 +61,18 @@ namespace downtimeC
         {
             printLabels(orderData, this.ComboboxPrinter.Text, setupTableData, orderedTests, TestPrintMode());
 
-            var testsToSend = orderData.getDiTests().getUnsentTests().tests.Select(x => x.Key);
+            var testsToSend = orderData.getDiTests().tests;
 
-            
+
             var dict = testsToSend.GroupBy(x =>
                 //group test DataRows by the SpecimenType
-                new SpecimenType { extension = x["Extension"].ToString(), diSpecimenType = x["DiTranslation"].ToString() })
+                new SpecimenType { extension = x.Key["Extension"].ToString(), diSpecimenType = x.Key["DiTranslation"].ToString() })
                 .ToDictionary(gdc => gdc.Key,
                 //convert to a Dictionary<SpecimenType,List<String>> where List<string> is the list of testIDs
                 //, but those testIDs are all IndividualTests and not group Tests
-                gdc => groupTestToIndividualTest.getUniqueIndividualTests(
-                    gdc.ToList().Select(row => row["Id"].ToString())
+                gdc => groupTestToIndividualTest.getUniqueUnsentIndividualTests(
+                    //pass list of (string TestId,bool Sent) to getUniqueUnsentIndividualTests
+                    gdc.Select(q => new Tuple2<string,bool>(q.Key["Id"].ToString(), q.Value ))
                     )
                 );
 
@@ -81,7 +82,7 @@ namespace downtimeC
               dict);
             
 
-            orderData.setTestsAsSentInDb(testsToSend.Select(dr=>dr["Id"].ToString())).InsertOrder(getSqlServer); //update data about the order in the DB
+            orderData.setTestsAsSentInDb(testsToSend.Select(dr=>dr.Key["Id"].ToString())).InsertOrder(getSqlServer); //update data about the order in the DB
           
 
         }
@@ -89,11 +90,11 @@ namespace downtimeC
         {
             this.ComboBoxRecentOrder.SelectedIndexChanged -= ComboBoxRecentOrder_SelectedIndexChanged;
             this.ordernumber.Enabled = false;
-            TextboxCollectDate.Text = DateTime.Now.ToString();
+            TextboxCollectDate.Text = DateTime.Now.Date.ToString();
 
             //get orderNumber from TextBox or create a new one
             var orderNum = this.ordernumber.TextOption.getOrElse(() => RestartWheel.getNewOrderNumber(getSqlServer));
-            printInsertAndSendHL7(cloneOrderData(orderNum));           
+            printInsertAndSendHL7(cloneFormOrderData(orderNum));           
 
             this.DisableAll<TextBox>();
             this.DisableAll<ComboBox>();
@@ -132,20 +133,20 @@ namespace downtimeC
             {
 
                 //send the hl7 messages
-                var status = sendhl.SendHL7Multiple(hl7Messages);
+                //var status = sendhl.SendHL7Multiple(hl7Messages);
 
-                if (status == HL7Status.NOCONNECTION)
-                {
-                    MessageBox.Show("HL7 connection failed");
-                }
-                else if ( status == HL7Status.NACK)
-                {
-                    //  MessageBox.Show("HL7 connection Successful, but NACK returned")
-                }
-                 else if ( status == HL7Status.EXCEPTION)
-                {
-                    MessageBox.Show("HL7 connection tried, but exception thrown");
-                }
+                //if (status == HL7Status.NOCONNECTION)
+                //{
+                //    MessageBox.Show("HL7 connection failed");
+                //}
+                //else if ( status == HL7Status.NACK)
+                //{
+                //    //  MessageBox.Show("HL7 connection Successful, but NACK returned")
+                //}
+                // else if ( status == HL7Status.EXCEPTION)
+                //{
+                //    MessageBox.Show("HL7 connection tried, but exception thrown");
+                //}
             }
 
         }
@@ -255,7 +256,7 @@ namespace downtimeC
         {
             if (ComboBoxRecentOrder.Text.Length > 8)
             {
-                ordernumber.Text = Strings.Left(ComboBoxRecentOrder.Text, 8);
+                ordernumber.Text = ComboBoxRecentOrder.Text.Substring(0, 8);
                 ButtonEditorder.Enabled = false;
                 ordernumber.Enabled = false;
             }

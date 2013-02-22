@@ -423,6 +423,24 @@
             <param name="filename">test.txt</param>
             <returns></returns>
         </member>
+        <member name="M:CodeBase2.Tuple4`4.GetHashCode">
+            <summary>
+            I'm not certain my implementation of GetHashCode is correct on Tuple4 and up
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Tuple5`5.GetHashCode">
+            <summary>
+            I'm not certain my implementation of GetHashCode is correct on Tuple4 and up
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CodeBase2.Tuple6`6.GetHashCode">
+            <summary>
+            I'm not certain my implementation of GetHashCode is correct on Tuple4 and up
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CodeBase2.DateLibrary.SkipWeekends(System.Int32,System.DateTime)">
             <summary>
             Counts a specified number of work days after the given date, skipping weekends and holidays.

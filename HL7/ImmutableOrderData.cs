@@ -79,18 +79,18 @@ mrn, dob, firstName, problem, calls, comment, lastName, "", "", techId, billingN
                                                    
             }
 
-           /// <summary>
-           /// get only the unsent Tests
-           /// </summary>
-           /// <returns></returns>
-            public ImmutableOrderData getUnsentTests()
-            {
-                return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,collectDate,
-                    tests.filter(x => !x.Value));
-            }
+           ///// <summary>
+           ///// get only the unsent Tests
+           ///// </summary>
+           ///// <returns></returns>
+           // public ImmutableOrderData getUnsentTests()
+           // {
+           //     return new ImmutableOrderData(orderNumber, collectionTime, receiveTime, ward, priority, mrn, dob, firstName, problem, calls, comment, lastName, techId, billingNumber,collectDate,
+           //         tests.filter(x => !x.Value));
+           // }
 
            /// <summary>
-           /// set the given tests as sent in the DB and return all tests
+           /// set the given tests as sent and return all tests
            /// </summary>
            /// <param name="sentTests"></param>
            /// <returns></returns>
