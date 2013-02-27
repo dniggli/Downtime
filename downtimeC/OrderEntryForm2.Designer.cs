@@ -168,8 +168,6 @@
             this.Controls.SetChildIndex(this.problem, 0);
             this.Controls.SetChildIndex(this.cal1, 0);
             this.Controls.SetChildIndex(this.comment, 0);
-            this.Controls.SetChildIndex(this.DebugButtonRead, 0);
-            this.Controls.SetChildIndex(this.DateTimePicker1, 0);
             this.Controls.SetChildIndex(this.TextboxCollectDate, 0);
             this.Controls.SetChildIndex(this.TextBoxTechId, 0);
             this.Controls.SetChildIndex(this.ComboboxPrinter, 0);

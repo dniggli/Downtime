@@ -33,7 +33,6 @@ namespace HL7
             this.hospital = hospital;
         #if DEBUG
             this.DebugButtonFill.Visible = true;
-            this.DebugButtonRead.Visible = true;
         #endif
             this.TextBoxTechId.Text = GlobalMutableState.userName;
 

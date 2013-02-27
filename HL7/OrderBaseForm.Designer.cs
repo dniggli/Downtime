@@ -47,9 +47,6 @@ namespace HL7
             FunctionalCSharp.None<string> none_116 = new FunctionalCSharp.None<string>();
             this.TextBoxTechId = new System.Windows.Forms.TextBox();
             this.Label27 = new System.Windows.Forms.Label();
-            this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.Label26 = new System.Windows.Forms.Label();
-            this.DebugButtonRead = new System.Windows.Forms.Button();
             this.Label25 = new System.Windows.Forms.Label();
             this.Label21 = new System.Windows.Forms.Label();
             this.Label20 = new System.Windows.Forms.Label();
@@ -113,37 +110,6 @@ namespace HL7
             this.Label27.Size = new System.Drawing.Size(46, 13);
             this.Label27.TabIndex = 256;
             this.Label27.Text = "Tech ID";
-            // 
-            // DateTimePicker1
-            // 
-            this.DateTimePicker1.Enabled = false;
-            this.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DateTimePicker1.Location = new System.Drawing.Point(770, 37);
-            this.DateTimePicker1.Name = "DateTimePicker1";
-            this.DateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.DateTimePicker1.TabIndex = 254;
-            this.DateTimePicker1.TabStop = false;
-            // 
-            // Label26
-            // 
-            this.Label26.AutoSize = true;
-            this.Label26.Location = new System.Drawing.Point(770, 18);
-            this.Label26.Name = "Label26";
-            this.Label26.Size = new System.Drawing.Size(68, 13);
-            this.Label26.TabIndex = 253;
-            this.Label26.Text = "Todays Date";
-            // 
-            // DebugButtonRead
-            // 
-            this.DebugButtonRead.Location = new System.Drawing.Point(770, 74);
-            this.DebugButtonRead.Name = "DebugButtonRead";
-            this.DebugButtonRead.Size = new System.Drawing.Size(75, 23);
-            this.DebugButtonRead.TabIndex = 249;
-            this.DebugButtonRead.TabStop = false;
-            this.DebugButtonRead.Text = "Read";
-            this.DebugButtonRead.UseVisualStyleBackColor = true;
-            this.DebugButtonRead.Visible = false;
-            this.DebugButtonRead.Click += new System.EventHandler(this.DebugButtonRead_click);
             // 
             // Label25
             // 
@@ -248,7 +214,7 @@ namespace HL7
             // 
             this.DebugButtonFill.BackColor = System.Drawing.SystemColors.Control;
             this.DebugButtonFill.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
-            this.DebugButtonFill.Location = new System.Drawing.Point(892, 73);
+            this.DebugButtonFill.Location = new System.Drawing.Point(897, 26);
             this.DebugButtonFill.Name = "DebugButtonFill";
             this.DebugButtonFill.Size = new System.Drawing.Size(72, 25);
             this.DebugButtonFill.TabIndex = 246;
@@ -635,9 +601,6 @@ namespace HL7
             this.Controls.Add(this.TextBoxTechId);
             this.Controls.Add(this.Label27);
             this.Controls.Add(this.TextboxCollectDate);
-            this.Controls.Add(this.DateTimePicker1);
-            this.Controls.Add(this.Label26);
-            this.Controls.Add(this.DebugButtonRead);
             this.Controls.Add(this.Label25);
             this.Controls.Add(this.comment);
             this.Controls.Add(this.Label21);
@@ -673,7 +636,6 @@ namespace HL7
         #endregion
 
         internal System.Windows.Forms.Label Label27;
-        internal System.Windows.Forms.Label Label26;
         internal System.Windows.Forms.Label Label21;
         internal System.Windows.Forms.Label Label20;
         internal System.Windows.Forms.Label Label19;
@@ -693,8 +655,6 @@ namespace HL7
         public downtimeC.StoredComboBox comboBoxWard;
         public System.Windows.Forms.TextBox TextBoxTechId;
         public downtimeC.StoredTextBox TextboxCollectDate;
-        public System.Windows.Forms.DateTimePicker DateTimePicker1;
-        public System.Windows.Forms.Button DebugButtonRead;
         public downtimeC.StoredTextBox comment;
         public downtimeC.StoredTextBox cal1;
         public downtimeC.StoredTextBox problem;

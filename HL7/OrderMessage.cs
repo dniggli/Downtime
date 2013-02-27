@@ -110,7 +110,7 @@ namespace HL7
 
 /*
 MSH|^~\&|LAB|SCC||ROCHE|20121023151125||OML^O01|64275384|P|2.3|||AL|NE||8859/1<cr>
-PID|||000000963359||HIRALDO^ARACELIS||19750527|F||U<cr>
+PID|||000000963359||HIR^ARA||19750527|F||U<cr>
 PV1|||AMHS<cr>
 SAC|||A623543900<cr>
 ORC|XO|A623543900|||||1^^^^^R^EVER<cr>
@@ -164,8 +164,7 @@ TCD|^^^ALK^ALK PHOS||||||Y<cr>
         string ward;
         string testCode;
         string diSpecimenType;
-        SpecimenType specimenType;
-        public TestCodeForOrder(string testIndex, string testCode, string orderNumberWithSpecExtension, string ward, SpecimenType SpecimenType)
+        public TestCodeForOrder(string testIndex, string testCode, string orderNumberWithSpecExtension, string ward, SpecimenType specimenType)
         {
             this.testIndex = testIndex;
             this.orderNumberWithSpecExtension = orderNumberWithSpecExtension;

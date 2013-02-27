@@ -44,7 +44,6 @@ namespace downtimeC
             TextBoxbillingnumber.Enabled = true;
         }
 
-        //http://www.vbmysql.com/articles/vbnet-mysql-tutorial/the-vbnet-mysql-tutorial-part-4
 
         public static bool NotAn_X_Mrn(string mrn)
         {
@@ -139,11 +138,11 @@ namespace downtimeC
                 {
                     MessageBox.Show("HL7 connection failed");
                 }
-                else if ( status == HL7Status.NACK)
+                else if (status == HL7Status.NACK)
                 {
                     //  MessageBox.Show("HL7 connection Successful, but NACK returned")
                 }
-                 else if ( status == HL7Status.EXCEPTION)
+                else if (status == HL7Status.EXCEPTION)
                 {
                     MessageBox.Show("HL7 connection tried, but exception thrown");
                 }
@@ -246,7 +245,6 @@ namespace downtimeC
         {
             Buttoneditprevious.Enabled = false;
             ordernumber.Enabled = true;
-            DebugButtonRead.Enabled = true;
             ButtonEditorder.Enabled = false;
             ordernumber.Focus();
 

@@ -46,9 +46,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CodeBase2.Database.0.0.0.21\lib\net35\CodeBase2.Database.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.MySql">
-      <HintPath>..\packages\CodeBase2.MySql.0.0.0.21\lib\net35\CodeBase2.MySql.dll</HintPath>
-    </Reference>
     <Reference Include="FunctionalCSharp, Version=0.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FunctionalCSharp.0.0.0.21\lib\net35\FunctionalCSharp.dll</HintPath>
