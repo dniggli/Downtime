@@ -9,9 +9,10 @@ using Microsoft.VisualBasic;
 using System.Data;
 using System.Diagnostics;
 using System.Collections;
-using CodeBase2.MySql.URMC;
+//using CodeBase2.MySql.URMC;
 using System.Windows.Forms;
 using System.Linq;
+using CodeBase2.Database;
 namespace downtimeC
 {
 
@@ -59,6 +60,7 @@ namespace downtimeC
         readonly string collectiontime = "Collected";
 
         readonly string priority;
+        readonly GetPathDirectory getPathDirectory = new GetPathDirectory();
         public LabelData(string _ordernumber, string _PRIORITY, string _medreqnum, string _lastname, string _firstname, string _ward)
         {
             orderNumber = _ordernumber;
@@ -386,14 +388,17 @@ namespace downtimeC
         public void doPrint(string printer, SetupTableData setupTableData)
         {           
             string PrinterDNSName = setupTableData.LabelersByIp[printer.ToUpper()].ToString();
+            
             if (!PrinterDNSName.Contains("."))
             {
-                printer = CodeBase2.DNS.NameToIPString(PrinterDNSName);
-                Send_IP_Printer.PrintLabel(printer, strNecessary.ToString());
+                
+                getPathDirectory.Labels.SendPrinter(CodeBase2.DNS.NameToIPString(PrinterDNSName))
+                    .PrintLabel(strNecessary.ToString());
             }
             else
             {
-                Send_IP_Printer.PrintLabel(setupTableData.LabelersByIp[printer.ToUpper()], strNecessary.ToString());
+                getPathDirectory.Labels.SendPrinter(setupTableData.LabelersByIp[printer.ToUpper()])
+                .PrintLabel(strNecessary.ToString());
             }
         }
     }

@@ -6,7 +6,8 @@ using CodeBase2;
 using CodeBase2.EmbeddedResources;
 using FunctionalCSharp;
 using HL7;
-using CodeBase2.MySql.URMC;
+using CodeBase2.Database;
+//using CodeBase2.MySql.URMC;
 namespace downtimeC
 {
     /// <summary>
@@ -27,7 +28,7 @@ namespace downtimeC
 
           DISpecimenTranslation = getSqlServer.FilledDictionary("SELECT [type], [translation] FROM [downtime].[dbo].[diTranslation]").ToReadOnly();
 
-          LabelersByIp = Send_IP_Printer.GetLabelersListOfIPs_byGroup(string.Format("/{0}/Specimen Management",Enum.GetName(typeof(Hospital),hospital))).ToReadOnly();
+          LabelersByIp = new GetPathDirectory().Labels.GetLabelersListOfIPs_byGroup(string.Format("/{0}/Specimen Management", Enum.GetName(typeof(Hospital), hospital))).ToReadOnly();
           
       }
 

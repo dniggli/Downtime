@@ -38,29 +38,25 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeBase2, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2, Version=0.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.0.0.0.18\lib\net35\CodeBase2.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.0.0.0.21\lib\net35\CodeBase2.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.Database, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2.Database, Version=0.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.Database.0.0.0.18\lib\net35\CodeBase2.Database.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.Database.0.0.0.21\lib\net35\CodeBase2.Database.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.MySql, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.MySql.0.0.0.18\lib\net35\CodeBase2.MySql.dll</HintPath>
+    <Reference Include="CodeBase2.MySql">
+      <HintPath>..\packages\CodeBase2.MySql.0.0.0.21\lib\net35\CodeBase2.MySql.dll</HintPath>
     </Reference>
-    <Reference Include="FunctionalCSharp, Version=0.0.0.18, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FunctionalCSharp, Version=0.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FunctionalCSharp.0.0.0.18\lib\net35\FunctionalCSharp.dll</HintPath>
+      <HintPath>..\packages\FunctionalCSharp.0.0.0.21\lib\net35\FunctionalCSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="MySql.Data">
-      <HintPath>..\packages\MySql.Data.6.5.4\lib\net20\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -235,7 +231,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ilmerge.exe" /target:winexe /out:downtime.exe downtimeC.exe CodeBase2.dll CodeBase2.Database.dll CodeBase2.MySql.dll FunctionalCSharp.dll HL7.dll</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ilmerge.exe" /target:winexe /out:downtime.exe downtimeC.exe CodeBase2.dll CodeBase2.Database.dll FunctionalCSharp.dll HL7.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
