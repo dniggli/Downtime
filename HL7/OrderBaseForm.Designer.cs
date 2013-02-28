@@ -420,12 +420,12 @@ namespace HL7
             this.TextBoxbillingnumber.Location = new System.Drawing.Point(42, 161);
             this.TextBoxbillingnumber.MaxLength = 13;
             this.TextBoxbillingnumber.Name = "TextBoxbillingnumber";
-            this.TextBoxbillingnumber.RegexValidation = "S000\\d{9}|SXB\\d{6}";
+            this.TextBoxbillingnumber.RegexValidation = "";
             this.TextBoxbillingnumber.Required = true;
             this.TextBoxbillingnumber.Size = new System.Drawing.Size(224, 20);
             this.TextBoxbillingnumber.TabIndex = 1;
             this.TextBoxbillingnumber.TextOption = none_14;
-            this.TextBoxbillingnumber.ValidationPrompt = "MUST ENTER BILLING # LIKE \'S000#########\' OR \'SXB######\'";
+            this.TextBoxbillingnumber.ValidationPrompt = "";
             // 
             // ComboboxPrinter
             // 
@@ -506,13 +506,14 @@ namespace HL7
             // 
             this.mrn.DataColumnName = "mrn";
             this.mrn.Location = new System.Drawing.Point(42, 346);
+            this.mrn.MaxLength = 12;
             this.mrn.Name = "mrn";
-            this.mrn.RegexValidation = "\\d{12}|X\\d{6}";
+            this.mrn.RegexValidation = "";
             this.mrn.Required = true;
             this.mrn.Size = new System.Drawing.Size(223, 20);
             this.mrn.TabIndex = 5;
             this.mrn.TextOption = none_111;
-            this.mrn.ValidationPrompt = "Must enter MRN in proper format 12 digits, or X prefix and 6 digits";
+            this.mrn.ValidationPrompt = "";
             // 
             // receivetime
             // 
@@ -627,6 +628,7 @@ namespace HL7
             this.Controls.Add(this.ordernumber);
             this.Name = "OrderBaseForm";
             this.Text = "OrderBaseForm";
+            this.Load += new System.EventHandler(this.OrderBaseForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridTests)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

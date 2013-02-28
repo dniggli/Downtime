@@ -28,8 +28,18 @@ namespace downtimeC
 
           DISpecimenTranslation = getSqlServer.FilledDictionary("SELECT [type], [translation] FROM [downtime].[dbo].[diTranslation]").ToReadOnly();
 
-          LabelersByIp = new GetPathDirectory().Labels.GetLabelersListOfIPs_byGroup(string.Format("/{0}/Specimen Management", Enum.GetName(typeof(Hospital), hospital))).ToReadOnly();
-          
+#if DEBUG
+          var dr = new GetPathDirectory().Labels.GetLabelersListOfIPs_byGroup(string.Format("/{0}/Specimen Management", Enum.GetName(typeof(Hospital), hospital)));
+          if (hospital == Hospital.Highland)
+          {
+              dr.Add("C42", "172.16.60.252");
+          }
+           LabelersByIp = dr.ToReadOnly();
+#else
+               LabelersByIp = new GetPathDirectory().Labels.GetLabelersListOfIPs_byGroup(string.Format("/{0}/Specimen Management", Enum.GetName(typeof(Hospital), hospital))).ToReadOnly();
+#endif
+
+
       }
 
     }
