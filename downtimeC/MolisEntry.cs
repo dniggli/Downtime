@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Diagnostics;
-using AutoItHelper;
+using CodeBase2.AutoItX;
 using System.Threading;
 using System.Text.RegularExpressions;
 
@@ -35,7 +35,7 @@ namespace downtimeC
     public static void MolisEnter()
     {
 
-        if (AutoItX.WinExists("Molis")) {
+        if (AutoIt.WinExists("Molis")) {
             myOrder = new MolisEntry();
             Application.Run(myOrder);
 
@@ -119,71 +119,71 @@ namespace downtimeC
             if (lavtest == "18") {
                 string lavordernumber = ordernumber + "18";
 
-                AutoItX.WinActivate("Molis", "MWMSBE 30");
-                //AutoItHelper.AutoItX.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 163, 57)
+                AutoIt.WinActivate("Molis", "MWMSBE 30");
+                //AutoIt.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 163, 57)
 
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", lavordernumber, 0);
+                AutoIt.Sleep(200);
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", lavordernumber, 0);
 
-                AutoItHelper.AutoItX.Send("{TAB}");
+                AutoIt.Send("{TAB}");
                 if (priority == "S")
-                    AutoItHelper.AutoItX.Send("{SPACE}");
+                    AutoIt.Send("{SPACE}");
 
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", fullname, 0);
+                AutoIt.Sleep(200);
+                AutoIt.Send("{TAB}");
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", fullname, 0);
 
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", mrn, 0);
+                AutoIt.Sleep(200);
+                AutoIt.Send("{TAB}");
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", mrn, 0);
 
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", DOB, 0);
+                AutoIt.Sleep(200);
+                AutoIt.Send("{TAB}");
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", DOB, 0);
 
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", ComboBoxWard, 0);
-
-
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", colldate, 0);
+                AutoIt.Sleep(200);
+                AutoIt.Send("{TAB}");
+                AutoIt.Send("{TAB}");
+                AutoIt.Send("{TAB}");
+                AutoIt.Send("{TAB}");
+                AutoIt.Send("{TAB}");
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", ComboBoxWard, 0);
 
 
+                AutoIt.Sleep(200);
+                AutoIt.Send("{TAB}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", colldate, 0);
 
 
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", collectiontime, 0);
 
 
-                AutoItHelper.AutoItX.Sleep(200);
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.Send("{TAB}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.Send("{DELETE}");
-                AutoItHelper.AutoItX.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", receivetime, 0);
+                AutoIt.Sleep(200);
+                AutoIt.Send("{TAB}");
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", collectiontime, 0);
 
-                AutoItHelper.AutoItX.Sleep(200);
-                //AutoItHelper.AutoItX.Send("{TAB}")
+
+                AutoIt.Sleep(200);
+                AutoIt.Send("{TAB}");
+                AutoIt.Send("{TAB}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.Send("{DELETE}");
+                AutoIt.ControlSend("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", receivetime, 0);
+
+                AutoIt.Sleep(200);
+                //AutoIt.Send("{TAB}")
 
                 string[] e = lavhemtest.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
          
@@ -201,69 +201,69 @@ namespace downtimeC
                     if (iInE == "RETA")  test = "RET";
                     if (iInE == " HH")   test = "HH";
 
-                    AutoItHelper.AutoItX.Sleep(200);
-                    AutoItHelper.AutoItX.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 179, 601);
-                    AutoItHelper.AutoItX.Send(test);
-                    AutoItHelper.AutoItX.Send("{TAB}");
+                    AutoIt.Sleep(200);
+                    AutoIt.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 179, 601);
+                    AutoIt.Send(test);
+                    AutoIt.Send("{TAB}");
 
-                    AutoItHelper.AutoItX.Send("{DELETE}");
-                    AutoItHelper.AutoItX.Send("{DELETE}");
-                    AutoItHelper.AutoItX.Send("{DELETE}");
-                    AutoItHelper.AutoItX.Send("{DELETE}");
-                    AutoItHelper.AutoItX.Send("{DELETE}");
-                    AutoItHelper.AutoItX.Send("{DELETE}");
-                    AutoItHelper.AutoItX.Send("{DELETE}");
-                    AutoItHelper.AutoItX.Sleep(400);
+                    AutoIt.Send("{DELETE}");
+                    AutoIt.Send("{DELETE}");
+                    AutoIt.Send("{DELETE}");
+                    AutoIt.Send("{DELETE}");
+                    AutoIt.Send("{DELETE}");
+                    AutoIt.Send("{DELETE}");
+                    AutoIt.Send("{DELETE}");
+                    AutoIt.Sleep(400);
 
                     //'clicking on test buttons
                     //If i = "CBC" Then
-                    //    AutoItHelper.AutoItX.Sleep(200)
-                    //    AutoItHelper.AutoItX.ControlClick("Molis", "CBC", "[CLASS:Button; INSTANCE:3]", "Button3", 1, 59, 30)
-                    //    AutoItHelper.AutoItX.Send("{SPACE}")
+                    //    AutoIt.Sleep(200)
+                    //    AutoIt.ControlClick("Molis", "CBC", "[CLASS:Button; INSTANCE:3]", "Button3", 1, 59, 30)
+                    //    AutoIt.Send("{SPACE}")
                     //End If
 
 
                     //If i = "CBCD" Then
 
-                    //    AutoItHelper.AutoItX.Sleep(200)
-                    //    AutoItHelper.AutoItX.ControlClick("Molis", "CBCD", "[CLASS:Button; INSTANCE:11]", "Button11", 1, 41, 32)
-                    //    AutoItHelper.AutoItX.Send("{SPACE}")
+                    //    AutoIt.Sleep(200)
+                    //    AutoIt.ControlClick("Molis", "CBCD", "[CLASS:Button; INSTANCE:11]", "Button11", 1, 41, 32)
+                    //    AutoIt.Send("{SPACE}")
 
                     //End If
 
                     //If i = "HH" Then
-                    //    AutoItHelper.AutoItX.Sleep(200)
-                    //    AutoItHelper.AutoItX.ControlClick("Molis", "HH", "[CLASS:Button; INSTANCE:15]", "Button15", 1, 87, 45)
-                    //    AutoItHelper.AutoItX.Send("{SPACE}")
+                    //    AutoIt.Sleep(200)
+                    //    AutoIt.ControlClick("Molis", "HH", "[CLASS:Button; INSTANCE:15]", "Button15", 1, 87, 45)
+                    //    AutoIt.Send("{SPACE}")
                     //End If
 
 
                     //'Mnualy entering test text
                     //If i = "HCT" Then
-                    //    AutoItHelper.AutoItX.Sleep(200)
-                    //    AutoItHelper.AutoItX.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 179, 601)
-                    //    AutoItHelper.AutoItX.Send(i)
-                    //    AutoItHelper.AutoItX.Send("{TAB}")
+                    //    AutoIt.Sleep(200)
+                    //    AutoIt.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 179, 601)
+                    //    AutoIt.Send(i)
+                    //    AutoIt.Send("{TAB}")
                     //End If
 
                     //If i = "PLT" Then
-                    //    AutoItHelper.AutoItX.Sleep(200)
-                    //    AutoItHelper.AutoItX.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 179, 601)
-                    //    AutoItHelper.AutoItX.Send(i)
-                    //    AutoItHelper.AutoItX.Send("{TAB}")
+                    //    AutoIt.Sleep(200)
+                    //    AutoIt.ControlClick("Molis", "", "[CLASS:UniCanvas; INSTANCE:1]", "", 1, 179, 601)
+                    //    AutoIt.Send(i)
+                    //    AutoIt.Send("{TAB}")
                     //End If
                 }
 
 
             }
-            AutoItHelper.AutoItX.Sleep(800);
+            AutoIt.Sleep(800);
 
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send("{SPACE}");
+            AutoIt.Send("{TAB}");
+            AutoIt.Send("{SPACE}");
 
-            AutoItHelper.AutoItX.Sleep(200);
+            AutoIt.Sleep(200);
 
-            AutoItHelper.AutoItX.WinActivate("MolisEntry");
+            AutoIt.WinActivate("MolisEntry");
             TextBoxOrderNumber.Focus();
             TextBoxOrderNumber.Clear();
 

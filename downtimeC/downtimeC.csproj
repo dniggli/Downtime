@@ -38,17 +38,21 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeBase2, Version=0.0.0.21, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2, Version=0.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.0.0.0.21\lib\net35\CodeBase2.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.0.0.1.1\lib\net35\CodeBase2.dll</HintPath>
     </Reference>
-    <Reference Include="CodeBase2.Database, Version=0.0.0.21, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2.AutoItX, Version=0.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CodeBase2.Database.0.0.0.21\lib\net35\CodeBase2.Database.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.AutoItX.0.0.1.1\lib\net35\CodeBase2.AutoItX.dll</HintPath>
     </Reference>
-    <Reference Include="FunctionalCSharp, Version=0.0.0.21, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CodeBase2.Database, Version=0.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FunctionalCSharp.0.0.0.21\lib\net35\FunctionalCSharp.dll</HintPath>
+      <HintPath>..\packages\CodeBase2.Database.0.0.1.1\lib\net35\CodeBase2.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="FunctionalCSharp, Version=0.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FunctionalCSharp.0.0.1.1\lib\net35\FunctionalCSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -215,10 +219,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Automator\AutoItHelper\AutoItHelper.csproj">
-      <Project>{F10D29C9-6CE9-444B-B3E6-B16FB78CD680}</Project>
-      <Name>AutoItHelper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HL7\HL7.csproj">
       <Project>{C60166B5-E748-4606-BD6A-DA84F4CA516C}</Project>
       <Name>HL7</Name>

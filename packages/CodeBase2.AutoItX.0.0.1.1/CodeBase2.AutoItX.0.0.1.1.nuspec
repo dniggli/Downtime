@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>CodeBase2.AutoItX</id>
+    <version>0.0.1.1</version>
+    <title>CodeBase2.AutoItX</title>
+    <authors>Chris Van Vranken</authors>
+    <owners>Chris Van Vranken</owners>
+    <projectUrl>https://github.com/urmc-pathology/codebase</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>AutoIt tools</description>
+    <releaseNotes>Initial CodeBase2 release for NuGet</releaseNotes>
+    <tags>autoit codebase</tags>
+    <references>
+      <reference file="CodeBase2.AutoItX.dll" />
+    </references>
+  </metadata>
+</package>

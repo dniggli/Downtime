@@ -8,15 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 
 using Microsoft.VisualBasic;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
 
 using HL7;
+using CodeBase2.AutoItX;
 
 namespace downtimeC
 {
@@ -297,11 +295,11 @@ namespace downtimeC
            var response1 = Interaction.MsgBox("file must be colsed", MsgBoxStyle.DefaultButton1, "MsgBox");
 
 
-            AutoItHelper.AutoItX.WinActivate("Microsoft Excel - Testlist.csv");
+            AutoIt.WinActivate("Microsoft Excel - Testlist.csv");
 
             Thread.Sleep(2000);
-            AutoItHelper.AutoItX.WinActivate("MsgBox");
-            AutoItHelper.AutoItX.WinWaitClose("Microsoft Excel - Testlist.csv");
+            AutoIt.WinActivate("MsgBox");
+            AutoIt.WinWaitClose("Microsoft Excel - Testlist.csv");
 
 
         }

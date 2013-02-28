@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using CodeBase2.AutoItX;
 
 namespace downtimeC
 {
@@ -24,7 +25,8 @@ namespace downtimeC
                 GlobalMutableState.userName = Login.userName;
                 GlobalMutableState.StartupDate = System.DateTime.Now;
                 Application.Run(new MainMenu(Login.hospital));
-            }           
+            }    
+            
         }
     }
 }

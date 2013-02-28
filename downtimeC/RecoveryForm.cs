@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using AutoItHelper;
+using CodeBase2.AutoItX;
 using System.Text.RegularExpressions;
 
 using HL7;
@@ -38,7 +38,7 @@ namespace downtimeC
     public void Button1_Click(System.Object sender, System.EventArgs e)
     {
 
-        if (AutoItX.WinExists("Search")) {
+        if (AutoIt.WinExists("Search")) {
 
             // If Not Me.TextBoxOrderNumber.Text = String.Empty Then
             //If Not Me.TextBox1.Text = String.Empty Then
@@ -176,32 +176,32 @@ namespace downtimeC
 
 
 
-            AutoItHelper.AutoItX.Sleep(500);
-            AutoItX.WinActivate("Search");
-            AutoItHelper.AutoItX.ControlSend("Search", "", "[CLASS:Edit; INSTANCE:7]", BILLING, 0);
-            AutoItHelper.AutoItX.Sleep(200);
-            AutoItX.WinActivate("Search");
-            AutoItHelper.AutoItX.Send("{ENTER}");
-            AutoItHelper.AutoItX.Sleep(200);
-            AutoItHelper.AutoItX.Send("!w");
-            AutoItHelper.AutoItX.Sleep(200);
-            AutoItHelper.AutoItX.Send("{o}");
+            AutoIt.Sleep(500);
+            AutoIt.WinActivate("Search");
+            AutoIt.ControlSend("Search", "", "[CLASS:Edit; INSTANCE:7]", BILLING, 0);
+            AutoIt.Sleep(200);
+            AutoIt.WinActivate("Search");
+            AutoIt.Send("{ENTER}");
+            AutoIt.Sleep(200);
+            AutoIt.Send("!w");
+            AutoIt.Sleep(200);
+            AutoIt.Send("{o}");
 
-            AutoItHelper.AutoItX.Sleep(500);
+            AutoIt.Sleep(500);
 
-            if (AutoItX.WinWaitActive("Order info", "", 1))
+            if (AutoIt.WinWaitActive("Order info", "", 1))
             {
-                AutoItHelper.AutoItX.Send("{ENTER}");
+                AutoIt.Send("{ENTER}");
             }
 
-            AutoItHelper.AutoItX.Sleep(500);
-            AutoItHelper.AutoItX.Send("SD");
+            AutoIt.Sleep(500);
+            AutoIt.Send("SD");
 
-            AutoItHelper.AutoItX.Sleep(100);
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Sleep(100);
+            AutoIt.Sleep(100);
+            AutoIt.Send("{TAB}");
+            AutoIt.Sleep(100);
             int n = 0;
-            string reqdr = AutoItHelper.AutoItX.WinGetText("Order Entry - [New Order  - Edit Mode]", "");
+            string reqdr = AutoIt.WinGetText("Order Entry - [New Order  - Edit Mode]", "");
             Console.WriteLine(reqdr);
             string[] drname = reqdr.Split('&');
 
@@ -237,128 +237,128 @@ namespace downtimeC
 
 
 
-            AutoItHelper.AutoItX.ControlSend("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:Edit; INSTANCE:33]", drcode, 0);
+            AutoIt.ControlSend("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:Edit; INSTANCE:33]", drcode, 0);
 
-            //AutoItHelper.AutoItX.Send("{TAB}")
-            //AutoItHelper.AutoItX.Sleep(100)
-            //AutoItHelper.AutoItX.Send("{TAB}")
-            //AutoItHelper.AutoItX.Sleep(100)
-            //AutoItHelper.AutoItX.Send("{TAB}")
-            //AutoItHelper.AutoItX.Sleep(100)
-            //AutoItHelper.AutoItX.Send("{F2}")
-            //AutoItHelper.AutoItX.Sleep(200)
-            //'AutoItHelper.AutoItX.Send(drlast)
-            //AutoItHelper.AutoItX.Sleep(100)
-            //AutoItHelper.AutoItX.Send("{TAB}")
-            //'AutoItHelper.AutoItX.Send(drfirst)
-            //AutoItHelper.AutoItX.Send("!F")
+            //AutoIt.Send("{TAB}")
+            //AutoIt.Sleep(100)
+            //AutoIt.Send("{TAB}")
+            //AutoIt.Sleep(100)
+            //AutoIt.Send("{TAB}")
+            //AutoIt.Sleep(100)
+            //AutoIt.Send("{F2}")
+            //AutoIt.Sleep(200)
+            //'AutoIt.Send(drlast)
+            //AutoIt.Sleep(100)
+            //AutoIt.Send("{TAB}")
+            //'AutoIt.Send(drfirst)
+            //AutoIt.Send("!F")
             //WinWaitClose("Doctor Search Screen")
-            //AutoItHelper.AutoItX.ControlFocus("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:Edit; INSTANCE:2]")
+            //AutoIt.ControlFocus("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:Edit; INSTANCE:2]")
 
 
-            //AutoItHelper.AutoItX.Send("^V")
+            //AutoIt.Send("^V")
 
 
-            AutoItHelper.AutoItX.ControlSend("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:ComboBox; INSTANCE:1]", priority, 0);
-            AutoItHelper.AutoItX.Sleep(500);
-            AutoItHelper.AutoItX.ControlSend("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:Edit; INSTANCE:15]", ordernumber, 0);
+            AutoIt.ControlSend("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:ComboBox; INSTANCE:1]", priority, 0);
+            AutoIt.Sleep(500);
+            AutoIt.ControlSend("Order Entry - [New Order  - Edit Mode]", "", "[CLASS:Edit; INSTANCE:15]", ordernumber, 0);
 
-            AutoItHelper.AutoItX.Sleep(700);
-            AutoItX.WinActivate("Order Entry - [New Order  - Edit Mode]");
-            AutoItHelper.AutoItX.Send("!2");
-            //AutoItHelper.AutoItX.SetOptions(true)
+            AutoIt.Sleep(700);
+            AutoIt.WinActivate("Order Entry - [New Order  - Edit Mode]");
+            AutoIt.Send("!2");
+            //AutoIt.SetOptions(true)
 
             foreach (string testtype in DICT.Keys) {
 
                 foreach (string test in DICT[testtype]) {
-                    AutoItHelper.AutoItX.Send(test);
-                    AutoItHelper.AutoItX.Send("{ENTER}");
-                    AutoItHelper.AutoItX.Sleep(300);
+                    AutoIt.Send(test);
+                    AutoIt.Send("{ENTER}");
+                    AutoIt.Sleep(300);
 
-                    if (AutoItX.WinExists("Order Entry", "RBS"))
+                    if (AutoIt.WinExists("Order Entry", "RBS"))
                     {
-                        while (!(AutoItHelper.AutoItX.WinExists("Order Entry", "RBS") == false)) {
-                            AutoItX.WinActivate("Order Entry", "RBS");
-                            AutoItHelper.AutoItX.Sleep(100);
-                            AutoItX.Send("{ENTER}");
-                            AutoItHelper.AutoItX.Sleep(200);
+                        while (!(AutoIt.WinExists("Order Entry", "RBS") == false)) {
+                            AutoIt.WinActivate("Order Entry", "RBS");
+                            AutoIt.Sleep(100);
+                            AutoIt.Send("{ENTER}");
+                            AutoIt.Sleep(200);
                         }
 
                     }
-                    if (AutoItX.WinExists("Order Entry", "RBS <SSIGN>: reflex 'SSIGN' on Ord# NEW"))
+                    if (AutoIt.WinExists("Order Entry", "RBS <SSIGN>: reflex 'SSIGN' on Ord# NEW"))
                     {
-                        while (!(AutoItHelper.AutoItX.WinExists("Order Entry", "RBS <SSIGN>: reflex 'SSIGN' on Ord# NEW") == false)) {
-                            AutoItX.WinActivate("Order Entry", "RBS <SSIGN>: reflex 'SSIGN' on Ord# NEW");
-                            AutoItHelper.AutoItX.Sleep(100);
-                            AutoItX.Send("{ENTER}");
-                            AutoItHelper.AutoItX.Sleep(200);
+                        while (!(AutoIt.WinExists("Order Entry", "RBS <SSIGN>: reflex 'SSIGN' on Ord# NEW") == false)) {
+                            AutoIt.WinActivate("Order Entry", "RBS <SSIGN>: reflex 'SSIGN' on Ord# NEW");
+                            AutoIt.Sleep(100);
+                            AutoIt.Send("{ENTER}");
+                            AutoIt.Sleep(200);
                         }
                     }
-                    if (AutoItX.WinExists("Order Entry", "not defined"))
+                    if (AutoIt.WinExists("Order Entry", "not defined"))
                     {
-                        AutoItHelper.AutoItX.Sleep(100);
-                        AutoItX.Send("{ENTER}");
-                        AutoItHelper.AutoItX.Sleep(200);
+                        AutoIt.Sleep(100);
+                        AutoIt.Send("{ENTER}");
+                        AutoIt.Sleep(200);
                         tests = test;
                         InputBoxForm Iform = new InputBoxForm();
 
                         Iform.ShowDialog(this);
-                        AutoItHelper.AutoItX.Sleep(200);
+                        AutoIt.Sleep(200);
                         Iform.Focus();
                         //TopMost = True
                         //Dim testfix As String = InputBox("Correct unknown test: " & test)
                         //TopMost = False
                         Console.WriteLine(fixTEST);
-                        AutoItHelper.AutoItX.ControlSend("Order Entry", "New Order  - Edit Mode", "[CLASS:Edit; INSTANCE:1]", fixTEST, 0);
-                        AutoItHelper.AutoItX.Sleep(100);
-                        AutoItX.WinActivate("Order Entry - [New Order  - Edit Mode]");
-                        AutoItHelper.AutoItX.Sleep(50);
-                        AutoItX.Send("{ENTER}");
+                        AutoIt.ControlSend("Order Entry", "New Order  - Edit Mode", "[CLASS:Edit; INSTANCE:1]", fixTEST, 0);
+                        AutoIt.Sleep(100);
+                        AutoIt.WinActivate("Order Entry - [New Order  - Edit Mode]");
+                        AutoIt.Sleep(50);
+                        AutoIt.Send("{ENTER}");
 
                     }
 
-                    AutoItHelper.AutoItX.Sleep(200);
+                    AutoIt.Sleep(200);
                 }
             }
-            AutoItHelper.AutoItX.Send("{F9}");
-            AutoItHelper.AutoItX.Sleep(200);
-            AutoItHelper.AutoItX.Send(";");
-            AutoItHelper.AutoItX.Sleep(200);
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send(collectiontime);
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send(DateTimeFunctions.datetoordentry(colldate));
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send(receivetime);
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send(DateTimeFunctions.datetoordentry(colldate));
-            AutoItHelper.AutoItX.Send("{ENTER}");
-            AutoItHelper.AutoItX.Sleep(200);
-            AutoItHelper.AutoItX.Send("^s");
-            AutoItHelper.AutoItX.Sleep(1000);
+            AutoIt.Send("{F9}");
+            AutoIt.Sleep(200);
+            AutoIt.Send(";");
+            AutoIt.Sleep(200);
+            AutoIt.Send("{TAB}");
+            AutoIt.Send(collectiontime);
+            AutoIt.Send("{TAB}");
+            AutoIt.Send(DateTimeFunctions.datetoordentry(colldate));
+            AutoIt.Send("{TAB}");
+            AutoIt.Send("{TAB}");
+            AutoIt.Send(receivetime);
+            AutoIt.Send("{TAB}");
+            AutoIt.Send(DateTimeFunctions.datetoordentry(colldate));
+            AutoIt.Send("{ENTER}");
+            AutoIt.Sleep(200);
+            AutoIt.Send("^s");
+            AutoIt.Sleep(1000);
 
-            if (AutoItX.WinExists("Result must be entered for this test:"))
+            if (AutoIt.WinExists("Result must be entered for this test:"))
             {
-                AutoItX.WinWaitClose("Result must be entered for this test:");
+                AutoIt.WinWaitClose("Result must be entered for this test:");
             }
 
 
-            if (AutoItX.WinExists("Results must be entered for these tests:"))
+            if (AutoIt.WinExists("Results must be entered for these tests:"))
             {
-                AutoItX.WinWaitClose("Results must be entered for these tests:");
+                AutoIt.WinWaitClose("Results must be entered for these tests:");
             }
 
-            AutoItHelper.AutoItX.Send("y");
-            AutoItHelper.AutoItX.Sleep(500);
-            AutoItX.WinWaitActive("Standard Label", 1);
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send("{TAB}");
-            AutoItHelper.AutoItX.Send("{TAB}");
-            //AutoItHelper.AutoItX.Send("{TAB}")
-            AutoItHelper.AutoItX.Send("{ENTER}");
-            AutoItHelper.AutoItX.Sleep(500);
+            AutoIt.Send("y");
+            AutoIt.Sleep(500);
+            AutoIt.WinWaitActive("Standard Label", 1);
+            AutoIt.Send("{TAB}");
+            AutoIt.Send("{TAB}");
+            AutoIt.Send("{TAB}");
+            AutoIt.Send("{TAB}");
+            //AutoIt.Send("{TAB}")
+            AutoIt.Send("{ENTER}");
+            AutoIt.Sleep(500);
 
 
         //For Each kv As KeyValuePair(Of String, String()) In DICT
