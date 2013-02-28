@@ -40,6 +40,10 @@ namespace HL7
             comboBoxWard.Items.AddRange(setupTableData.wards);
 
 
+
+            
+
+
             ComboboxPrinter.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             ComboboxPrinter.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBoxWard.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -110,7 +114,9 @@ namespace HL7
         private void DebugButtonFill_Click(System.Object sender, System.EventArgs e)
         {
                     //ordernumber.Text = RandomString.get(8);
-                    mrn.Text = RandomString.numeric(12);
+                    mrn.Text = hospital == Hospital.Strong 
+                        ? RandomString.numeric(12) 
+                        : RandomString.numeric(10);
                     ComboboxPrinter.SelectedIndex = 0;
                     ComboBoxPriority.SelectedIndex = 1;
                     DOB.Text = "08/28/2003";
@@ -325,6 +331,29 @@ namespace HL7
         private void testGridSelectionChange(object sender, EventArgs e)
         {
             this.textBoxAddTest.Text = this.testTable.Rows[this.dataGridTests.SelectedRows[0].Index]["Id"].ToString();
+        }
+
+        private void OrderBaseForm_Load(object sender, EventArgs e)
+        {
+            if (hospital == Hospital.Strong)
+            {
+                TextBoxbillingnumber.ValidationPrompt = "MUST ENTER BILLING # LIKE 'S000#########' OR 'SXB######'";
+                TextBoxbillingnumber.RegexValidation = @"S000\d{9}|SXB\d{6}";
+                TextBoxbillingnumber.MaxLength = 13;
+                mrn.ValidationPrompt = "Must enter MRN in proper format 12 digits, or X prefix and 6 digits";
+                mrn.RegexValidation = @"\d{12}|X\d{6}";
+                mrn.MaxLength = 12;
+            }
+            else
+            {
+                TextBoxbillingnumber.ValidationPrompt = "MUST ENTER BILLING # LIKE 'I##########' OR 'IXB######'";
+                TextBoxbillingnumber.RegexValidation = @"I\d{10}|IXB\d{6}";
+                TextBoxbillingnumber.MaxLength = 11;
+                mrn.ValidationPrompt = "Must enter MRN in proper format 10 digits, or X prefix and 6 digits";
+                mrn.RegexValidation = @"\d{10}|X\d{6}";
+                mrn.MaxLength = 10;
+            }
+
         }
     }
 }
