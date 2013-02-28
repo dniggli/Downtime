@@ -128,25 +128,41 @@ namespace downtimeC
 
             var hl7Messages = co.toHl7();
 
-            if (DialogResult.Yes == MessageBox.Show("Send Order Message to DI?", "Send Order Message to DI?", MessageBoxButtons.YesNo))
-            {
+             if (DialogResult.Yes == MessageBox.Show("Send Order Message to DI?", "Send Order Message to DI?", MessageBoxButtons.YesNo))
+             {
+                sendHL7Recursion(hl7Messages, sendhl);
+             }
+        }
 
-              //  send the hl7 messages
+        public static void sendHL7Recursion(IEnumerable<string> hl7Messages, SendHl7 sendhl)
+        {
+                //  send the hl7 messages
                 var status = sendhl.SendHL7Multiple(hl7Messages);
+
+                Option<string> message = Option.None<string>();
 
                 if (status == HL7Status.NOCONNECTION)
                 {
-                    MessageBox.Show("HL7 connection failed");
+                    message = Option.Some("HL7 connection failed (NOCONNECTION), attempt resending Order Message to DI?");
                 }
                 else if (status == HL7Status.NACK)
                 {
-                    //  MessageBox.Show("HL7 connection Successful, but NACK returned")
+                    //MessageBox.Show("HL7 connection Successful, but NACK returned");
                 }
                 else if (status == HL7Status.EXCEPTION)
                 {
-                    MessageBox.Show("HL7 connection tried, but exception thrown");
+                    message = Option.Some("HL7 connection failed (EXCEPTION), attempt resending Order Message to DI?");
                 }
-            }
+
+                message.forEach(mess =>
+                {
+
+                    if (DialogResult.Yes == MessageBox.Show(mess, mess, MessageBoxButtons.YesNo))
+                    {
+                        sendHL7Recursion(hl7Messages, sendhl);
+                    }
+
+                });
 
         }
 
