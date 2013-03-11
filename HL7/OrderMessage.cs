@@ -53,7 +53,7 @@ namespace HL7
 
         private string PID()
         {
-            return "PID|||" + mrn + "||" + firstName + "^" + lastName + "||" + dob + "|" + sex + "||U";
+            return "PID|||" + mrn + "||" + lastName + "^" + firstName + "||" + dob + "|" + sex + "||U";
         }
 
         private string PV1()
